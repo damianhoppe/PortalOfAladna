@@ -9,7 +9,7 @@ public class GridManager : MonoBehaviour
     Grid grid;
     private void Start()
     {
-        grid = new Grid(10, 10, 10f);
+        grid = new Grid(5, 5, 5f);
     }
     // Update is called once per frame
     void Update()
