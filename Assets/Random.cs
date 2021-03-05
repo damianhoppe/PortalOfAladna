@@ -8,6 +8,7 @@ public class Random : MonoBehaviour
     void Start()
     {
         Debug.Log("Test");
+        Debug.Log("Hello");
        
     }
 
