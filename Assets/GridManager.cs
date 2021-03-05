@@ -7,9 +7,11 @@ public class GridManager : MonoBehaviour
 {
     // Start is called before the first frame update
     Grid grid;
+    [SerializeField]
+    GameObject[] sprite;
     private void Start()
     {
-        grid = new Grid(5, 5, 5f);
+        grid = new Grid(5, 5, 5f, sprite);
     }
     // Update is called once per frame
     void Update()

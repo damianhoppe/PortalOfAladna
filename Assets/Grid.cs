@@ -11,18 +11,21 @@ public class Grid
     private int[,] gridArray;
     private float cellSize;
     private TextMesh[,] DebugTextArray;
+    private GameObject[,] gridObjectsArray;
     public Grid()
     {
         
     }
-    public Grid(int width, int height, float cellSize)
+    public Grid(int width, int height, float cellSize, GameObject[] sprite)
     {
+        
         this.width = width;
         this.height = height;
         this.cellSize = cellSize;
-
+        gridObjectsArray = new GameObject[width, height];
         gridArray = new int[width, height];
         DebugTextArray = new TextMesh[width, height];
+  
 
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
@@ -31,6 +34,11 @@ public class Grid
                 DebugTextArray[x,y] = UtilsClass.CreateWorldText(x.ToString()+","+y.ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize,cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 9999f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 9999f);
+                Debug.Log("LOG "+ UnityEngine.Random.Range(0, 1));
+                gridObjectsArray[x, y] = GameObject.Instantiate(sprite[UnityEngine.Random.Range(0, 2)]);
+                gridObjectsArray[x, y].transform.position = GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f;
+
+
             }
         }
         Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 9999f);
