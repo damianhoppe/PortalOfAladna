@@ -18,21 +18,25 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float minZoom = 10f;
     [SerializeField]
-    private float maxZoom = 50f;
+    private float maxZoom = 80f;
     [SerializeField]
     private float zoomSpeed = 10f;
     [SerializeField]
     private float currentZoom = 10f;
     [SerializeField]
     Camera camera = new Camera();
+    private bool canMoveCamera;
     void Start()
     {
+        canMoveCamera = false;
         camera = Camera.main;
         theScreenWidth = Screen.width;
         theScreenHeight = Screen.height;
     }
     void Update()
     {
+        if (canMoveCamera)
+        {
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 sprint = 30;
@@ -64,11 +68,17 @@ public class CameraController : MonoBehaviour
             }
 
 
-            currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
-            Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-            camera.orthographicSize = currentZoom;
+        }
+        currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+        camera.orthographicSize = currentZoom;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            canMoveCamera = !canMoveCamera;
+        }
 
     }
 
 }
+

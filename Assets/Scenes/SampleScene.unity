@@ -164,7 +164,7 @@ MonoBehaviour:
   speed: 20
   sprint: 0
   minZoom: 10
-  maxZoom: 50
+  maxZoom: 80
   zoomSpeed: 10
   currentZoom: 10
   camera: {fileID: 0}
