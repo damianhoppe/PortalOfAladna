@@ -8,11 +8,12 @@ public class Random : MonoBehaviour
     void Start()
     {
         Debug.Log("Test");
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Test2");
     }
 }
