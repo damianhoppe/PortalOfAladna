@@ -14,5 +14,8 @@ public class SecondScript : MonoBehaviour
     void Update()
     {
         Debug.Log("xD");
+        Debug.Log("xD");
+        Debug.Log("xD");
+        Debug.Log("xD");
     }
 }
