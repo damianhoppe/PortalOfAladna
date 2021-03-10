@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Portal : BuildingStructure
+public class Portal : Building
 {
-    // Start is called before the first frame update
     protected void Start()
     {
         base.Start();
-        setTexture("Portal");
     }
 
-    // Update is called once per frame
     protected void Update()
     {
-        
+        base.Update();
     }
 }

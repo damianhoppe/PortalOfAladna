@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IOnBuildingSelected
 {
-    void onBuildingSelected(BuildingId buildingId);
+    void onBuildingSelected(GameObject building);
 }

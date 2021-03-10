@@ -18,52 +18,28 @@ public class GridManager : MonoBehaviour
             height++;
         grid = new Grid(width, height);
     }
-
-    void Update()
-    {
-    }
-
-    public bool canBuild(float x, float y)
-    {
-        return canBuild((int)x, (int)y);
-    }
-
-    public bool isEmpty(float x, float y)
-    {
-        return isEmpty((int)x, (int)y);
-    }
-
-    public GameObject getBuilding(float x, float y)
-    {
-        return getBuilding((int)x, (int)y);
-    }
-
-    public void addBuilding(GameObject building, float x, float y)
-    {
-        addBuilding(building, (int)x, (int)y);
-    }
-
-    public bool canBuild(int x, int y)
+    public bool isInGrid(int x, int y)
     {
         if (x > width / 2 || x < -width / 2)
             return false;
         if (y > height / 2 || y < -height / 2)
             return false;
-        return isEmpty(x,y);
+        return true;
     }
 
     public bool isEmpty(int x, int y)
     {
-        return getBuilding(x,y) == null;
+        return getStructure(x, y) == null;
     }
 
-    public GameObject getBuilding(int x, int y)
+    public Structure getStructure(int x, int y)
     {
-        return grid.getGameObject(x,y);
+        if(!isInGrid(x,y)) return null;
+        return grid.getGameObject(x, y);
     }
 
-    public void addBuilding(GameObject building, int x, int y)
+    public void addStructure(Structure structure, int x, int y)
     {
-        grid.setGameObject(building, x, y);
+        grid.setGameObject(structure, x, y);
     }
 }

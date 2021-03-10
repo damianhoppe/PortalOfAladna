@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a52a93c054c4f843995065d4ecba427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  builderBehaviour: {fileID: 1626289832}
 --- !u!1 &1439673417
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,8 +393,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3949c7dcece262148a9dce7d7dff5a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 762566736}
   gridManager: {fileID: 1439673418}
+  buildings:
+  - {fileID: 5622522296184841837, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
+  - {fileID: 3993969840122632321, guid: aa841cd5926e58940b47fddaacdfb0cd, type: 3}
 --- !u!4 &1626289833
 Transform:
   m_ObjectHideFlags: 0

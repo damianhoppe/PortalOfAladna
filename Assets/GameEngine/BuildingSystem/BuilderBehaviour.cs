@@ -2,46 +2,77 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuilderBehaviour : MonoBehaviour, IOnBuildingSelected
+public class BuilderBehaviour : MonoBehaviour, IOnBuildingSelected, IOnCursorPositionChanged
 {
     [SerializeField]
-    private GameObject cursor;
-    [SerializeField]
     private GridManager gridManager;
+    [SerializeField]
+    private List<Building> buildings;
 
-    private BuildingId buildingId;
     private GameObject buildingPreview;
+    private CursorBehaviour cursor;
 
     void Start()
     {
-        CursorBehaviour cursorB = cursor.GetComponent<CursorBehaviour>();
-        cursorB.registerOnBuildSelectedListener(this);
+        cursor = FindObjectsOfType<CursorBehaviour>()[0];
+        cursor.registerOnBuildSelectedListener(this);
+        cursor.addOnPositionChangedListener(this);
     }
 
     void Update()
     {
-        if (buildingPreview != null)
+        if (Input.GetMouseButtonDown(0) && buildingPreview != null)
         {
-            Vector3 pos = Utils.copy(cursor.transform.position);
-            pos.z = buildingPreview.transform.position.z;
-            buildingPreview.transform.position = pos;
-            if (Input.GetMouseButtonDown(1))
+            Position position = cursor.getPosition();
+            if (gridManager.isInGrid(position.getX(), position.getY()) && gridManager.isEmpty(position.getX(), position.getY()))
             {
-                Vector3 buildingPos = new Vector3(cursor.transform.position.x, cursor.transform.position.y, -0.5f);
-                if (gridManager.canBuild((int)buildingPos.x, (int)buildingPos.y))
+                Building buildingScript = this.buildingPreview.GetComponent<Building>();
+                buildingScript.setPosition(new Position(position));
+                if (buildingScript.getBuildingRequirements().areMet(this.gridManager))
                 {
-                    Destroy(buildingPreview);
-                    buildingPreview = null;
-                    gridManager.addBuilding(Builder.getBuilding(buildingId, Utils.copyZ(cursor.transform.position, -0.5f)), buildingPos.x, buildingPos.y);
+                    GameObject buildingObject = Instantiate(buildingPreview);
+                    Building building = buildingObject.GetComponent<Building>();
+                    buildingObject.name = building.getName();
+                    gridManager.addStructure((Structure)building, position.getX(), position.getY());
+                    building.onCreate();
                 }
             }
         }
+        if(Input.GetMouseButtonDown(2))
+        {
+            Destroy(this.buildingPreview);
+            buildingPreview = null;
+        }
     }
 
-    public void onBuildingSelected(BuildingId buildingId)
+    public void onBuildingSelected(GameObject building)
     {
-        this.buildingId = buildingId;
-        if (buildingPreview != null) Destroy(buildingPreview);
-        buildingPreview = Builder.getBuildingPreview(buildingId, Utils.copyZ(cursor.transform.position, -0.5f));
+        if (this.buildingPreview != null) Destroy(this.buildingPreview);
+        this.buildingPreview = Instantiate(building);
+        this.buildingPreview.name = this.buildingPreview.GetComponent<Structure>().getName() + " - preview";
+        setBuildingPreviewPosition(cursor.getPosition());
+    }
+
+    public void onPositionChanged(Position oldPosition, Position newPosition)
+    {
+        if(this.buildingPreview != null)
+        {
+            this.setBuildingPreviewPosition(newPosition);
+        }
+    }
+
+    private void setBuildingPreviewPosition(Position pos)
+    {
+        this.buildingPreview.transform.position = pos.toVector3(-0.5f);
+    }
+
+    public List<Building> getBuildings()
+    {
+        return this.buildings;
+    }
+
+    public bool allowsToClick()
+    {
+        return this.buildingPreview == null;
     }
 }

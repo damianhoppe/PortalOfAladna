@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BuildingId
+public interface IOnClick
 {
-    PORTAL, MINE
+    void onClick(Position position);
 }

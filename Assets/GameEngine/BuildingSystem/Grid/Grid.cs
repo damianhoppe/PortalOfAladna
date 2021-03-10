@@ -8,13 +8,8 @@ public class Grid
 {
     private int width;
     private int height;
-    private GameObject[,] gridArray;
+    private Structure[,] gridArray;
     private Vector2 centerPoint;
-
-    public Grid()
-    {
-        
-    }
 
     public Grid(int width, int height)
     {
@@ -22,8 +17,8 @@ public class Grid
         this.height = height;
         centerPoint = new Vector2(this.width/2, this.height/2);
 
-        gridArray = new GameObject[this.width, this.height];
-
+        gridArray = new Structure[this.width, this.height];
+        /*
         for (int x = 0; x < gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
@@ -34,8 +29,19 @@ public class Grid
             }
         }
         Debug.DrawLine(GetWorldPositionLine(0, height), GetWorldPositionLine(width, height), Color.white, 9999f);
-        Debug.DrawLine(GetWorldPositionLine(width, 0), GetWorldPositionLine(width, height), Color.white, 9999f);
-
+        Debug.DrawLine(GetWorldPositionLine(width, 0), GetWorldPositionLine(width, height), Color.white, 9999f);*/
+        for (int x = 0; x <= gridArray.GetLength(0); x++)
+        {
+            Vector3 v1 = GetWorldPositionLine(x, 0);
+            Vector3 v2 = GetWorldPositionLine(x, this.height);
+            Debug.DrawLine(v1, v2, Color.white, 9999f);
+        }
+        for (int y = 0; y <= gridArray.GetLength(1); y++)
+        {
+            Vector3 v1 = GetWorldPositionLine(0, y);
+            Vector3 v2 = GetWorldPositionLine(this.width, y);
+            Debug.DrawLine(v1, v2, Color.white, 9999f);
+        }
     }
 
     private Vector3 GetWorldPositionLine(int x, int y)
@@ -54,15 +60,15 @@ public class Grid
         y = wy + (int)centerPoint.y;
     }
 
-    public GameObject getGameObject(int x, int y)
+    public Structure getGameObject(int x, int y)
     {
         getXY(x, y, out x, out y);
         return gridArray[x, y];
     }
 
-    public void setGameObject(GameObject gameObject, int x, int y)
+    public void setGameObject(Structure structure, int x, int y)
     {
         getXY(x, y, out x, out y);
-        gridArray[x, y] = gameObject;
+        gridArray[x, y] = structure;
     }
 }
