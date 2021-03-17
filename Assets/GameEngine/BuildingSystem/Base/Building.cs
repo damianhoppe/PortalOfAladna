@@ -13,6 +13,7 @@ public class Building : Structure, IBuilding
     [SerializeField]
     int maxLvl;
 
+    public int Danger; //test
     bool updateEnabled;
     int numberOfEmployees;
     int maxNumberOfEmployees;

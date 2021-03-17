@@ -56,6 +56,16 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
             this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[1].gameObject);
             //this.canEnterOnTakenPlace = false;
         }
+        if (Input.GetKeyDown("3"))
+        {
+            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[2].gameObject);
+            //this.canEnterOnTakenPlace = false;
+        }
+        if (Input.GetKeyDown("4"))
+        {
+            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[3].gameObject);
+            //this.canEnterOnTakenPlace = false;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.NONE);
