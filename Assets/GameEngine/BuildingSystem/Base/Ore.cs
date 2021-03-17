@@ -6,12 +6,12 @@ public class Ore : Structure
 {
     public Ore() : base(EStructureType.Building) { }
 
-    protected void Start()
+    protected override void Start()
     {
         base.Start();
     }
 
-    protected void Update()
+    protected override void Update()
     {
     }
 }

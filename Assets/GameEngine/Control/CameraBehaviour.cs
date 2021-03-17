@@ -18,11 +18,17 @@ public class CameraBehaviour : MonoBehaviour
     float minZoom = 2F;
     [SerializeField]
     float maxZoom = 10F;
+
     Camera cameraObj;
+    GridManager gridManager;
 
     void Start()
     {
         cameraObj = GetComponent<Camera>();
+        gridManager = FindObjectOfType<GridManager>();
+        maxZoom += Mathf.Max(gridManager.getWidth(), gridManager.getHeight()) * 0.2f;
+        if (maxZoom < minZoom)
+            minZoom = maxZoom + 1;
     }
 
     // Update is called once per frame
@@ -47,7 +53,7 @@ public class CameraBehaviour : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         if (dragAndDrop)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(1))
             {
                 moveVector = new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"), 0);
             }
@@ -76,7 +82,14 @@ public class CameraBehaviour : MonoBehaviour
 
     void moveCamera(Vector3 moveVector)
     {
-        if (GlobalSettings.DEBUG) Debug.Log(moveVector);
-        transform.position += moveVector * moveSpeed * zoom * Time.deltaTime;
+        Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        
+        if (dragAndDrop)
+            newPos += moveVector * moveSpeed * zoom * 0.02f;
+        else
+            newPos += moveVector * moveSpeed * zoom * Time.deltaTime;
+        newPos.x = Mathf.Clamp(newPos.x, -gridManager.getWidth()/2, gridManager.getWidth()/2);
+        newPos.y = Mathf.Clamp(newPos.y, -gridManager.getWidth()/2, gridManager.getWidth()/2);
+        transform.position = newPos;
     }
 }

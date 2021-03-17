@@ -94,6 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0188b340d5c111643aaf1a4c34ce43f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Portal
+  Name: Portal
   nearbyStructuresRequired: []
-  requiredMinimalDistances: 
+  requiredMinimalDistance: 0
+  maxHp: 500
+  buildSpeed: 100
+  maxLvl: 0

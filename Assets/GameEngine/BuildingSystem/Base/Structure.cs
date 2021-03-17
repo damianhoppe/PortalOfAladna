@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour, IStructure
 {
-    [SerializeField] string name;
+    [SerializeField] string Name;
     protected EStructureType type;
-    SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
 
     Position position;
 
@@ -15,14 +15,17 @@ public class Structure : MonoBehaviour, IStructure
         this.type = type;
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
+    }
+    protected virtual void Update()
+    {
     }
 
     public string getName()
     {
-        return this.name;
+        return this.Name;
     }
 
     public Position getPosition()
@@ -34,8 +37,8 @@ public class Structure : MonoBehaviour, IStructure
     {
         this.position = position;
     }
-    public void onClick()
+    public virtual void onClick()
     {
-        Debug.Log(this.name + " onClick");
+        Debug.Log(this.Name + " - onClick()");
     }
 }

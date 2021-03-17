@@ -7,34 +7,102 @@ public class Building : Structure, IBuilding
     [SerializeField]
     List<Structure> nearbyStructuresRequired;
     [SerializeField]
-    int requiredMinimalDistance;
+    public int requiredMinimalDistance;
+    [SerializeField]
+    int buildSpeed;
+    [SerializeField]
+    int maxLvl;
 
+    bool updateEnabled;
+    int numberOfEmployees;
+    int maxNumberOfEmployees;
+    int lvl;
+    float currentPerformance;
+    float upgradePercentage;
+
+    Status status;
     BuildingRequirements buildingRequirements;
+
     public Building() : base(EStructureType.Building)
     {
+        this.lvl = 0;
+        this.maxNumberOfEmployees = 5;
+        this.status = Status.IS_BEING_BUILT;
         this.buildingRequirements = new BuildingRequirements(this);
     }
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         buildingRequirements.initDictionary(nearbyStructuresRequired, requiredMinimalDistance);
     }
 
-    protected void Update()
+    protected override void Update()
     {
-
+        if(this.updateEnabled)
+        {
+            this.currentPerformance = (float)this.numberOfEmployees / this.maxNumberOfEmployees;
+            if (this.status == Status.IS_BEING_BUILT)
+            {
+                Color color = this.spriteRenderer.color;
+                this.upgradePercentage += this.currentPerformance * buildSpeed * Time.deltaTime;
+                color.a = this.upgradePercentage / 100;
+                this.spriteRenderer.color = color;
+                if (this.upgradePercentage >= 100)
+                {
+                    this.upgradePercentage = 0;
+                    this.lvl++;
+                    this.onUpgrade();
+                    this.status = Status.WORKS;
+                }
+            }else
+            {
+            }
+        }
     }
 
-    public BuildingRequirements getBuildingRequirements()
+    public virtual BuildingRequirements getBuildingRequirements()
     {
-        return this.buildingRequirements;
+        switch (this.lvl + 1)
+        {
+            case 1:
+                return this.buildingRequirements;
+        }
+        return null;
     }
 
-    public void onCreate()
+    public virtual void onCreate()
+    {
+        this.upgradePercentage = 0;
+        this.updateEnabled = true;
+        if (true)
+        {
+            this.numberOfEmployees = 2;
+        }
+    }
+
+    public virtual void onDestroy()
     {
     }
 
-    public void onDestroy()
+    public virtual void onUpgrade()
     {
+        switch(this.lvl)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+        }
+    }
+
+    public override void onClick()
+    {
+        Debug.Log("S: " + this.status.ToString() + " - " + (int)this.upgradePercentage + "%" + ", LVL:" + this.lvl + ", PERF: " + this.currentPerformance + ", NOE: " + this.numberOfEmployees + "/:" + this.maxNumberOfEmployees);
+    }
+
+    public enum Status
+    {
+        WORKS, IS_BEING_BUILT
     }
 }

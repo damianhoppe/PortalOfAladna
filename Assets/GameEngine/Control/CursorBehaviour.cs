@@ -2,50 +2,73 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CursorBehaviour : MonoBehaviour
+public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
 {
-    [SerializeField]
+    bool canExceedGrid = false;
+    bool canEnterOnTakenPlace = true;
+
     BuilderBehaviour builderBehaviour;
-
-    IOnBuildingSelected onBuildingSelectedListener;
-    List<IOnCursorPositionChanged> onPositionChangedListeners;
-
-    Position position;
-
     GridManager gridManager;
+
+    SpriteRenderer spriteRenderer;
+    Color mainColor;
+    List<IOnCursorPositionChanged> onPositionChangedListeners;
+    Position position;
+    V3Interp positionInterpolator;
 
     void Start()
     {
+        this.builderBehaviour = FindObjectOfType<BuilderBehaviour>();
+        this.gridManager = FindObjectOfType<GridManager>();
+        this.spriteRenderer = GetComponent<SpriteRenderer>();
+        this.mainColor = spriteRenderer.color;
+
         this.onPositionChangedListeners = new List<IOnCursorPositionChanged>();
         this.position = new Position();
-        this.gridManager = FindObjectOfType<GridManager>();
+        this.positionInterpolator = new V3Interp(0.02f, this);
     }
 
     void Update()
     {
-        Position oldPosition = this.position;
-        this.position = getCursorPosition();
-        if(this.position != oldPosition)
+        if (!Input.GetMouseButton(1))
         {
-            foreach (IOnCursorPositionChanged listener in this.onPositionChangedListeners)
+            Position oldPosition = this.position;
+            this.position = getCursorPosition();
+            if (this.position != oldPosition)
             {
-                listener.onPositionChanged(this.position, oldPosition);
+                this.positionInterpolator.setValues(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.position.toVector3(this.transform.position.z));
+                this.positionInterpolator.reset();
+                foreach (IOnCursorPositionChanged listener in this.onPositionChangedListeners)
+                {
+                    listener.onPositionChanged(this.position, oldPosition);
+                }
             }
-            this.gameObject.transform.position = this.position.toVector3(0);
         }
-        if(Input.GetKeyDown("1"))
+        this.positionInterpolator.update();
+
+        if (Input.GetKeyDown("1"))
         {
-            if (this.onBuildingSelectedListener != null)
-                this.onBuildingSelectedListener.onBuildingSelected(builderBehaviour.getBuildings()[0].gameObject);
+            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[0].gameObject);
+            //this.canEnterOnTakenPlace = false;
         }
         if (Input.GetKeyDown("2"))
         {
-            if (this.onBuildingSelectedListener != null)
-                this.onBuildingSelectedListener.onBuildingSelected(builderBehaviour.getBuildings()[1].gameObject);
+            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[1].gameObject);
+            //this.canEnterOnTakenPlace = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.NONE);
+            this.canEnterOnTakenPlace = true;
+        }
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.DESTRUCTION);
+            this.canEnterOnTakenPlace = true;
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (this.builderBehaviour.allowsToClick())
+            if (this.builderBehaviour.getBuildingMode() == BuilderBehaviour.Mode.NONE)
             {
                 Structure structure = this.gridManager.getStructure(this.position.getX(), this.position.getY());
                 if (structure != null)
@@ -58,10 +81,11 @@ public class CursorBehaviour : MonoBehaviour
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Position newPosition = new Position(convert(position.x), convert(position.y));
-        if (this.gridManager.isInGrid(newPosition.getX(), newPosition.getY()))
-            return newPosition;
-        else
+        if (!this.canExceedGrid && !this.gridManager.isInGrid(newPosition.getX(), newPosition.getY()))
             return this.position;
+        if (!this.canEnterOnTakenPlace && !this.gridManager.isEmpty(newPosition.getX(), newPosition.getY()))
+            return this.position;
+        return newPosition;
     }
 
     int convert(float v)
@@ -86,11 +110,6 @@ public class CursorBehaviour : MonoBehaviour
         }
     }
 
-    public void registerOnBuildSelectedListener(IOnBuildingSelected listener)
-    {
-        this.onBuildingSelectedListener = listener;
-    }
-
     public void addOnPositionChangedListener(IOnCursorPositionChanged listener)
     {
         this.onPositionChangedListeners.Add(listener);
@@ -104,5 +123,21 @@ public class CursorBehaviour : MonoBehaviour
     public Position getPosition()
     {
         return this.position;
+    }
+
+    public void onUpdateInterpolation(Interpolator<Vector3> interpolator, Vector3 value)
+    {
+        this.transform.position = value;
+    }
+
+    public void resetColor()
+    {
+        this.spriteRenderer.color = this.mainColor;
+    }
+
+    public void setColor(Color color)
+    {
+        color.a = 0.5f;
+        this.spriteRenderer.color = color;
     }
 }

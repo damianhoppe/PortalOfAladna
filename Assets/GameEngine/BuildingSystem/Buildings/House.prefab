@@ -94,7 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cc5b2c6b022df4bbceb3eb9e89b030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: House
+  Name: House
   nearbyStructuresRequired:
   - {fileID: 5622522296184841837, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
   requiredMinimalDistance: 2
+  maxHp: 100
+  buildSpeed: 20
+  maxLvl: 0

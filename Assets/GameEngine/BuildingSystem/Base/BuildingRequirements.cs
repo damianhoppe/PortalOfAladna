@@ -7,6 +7,7 @@ public class BuildingRequirements
     List<string> nearbyStructures;
     int minDistance;
     List<Position> positionsToCheck;
+    bool initialized;
 
     Building building;
 
@@ -14,14 +15,16 @@ public class BuildingRequirements
     {
         this.nearbyStructures = new List<string>();
         this.building = building;
+        this.initialized = false;
         positionsToCheck = new List<Position>();
     }
 
     public void initDictionary(List<Structure> structures, int minDistance)
     {
-        for(int i = 0; i < structures.Count; i++)
+        this.initialized = true;
+        for (int i = 0; i < structures.Count; i++)
         {
-            nearbyStructures.Add(structures[i].GetComponent<Structure>().getName());
+            this.nearbyStructures.Add(structures[i].GetComponent<Structure>().getName());
         }
         this.minDistance = minDistance;
 
@@ -33,19 +36,12 @@ public class BuildingRequirements
             {
                 positionsToCheck.Add(new Position(x-this.minDistance, y-this.minDistance));
             }
-        }/*
-        positionsToCheck.Add(new Position(buildingPosition.getX(), buildingPosition.getY() + 1));
-        positionsToCheck.Add(new Position(buildingPosition.getX() + 1, buildingPosition.getY() + 1));
-        positionsToCheck.Add(new Position(buildingPosition.getX() + 1, buildingPosition.getY()));
-        positionsToCheck.Add(new Position(buildingPosition.getX() + 1, buildingPosition.getY() - 1));
-        positionsToCheck.Add(new Position(buildingPosition.getX(), buildingPosition.getY() - 1));
-        positionsToCheck.Add(new Position(buildingPosition.getX() - 1, buildingPosition.getY() - 1));
-        positionsToCheck.Add(new Position(buildingPosition.getX() - 1, buildingPosition.getY()));
-        positionsToCheck.Add(new Position(buildingPosition.getX() - 1, buildingPosition.getY() + 1));*/
+        }
     }
 
     public bool areMet(GridManager gridManager)
     {
+        if (!initialized) return false;
         if (isStructureNear(gridManager)) return true;
         return false;
     }
@@ -54,15 +50,22 @@ public class BuildingRequirements
     {
         if (this.positionsToCheck.Count == 0) return true;
         Position buildingPosition = this.building.getPosition();
-        foreach(Position pos in positionsToCheck)
+        foreach (Position pos in positionsToCheck)
         {
             Structure structure = gridManager.getStructure(buildingPosition.getX() + pos.getX(), buildingPosition.getY() + pos.getY());
             if (structure != null)
             {
                 if (this.nearbyStructures.Contains(structure.getName()))
+                {
                     return true;
+                }
             }
         }
         return false;
+    }
+
+    public int getMinDistance()
+    {
+        return this.minDistance;
     }
 }

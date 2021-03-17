@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Position
 {
-    int x;
-    int y;
+    public int x;
+    public int y;
 
     public Position() : this(0,0) { }
     public Position(Position position) : this(position.x, position.y) { }
