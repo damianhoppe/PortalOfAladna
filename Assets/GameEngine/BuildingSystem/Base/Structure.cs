@@ -41,4 +41,9 @@ public class Structure : MonoBehaviour, IStructure
     {
         Debug.Log(this.Name + " - onClick()");
     }
+
+    public EStructureType getType()
+    {
+        return this.type;
+    }
 }
