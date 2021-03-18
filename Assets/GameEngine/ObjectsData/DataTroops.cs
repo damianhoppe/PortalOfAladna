@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TroopTypes : MonoBehaviour
+public class DataTroops : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -15,6 +15,47 @@ public class TroopTypes : MonoBehaviour
     {
 
     }
+    public class DefaultTroop : DataSpecialObjects.DefaultObject
+    {
+        public new string ObjectName { get; protected set; } = "Default Troop";
+        public new string ObjectDescription { get; protected set; } = "Default Troop Description";
+        public new string ObjectType { get; protected set; } = "Troop";
+        public new int ObjectTypeID { get; protected set; } = 6;
+
+        public new bool IsFriendly { get; protected set; } = true;
+        public new bool CanSelect { get; protected set; } = true;
+        public new bool IsAlive { get; protected set; } = true;
+        public new bool CanDie { get; protected set; } = true;
+
+        public bool CanBuild { get; protected set; } = false;
+        public bool CanUpgrade { get; protected set; } = false;
+        public bool CanRepair { get; protected set; } = false;
+        public bool CanSell { get; protected set; } = false;
+
+        public bool CanSpawn { get; protected set; } = false;
+        public bool CanDespawn { get; protected set; } = false;
+
+        public bool HasEnergy { get; protected set; } = false;
+        public bool HasAbilities { get; protected set; } = false;
+        public bool HasHealth { get; protected set; } = true;
+
+        public double MaxHitpoints { get; protected set; } = 100.0;
+        public double CurrentHitpoints { get; protected set; }
+        public double Armor { get; protected set; } = 0.0;
+        public double Protection { get; protected set; } = 0.0;
+
+
+        public override bool OnSelect()
+        {
+            return base.OnSelect();
+        }
+        public override bool OnDeath()
+        {
+            return base.OnDeath();
+        }
+    }
+
+    /*
     public class Cost
     {
         private int Gold { get; set; }
@@ -176,5 +217,6 @@ public class TroopTypes : MonoBehaviour
     public class Scout : Default
     {
 
-    }
+    }*/
+
 }
