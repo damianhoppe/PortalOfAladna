@@ -36,10 +36,10 @@ public class DataBuildings : MonoBehaviour
         public bool HasAbilities { get; protected set; } = false;
         public bool HasHealth { get; protected set; } = true;
 
-        public double MaxHitpoints { get; protected set; } = 100.0;
-        public double CurrentHitpoints { get; protected set; }
-        public double Armor { get; protected set; } = 0.0;
-        public double Protection { get; protected set; } = 0.0;
+        public float MaxHitpoints { get; protected set; } = 100.0f;
+        public float CurrentHitpoints { get; protected set; }
+        public float Armor { get; protected set; } = 0.0f;
+        public float Protection { get; protected set; } = 0.0f;
 
         public override bool OnSelect()
         {
