@@ -44,6 +44,7 @@ public class DataTroops : MonoBehaviour
         public float Armor { get; protected set; } = 0.0f;
         public float Protection { get; protected set; } = 0.0f;
 
+        //public Point SpawnPoint { get; protected set; } = new Point();
 
         public override bool OnSelect()
         {
