@@ -9,14 +9,15 @@ public class EnemyController : MonoBehaviour
 {
     // Start is called before the first frame update
     AIPath ai;
-    GameObject portal;
-    AIDestinationSetter destination;
     [SerializeField]
     GameObject[] Targets;
+    List<GameObject> TargetsLocations = new List<GameObject>();
     void Start()
     {
-        destination = GetComponent<AIDestinationSetter>();
-        portal = GameObject.FindWithTag("Portal");
+        foreach(var Target in Targets)
+        {
+            TargetsLocations.Add(GameObject.Find(Target.name));
+        }
         ai = this.GetComponent<AIPath>();
         ai.canMove = false;
     }
@@ -27,28 +28,33 @@ public class EnemyController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             ai.canMove = true;
-            destination.target = TargetSelection(Targets);
             DayNightController.ScanPathfinding();
         }
     }
-
-    Transform TargetSelection(GameObject[] Targets)
+    private void LateUpdate()
+    {
+        if (TargetsLocations.Count() != 0 || TargetsLocations != null)
+        {
+            TargetSelection(TargetsLocations);
+        }
+    }
+    void TargetSelection(List<GameObject> Targets)
     {
 
-        /*List<float> aggro = new List<float>();
+        List<float> aggro = new List<float>();
         
         int min=0;
-        for (int i=0;i<Targets.Length;i++)
+        for (int i=0;i<Targets.Count();i++)
         {
-            destination.target = TargetSelection(Targets);
+            GetComponent<AIPath>().destination = Targets[i].transform.position;
             aggro.Add(ai.remainingDistance - Targets[i].GetComponent<Building>().Danger);
-            Debug.Log("Danger: " + Targets[i].GetComponent<Building>().Danger);
+            Debug.Log("Danger: " + Targets[i].GetComponent<Building>().Danger+" Target: "+Targets[i].name);
             min = Array.IndexOf(aggro.ToArray(),aggro.Min());
             
         }
-
-                return Targets[min].transform;*/
-        ;
-        return GameObject.Find(Targets[0].name).transform;
+        Debug.Log(Targets[min].transform.position);
+        GetComponent<AIPath>().destination = Targets[min].transform.position;
+        
+       // return GameObject.Find(Targets[0].name).transform;
     }
 }
