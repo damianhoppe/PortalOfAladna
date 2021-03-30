@@ -12,6 +12,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     GameObject[] Targets;
     List<GameObject> TargetsLocations = new List<GameObject>();
+    Rigidbody2D rb2D;
+    float speed;
+    float time = 0;
     void Start()
     {
         foreach(var Target in Targets)
@@ -20,6 +23,7 @@ public class EnemyController : MonoBehaviour
         }
         ai = this.GetComponent<AIPath>();
         ai.canMove = false;
+        rb2D = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -30,7 +34,9 @@ public class EnemyController : MonoBehaviour
             ai.canMove = true;
             DayNightController.ScanPathfinding();
         }
+
     }
+
     private void LateUpdate()
     {
         if (TargetsLocations.Count() != 0 || TargetsLocations != null)
@@ -55,6 +61,5 @@ public class EnemyController : MonoBehaviour
         Debug.Log(Targets[min].transform.position);
         GetComponent<AIPath>().destination = Targets[min].transform.position;
         
-       // return GameObject.Find(Targets[0].name).transform;
     }
 }

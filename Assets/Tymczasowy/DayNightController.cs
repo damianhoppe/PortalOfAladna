@@ -15,6 +15,9 @@ public class DayNightController : MonoBehaviour
     {
         
     }
+    private void LateUpdate()
+    {
+    }
 
     public void UpdatePathfinding()
     {

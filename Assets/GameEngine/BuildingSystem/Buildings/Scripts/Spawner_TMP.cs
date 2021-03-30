@@ -10,7 +10,6 @@ public class Spawner_TMP : Building
     protected override void Start()
     {
         base.Start();
-
     }
 
     protected override void Update()

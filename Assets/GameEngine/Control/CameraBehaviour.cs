@@ -32,7 +32,7 @@ public class CameraBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         zoom -= Input.mouseScrollDelta.y * zoomSpeed;
         if(zoom < minZoom)
