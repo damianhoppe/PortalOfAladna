@@ -34,6 +34,42 @@ public class DataStructures : MonoBehaviour
             this.Crystals = C;
             this.Humans = H;
         }
+
+        public static Cost operator +(Cost a, Cost b)
+        {
+            return new Cost(
+                a.Gold + b.Gold,
+                a.Wood+b.Wood,
+                a.Stone+b.Stone,
+                a.Metal+b.Metal,
+                a.Crystals+b.Crystals,
+                a.Humans+b.Humans
+                );
+        }
+        public static Cost operator -(Cost a, Cost b)
+        {
+            return new Cost(
+                a.Gold - b.Gold,
+                a.Wood - b.Wood,
+                a.Stone - b.Stone,
+                a.Metal - b.Metal,
+                a.Crystals - b.Crystals,
+                a.Humans - b.Humans
+                );
+        }
+        public static Cost operator *(Cost a,float f)
+        {
+
+            return new Cost(
+                a.Gold * f,
+                a.Wood * f,
+                a.Stone * f,
+                a.Metal * f,
+                a.Crystals * f,
+                a.Humans*f
+                );
+        }
+
         public void RoundUpAll()
         {
             this.Gold = Mathf.Ceil(this.Gold);
