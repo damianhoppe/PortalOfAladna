@@ -13,21 +13,22 @@ public class Building : Structure, IBuilding
     [SerializeField]
     int maxLvl;
 
-    public int Danger; //test
+    int lvl;
     bool updateEnabled;
+    float upgradePercentage;
+
+    public int Danger; //test
     int numberOfEmployees;
     int maxNumberOfEmployees;
-    int lvl;
     float currentPerformance;
-    float upgradePercentage;
 
     Status status;
     BuildingRequirements buildingRequirements;
+    BuildingStatusBehaviour buildingStatus;
 
     public Building() : base(EStructureType.Building)
     {
         this.lvl = 0;
-        this.maxNumberOfEmployees = 5;
         this.status = Status.IS_BEING_BUILT;
         this.buildingRequirements = new BuildingRequirements(this);
     }
@@ -42,44 +43,53 @@ public class Building : Structure, IBuilding
     {
         if(this.updateEnabled)
         {
-            this.currentPerformance = (float)this.numberOfEmployees / this.maxNumberOfEmployees;
-            if (this.status == Status.IS_BEING_BUILT)
+            this.update();
+        }
+    }
+
+    protected virtual void update()
+    {
+        this.currentPerformance = 1;
+        if (this.status == Status.IS_BEING_BUILT)
+        {
+            Color color = this.spriteRenderer.color;
+            this.upgradePercentage += this.currentPerformance * buildSpeed * Time.deltaTime;
+            color.a = this.upgradePercentage / 100;
+            this.spriteRenderer.color = color;
+            if (this.upgradePercentage >= 100)
             {
-                Color color = this.spriteRenderer.color;
-                this.upgradePercentage += this.currentPerformance * buildSpeed * Time.deltaTime;
-                color.a = this.upgradePercentage / 100;
-                this.spriteRenderer.color = color;
-                if (this.upgradePercentage >= 100)
-                {
-                    this.upgradePercentage = 0;
-                    this.lvl++;
-                    this.onUpgrade();
-                    this.status = Status.WORKS;
-                }
-            }else
-            {
+                this.upgradePercentage = 0;
+                this.lvl++;
+                this.onUpgrade();
+                this.status = Status.WORKS;
             }
+        }
+        else
+        {
         }
     }
 
     public virtual BuildingRequirements getBuildingRequirements()
     {
-        switch (this.lvl + 1)
+        return this.buildingRequirements;
+    }
+
+    public void getCosts()
+    {
+        switch(this.lvl + 1)
         {
             case 1:
-                return this.buildingRequirements;
+                return;
+            case 2:
+                return;
         }
-        return null;
+        return;
     }
 
     public virtual void onCreate()
     {
         this.upgradePercentage = 0;
         this.updateEnabled = true;
-        if (true)
-        {
-            this.numberOfEmployees = 2;
-        }
     }
 
     public virtual void onDestroy()
@@ -104,6 +114,6 @@ public class Building : Structure, IBuilding
 
     public enum Status
     {
-        WORKS, IS_BEING_BUILT
+        IS_BEING_BUILT, WORKS
     }
 }

@@ -7,9 +7,13 @@ public class CameraBehaviour : MonoBehaviour
     [SerializeField]
     bool dragAndDrop = true;
     [SerializeField]
+    bool keyboardMovement = true;
+    [SerializeField]
     int moveActivationLimit = 100;
     [SerializeField]
     float moveSpeed = 20;
+    [SerializeField]
+    float keyboardMoveSpeed = 20;
     [SerializeField]
     float zoomSpeed = 1;
     [SerializeField]
@@ -56,6 +60,28 @@ public class CameraBehaviour : MonoBehaviour
             if (Input.GetMouseButton(1))
             {
                 moveVector = new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y"), 0);
+                moveVector *= this.moveSpeed;
+            }
+            else if (this.keyboardMovement)
+            {
+                moveVector = new Vector3();
+                if(Input.GetKey(KeyCode.A))
+                {
+                    moveVector.x -= 0.1f;
+                }
+                if(Input.GetKey(KeyCode.D))
+                {
+                    moveVector.x += 0.1f;
+                }
+                if (Input.GetKey(KeyCode.W))
+                {
+                    moveVector.y += 0.1f;
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    moveVector.y -= 0.1f;
+                }
+                moveVector *= keyboardMoveSpeed;
             }
         }
         else
@@ -83,13 +109,20 @@ public class CameraBehaviour : MonoBehaviour
     void moveCamera(Vector3 moveVector)
     {
         Vector3 newPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        
         if (dragAndDrop)
-            newPos += moveVector * moveSpeed * zoom * 0.02f;
-        else
+        {
+            newPos += moveVector * zoom * 0.002f;
+        } else
+        {
             newPos += moveVector * moveSpeed * zoom * Time.deltaTime;
+        }
         newPos.x = Mathf.Clamp(newPos.x, -gridManager.getWidth()/2, gridManager.getWidth()/2);
         newPos.y = Mathf.Clamp(newPos.y, -gridManager.getWidth()/2, gridManager.getWidth()/2);
         transform.position = newPos;
+    }
+
+    public float getCameraZoom()
+    {
+        return this.zoom;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
 {
+    [SerializeField]
+    float defaultAlpha = 0.5f;
     bool canExceedGrid = false;
     bool canEnterOnTakenPlace = true;
 
@@ -21,7 +23,8 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
         this.builderBehaviour = FindObjectOfType<BuilderBehaviour>();
         this.gridManager = FindObjectOfType<GridManager>();
         this.spriteRenderer = GetComponent<SpriteRenderer>();
-        this.mainColor = spriteRenderer.color;
+        this.mainColor = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, this.defaultAlpha);
+        this.spriteRenderer.color = this.mainColor;
 
         this.onPositionChangedListeners = new List<IOnCursorPositionChanged>();
         this.position = new Position();
@@ -147,7 +150,7 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
 
     public void setColor(Color color)
     {
-        color.a = 0.5f;
+        color.a = this.defaultAlpha;
         this.spriteRenderer.color = color;
     }
 }

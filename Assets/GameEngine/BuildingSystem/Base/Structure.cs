@@ -37,6 +37,7 @@ public class Structure : MonoBehaviour, IStructure
     {
         this.position = position;
     }
+
     public virtual void onClick()
     {
         Debug.Log(this.Name + " - onClick()");
