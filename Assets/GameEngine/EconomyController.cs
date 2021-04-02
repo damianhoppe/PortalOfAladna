@@ -7,7 +7,7 @@ public class EconomyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //this.PlayerResources = LOAD POSIADANE SUROWCE xD
     }
 
     // Update is called once per frame
@@ -15,8 +15,8 @@ public class EconomyController : MonoBehaviour
     {
         
     }
-    
-    public DataStructures.Cost PlayerResources = new DataStructures.Cost();
+
+    public DataStructures.Cost PlayerResources { get; protected set; }// = new DataStructures.Cost();
 
     public bool CanAffordTEST(DataStructures.Cost koszt)
     {
@@ -25,14 +25,19 @@ public class EconomyController : MonoBehaviour
     }
     public bool CanAfford(DataStructures.Cost koszt)
     {
-        if (koszt <= PlayerResources) return true;
-        else return false;
+        if (koszt.Gold > PlayerResources.Gold) return false;
+        else if (koszt.Wood > PlayerResources.Wood) return false;
+        else if (koszt.Stone > PlayerResources.Stone) return false;
+        else if (koszt.Metal > PlayerResources.Metal) return false;
+        else if (koszt.Crystals > PlayerResources.Crystals) return false;
+        else if (koszt.Humans > PlayerResources.Humans) return false;
+        else return true;
     }
     public void ResourcesSpent(DataStructures.Cost koszt)
     {
         PlayerResources -= koszt;
     }
-    public void ResourcesGained (DataStructure.Cost zysk)
+    public void ResourcesGained (DataStructures.Cost zysk)
     {
         PlayerResources -= zysk;
     }

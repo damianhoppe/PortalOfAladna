@@ -68,7 +68,7 @@ public class DataStructures : MonoBehaviour
                 a.Crystals * f,
                 a.Humans*f
                 );
-        }
+        }/*
         public static Cost operator <=(Cost a, Cost b)
         {
             if (a.Gold > b.Gold) return false;
@@ -88,7 +88,9 @@ public class DataStructures : MonoBehaviour
             else if (a.Crystals < b.Crystals) return false;
             else if (a.Humans < b.Humans) return false;
             else return true;
-        }
+        }*/
+        
+
         public void RoundUpAll()
         {
             this.Gold = Mathf.Ceil(this.Gold);
