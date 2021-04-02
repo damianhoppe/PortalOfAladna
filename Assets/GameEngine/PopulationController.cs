@@ -32,4 +32,9 @@ public class PopulationController : MonoBehaviour
         this.BusyPopulation -= Casualities;
         this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
     }
+    public void FireHumans(int Workers)
+    {
+        this.BusyPopulation -= Workers;
+        this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
+    }
 }

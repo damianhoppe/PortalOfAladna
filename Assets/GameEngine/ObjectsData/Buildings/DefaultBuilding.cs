@@ -125,6 +125,8 @@ public class DefaultBuilding : Building
             //base.OnSell();
             EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
             EC.ResourcesGained(this.TotalCost * this.RefundRate);
+            PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
+            PC.FireHumans(this.RequiredHumans);
             return true;
         }
         else return false;
@@ -173,7 +175,7 @@ public class DefaultBuilding : Building
             if (this.ActiveAtNight)
             {
                 PopulationController PC= GameObject.Find("PopulationController").GetComponent<PopulationController>();
-                PC.KillHumans(RequiredHumans);
+                PC.KillHumans(this.RequiredHumans);
             }
             //zabij budynek itp.
 
