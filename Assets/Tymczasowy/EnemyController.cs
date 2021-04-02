@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
             TargetsLocations.Add(GameObject.Find(Target.name));
         }
         ai = this.GetComponent<AIPath>();
-        ai.canMove = false;
+        //ai.canMove = false;
         rb2D = GetComponent<Rigidbody2D>();
     }
 

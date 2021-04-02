@@ -15,13 +15,13 @@ public class Spawner_TMP : Building
     protected override void Update()
     {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.K))
+
+    }
+    public void Spawn() {
+        foreach (var enemy in enemyArray)
         {
-            foreach(var enemy in enemyArray){
-                Instantiate(enemy).transform.position = this.transform.position;
-            }
+            Instantiate(enemy).transform.position = this.transform.position;
         }
     }
-
 
 }
