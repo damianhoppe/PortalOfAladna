@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeController : MonoBehaviour
+public class UpgadeController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

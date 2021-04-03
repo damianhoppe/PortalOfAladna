@@ -22,7 +22,7 @@ public class Lookout : DefaultBuilding
     public override int ObjectTypeID { get; protected set; } = 1;
     public override string ObjectSubtype { get; protected set; } = "Default Lookout";
     public override int ObjectSubtypeID { get; protected set; } = 2;
-    
+
     public override bool IsMilitary { get; protected set; } = true;
     public override bool IsCivilian { get; protected set; } = false;
 
@@ -41,14 +41,14 @@ public class Lookout : DefaultBuilding
     public override float EnergyToBuild { get; protected set; } = 10.0f;
     public override int RequiredHumans { get; protected set; } = 5;
 
-    public override bool onCreate()
+    public override bool OnBuild()
     {
 
-        return base.onCreate();
+        return base.OnBuild();
     }
-    public override bool onDestroy()
+    public override bool OnDeath()
     {
 
-        return base.onDestroy();
+        return base.OnDeath();
     }
 }
