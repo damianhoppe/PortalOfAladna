@@ -36,7 +36,6 @@ public class BuildingStatusBehaviour : MonoBehaviour
             this.canvas.SetActive(false);
             return;
         }
-        Debug.Log(status);
         if (this.status != status)
         {
             this.status = status;
@@ -52,7 +51,6 @@ public class BuildingStatusBehaviour : MonoBehaviour
 
     public void updateImage()
     {
-        Debug.Log(this.status.ToString());
         switch(this.status)
         {
             case Status.LACK_OF_REQUIRED_BUILDING:
