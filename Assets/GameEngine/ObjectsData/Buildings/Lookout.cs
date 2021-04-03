@@ -26,14 +26,29 @@ public class Lookout : DefaultBuilding
     public override bool IsMilitary { get; protected set; } = true;
     public override bool IsCivilian { get; protected set; } = false;
 
+    public override float Armor { get; protected set; } = 1.0f;
+    public override float Protection { get; protected set; } = 5.0f;
+
     public override float MaxHitpoints { get; protected set; } = 100.0f;
     public override float SightRange { get; protected set; } = 5.0f;
     public override bool ActiveAtNight { get; protected set; } = true;
-
-    public override float EnergyToBuild { get; protected set; } = 10.0f;
 
     public override float PositionValue { get; protected set; } = 1.0f;
     public override float PositionObstacle { get; protected set; } = 1.0f;
     public override float PositionDanger { get; protected set; } = 2.5f;
 
+    public override DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(50.0f, 15.0f, 5.0f, 0.0f, 0.0f, 0.0f);
+    public override float EnergyToBuild { get; protected set; } = 10.0f;
+    public override int RequiredHumans { get; protected set; } = 5;
+
+    public override bool OnBuild()
+    {
+
+        return base.OnBuild();
+    }
+    public override bool OnDeath()
+    {
+
+        return base.OnDeath();
+    }
 }

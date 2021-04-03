@@ -24,12 +24,28 @@ public class SmallBank : DefaultBuilding
     public override int ObjectSubtypeID { get; protected set; } = 3;
 
     public override float MaxHitpoints { get; protected set; } = 200.0f;
-    public override DataStructures.Cost BuildingStorage { get; protected set; } = new DataStructures.Cost(200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    public override DataStructures.Cost BuildingStorage { get; protected set; } = new DataStructures.Cost(500.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
-    public override float EnergyToBuild { get; protected set; } = 20.0f;
+    public override float Armor { get; protected set; } = 1.0f;
+    public override float Protection { get; protected set; } = 10.0f;
 
     public override float PositionValue { get; protected set; } = 4.0f;
     public override float PositionObstacle { get; protected set; } = 2.0f;
 
-    
+    public override DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(150.0f, 20.0f, 10.0f, 0.0f, 0.0f, 0.0f);
+    public override float EnergyToBuild { get; protected set; } = 20.0f;
+    public override int RequiredHumans { get; protected set; } = 10;
+
+    public override bool OnBuild()
+    {
+        EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+        EC.StorageIncrease(this.BuildingStorage);
+        return base.OnBuild();
+    }
+    public override bool OnDeath()
+    {
+        EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+        EC.StorageDecrease(this.BuildingStorage);
+        return base.OnDeath();
+    }
 }

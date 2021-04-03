@@ -26,9 +26,24 @@ public class SmallHouse : DefaultBuilding
     public override float MaxHitpoints { get; protected set; } = 50.0f;
     public override bool ActiveAtNight { get; protected set; } = true;
 
-    public override float EnergyToBuild { get; protected set; } = 10.0f;
-
     public override float PositionValue { get; protected set; } = 2.0f;
     public override float PositionObstacle { get; protected set; } = 1.0f;
 
+    public override DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(50.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    public override float EnergyToBuild { get; protected set; } = 10.0f;
+
+    public virtual int LivingSpace { get; protected set; } = 5;
+
+    public override bool OnBuild()
+    {
+        PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
+        PC.IncreasePopulation(this.LivingSpace);
+        return base.OnBuild();
+    }
+    public override bool OnDeath()
+    {
+        PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
+        PC.DecreasePopulation(this.LivingSpace);
+        return base.OnDeath();
+    }
 }

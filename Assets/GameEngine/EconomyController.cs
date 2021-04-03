@@ -17,7 +17,7 @@ public class EconomyController : MonoBehaviour
     }
 
     public DataStructures.Cost PlayerResources { get; protected set; }// = new DataStructures.Cost();
-
+    public DataStructures.Cost TotalStorage { get; protected set; } = new DataStructures.Cost(500.0f, 50.0f, 50.0f, 50.0f, 50.0f, 0.0f);
     public bool CanAffordTEST(DataStructures.Cost koszt)
     {
         
@@ -35,10 +35,18 @@ public class EconomyController : MonoBehaviour
     }
     public void ResourcesSpent(DataStructures.Cost koszt)
     {
-        PlayerResources -= koszt;
+        this.PlayerResources -= koszt;
     }
     public void ResourcesGained (DataStructures.Cost zysk)
     {
-        PlayerResources -= zysk;
+        this.PlayerResources -= zysk;
+    }
+    public void StorageIncrease(DataStructures.Cost storage)
+    {
+        this.TotalStorage += storage;
+    }
+    public void StorageDecrease(DataStructures.Cost storage)
+    {
+        this.TotalStorage -= storage;
     }
 }
