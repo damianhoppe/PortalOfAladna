@@ -15,7 +15,8 @@ public class SmallBank : DefaultBuilding
     {
         base.Update();
     }
-
+    
+    /*
     public override string ObjectName { get; protected set; } = "Small Bank";
     public override string ObjectDescription { get; protected set; } = "This is bank. You can store gold here.";
     public override string ObjectType { get; protected set; } = "Building";
@@ -35,7 +36,7 @@ public class SmallBank : DefaultBuilding
     public override DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(150.0f, 20.0f, 10.0f, 0.0f, 0.0f, 0.0f);
     public override float EnergyToBuild { get; protected set; } = 20.0f;
     public override int RequiredHumans { get; protected set; } = 10;
-
+    */
     public override bool onCreate()
     {
         //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
