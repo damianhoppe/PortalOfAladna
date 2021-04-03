@@ -36,16 +36,16 @@ public class SmallBank : DefaultBuilding
     public override float EnergyToBuild { get; protected set; } = 20.0f;
     public override int RequiredHumans { get; protected set; } = 10;
 
-    public override bool OnBuild()
+    public override bool onCreate()
     {
-        EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+        //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
         EC.StorageIncrease(this.BuildingStorage);
-        return base.OnBuild();
+        return base.onCreate();
     }
-    public override bool OnDeath()
+    public override bool onDestroy()
     {
-        EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+        //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
         EC.StorageDecrease(this.BuildingStorage);
-        return base.OnDeath();
+        return base.onDestroy();
     }
 }

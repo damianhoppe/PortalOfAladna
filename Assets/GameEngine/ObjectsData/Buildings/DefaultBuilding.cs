@@ -6,12 +6,20 @@ public class DefaultBuilding : Building
 {
     // Start is called before the first frame update
 
+    public virtual UpgradeController UC { get; protected set; }
+    public virtual EconomyController EC { get; protected set; }
+    public virtual PopulationController PC { get; protected set; }
+    public virtual DayNightController DNC { get; protected set; }
 
     protected override void Start()
     {
         base.Start();
+        UpgradeController UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
+        EconomyController EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        PopulationController PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
+        DayNightController DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
-        
+
         this.CurrentHitpoints = this.MaxHitpoints;
         //czy zmiana TotalCost zmieni BaseCost?
         this.TotalCost = this.BaseCost;
@@ -78,11 +86,11 @@ public class DefaultBuilding : Building
     public virtual DataStructures.Cost BuildingStorage { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     public virtual DataStructures.Cost ResourcesInside { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
-    public virtual bool OnBuild()
+    public virtual bool onCreate()
     {
         if (this.CanBuild)
         {
-            //base.OnBuild();
+            base.onCreate();
             //
             return true;
         }
@@ -94,7 +102,7 @@ public class DefaultBuilding : Building
         if (this.CanUpgrade)
         {
             //base.OnUpgrade();
-            EconomyController EC =GameObject.Find("EconomyController").GetComponent<EconomyController>();
+            //EconomyController EC =GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.UpgradeCost))
             {
                 EC.ResourcesSpent(this.UpgradeCost);
@@ -112,7 +120,7 @@ public class DefaultBuilding : Building
         if (this.CanRepair)
         {
             //base.OnRepair();
-            EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+            //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.RepairCost))
             {
                 EC.ResourcesSpent(this.RepairCost);
@@ -129,10 +137,11 @@ public class DefaultBuilding : Building
         if (this.CanSell)
         {
             //base.OnSell();
-            EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+            //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
             EC.ResourcesGained(this.TotalCost * this.RefundRate);
-            PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
+            //PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
             PC.FireHumans(this.RequiredHumans);
+            base.onDestroy();
             return true;
         }
         else return false;
@@ -150,7 +159,7 @@ public class DefaultBuilding : Building
             float DMG = (Damage - this.Armor) * (1.0f - this.Protection / 100.0f);
             if (DMG <= 0.0f) DMG=0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) OnDeath();
+            if (this.CurrentHitpoints <= 0.0f) onDestroy();
             else
             {
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints));
@@ -162,7 +171,7 @@ public class DefaultBuilding : Building
             float DMG = Damage * (1.0f - this.Protection / 100.0f) - this.Armor;
             if (DMG <= 0.0f) DMG = 0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) OnDeath();
+            if (this.CurrentHitpoints <= 0.0f) onDestroy();
             else 
             { 
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints)); 
@@ -171,20 +180,20 @@ public class DefaultBuilding : Building
         }
         return false;
     }
-    public virtual bool OnDeath()
+    public virtual bool onDestroy()
     {
-        //return base.OnDeath();
+        
         if (this.CanDie)
         {
             this.IsAlive = false;
             this.IsDead = true;
             if (this.ActiveAtNight)
             {
-                PopulationController PC= GameObject.Find("PopulationController").GetComponent<PopulationController>();
+                //PopulationController PC= GameObject.Find("PopulationController").GetComponent<PopulationController>();
                 PC.KillHumans(this.RequiredHumans);
             }
             //zabij budynek itp.
-
+            base.onDestroy();
             return true;
         }
         else return false; 
