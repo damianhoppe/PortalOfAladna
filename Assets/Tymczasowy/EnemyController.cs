@@ -13,8 +13,6 @@ public class EnemyController : MonoBehaviour
     GameObject[] Targets;
     List<GameObject> TargetsLocations = new List<GameObject>();
     Rigidbody2D rb2D;
-    float speed;
-    float time = 0;
     void Start()
     {
         foreach(var Target in Targets)
