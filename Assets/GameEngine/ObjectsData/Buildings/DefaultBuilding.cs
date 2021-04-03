@@ -6,13 +6,23 @@ public class DefaultBuilding : Building
 {
     // Start is called before the first frame update
 
+    public virtual UpgradeController UC { get; protected set; }
+    public virtual EconomyController EC { get; protected set; }
+    public virtual PopulationController PC { get; protected set; }
+    public virtual DayNightController DNC { get; protected set; }
 
     protected override void Start()
     {
         base.Start();
         //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
-        
+
+        UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
+        EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
+        DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
+
         this.CurrentHitpoints = this.MaxHitpoints;
+
         //czy zmiana TotalCost zmieni BaseCost?
         this.TotalCost = this.BaseCost;
         this.UpgradeCost = this.TotalCost * UpgradeRate;
@@ -94,7 +104,7 @@ public class DefaultBuilding : Building
         if (this.CanUpgrade)
         {
             //base.OnUpgrade();
-            EconomyController EC =GameObject.Find("EconomyController").GetComponent<EconomyController>();
+            //EconomyController EC =GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.UpgradeCost))
             {
                 EC.ResourcesSpent(this.UpgradeCost);
@@ -112,7 +122,7 @@ public class DefaultBuilding : Building
         if (this.CanRepair)
         {
             //base.OnRepair();
-            EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+            //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.RepairCost))
             {
                 EC.ResourcesSpent(this.RepairCost);
@@ -129,9 +139,9 @@ public class DefaultBuilding : Building
         if (this.CanSell)
         {
             //base.OnSell();
-            EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
+            //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
             EC.ResourcesGained(this.TotalCost * this.RefundRate);
-            PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
+            //PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
             PC.FireHumans(this.RequiredHumans);
             return true;
         }
@@ -180,7 +190,7 @@ public class DefaultBuilding : Building
             this.IsDead = true;
             if (this.ActiveAtNight)
             {
-                PopulationController PC= GameObject.Find("PopulationController").GetComponent<PopulationController>();
+                //PopulationController PC= GameObject.Find("PopulationController").GetComponent<PopulationController>();
                 PC.KillHumans(this.RequiredHumans);
             }
             //zabij budynek itp.
