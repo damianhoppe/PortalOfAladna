@@ -12,7 +12,7 @@ public class PathfinderGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gm = GameObject.Find("GridManager");
+        gm = GameObject.Find("BuildingSystem");
         // This holds all graph data
         data = AstarPath.active.data;
         gg = AstarPath.active.data.gridGraph;
