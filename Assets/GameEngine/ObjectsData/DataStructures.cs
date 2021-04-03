@@ -68,29 +68,17 @@ public class DataStructures : MonoBehaviour
                 a.Crystals * f,
                 a.Humans*f
                 );
-        }/*
-        public static Cost operator <=(Cost a, Cost b)
+        }
+        public static bool IsGreater(Cost a, Cost b)
         {
-            if (a.Gold > b.Gold) return false;
-            else if (a.Wood > b.Wood) return false;
-            else if (a.Stone > b.Stone) return false;
-            else if (a.Metal > b.Metal) return false;
-            else if (a.Crystals > b.Crystals) return false;
-            else if (a.Humans > b.Humans) return false;
+            if (a.Gold < b.Gold || a.Wood < b.Wood || a.Stone < b.Stone || a.Metal < b.Metal || a.Crystals < b.Crystals) return false;
             else return true;
         }
-        public static Cost operator >=(Cost a, Cost b)
+        public static bool IsLesser(Cost a, Cost b)
         {
-            if (a.Gold < b.Gold) return false;
-            else if (a.Wood < b.Wood) return false;
-            else if (a.Stone < b.Stone) return false;
-            else if (a.Metal < b.Metal) return false;
-            else if (a.Crystals < b.Crystals) return false;
-            else if (a.Humans < b.Humans) return false;
+            if (a.Gold > b.Gold || a.Wood > b.Wood || a.Stone > b.Stone || a.Metal > b.Metal || a.Crystals > b.Crystals) return false;
             else return true;
-        }*/
-        
-
+        }
         public void RoundUpAll()
         {
             this.Gold = Mathf.Ceil(this.Gold);
