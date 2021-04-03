@@ -88,11 +88,11 @@ public class DefaultBuilding : Building
     public virtual DataStructures.Cost BuildingStorage { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     public virtual DataStructures.Cost ResourcesInside { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
-    public virtual bool OnBuild()
+    public virtual bool onCreate()
     {
         if (this.CanBuild)
         {
-            //base.OnBuild();
+            base.onCreate();
             //
             return true;
         }
@@ -153,6 +153,7 @@ public class DefaultBuilding : Building
         if (this.CanSelect) return true;
         else return false;
     }
+    
     public virtual bool OnHit(float Damage)
     {
         if (this.IsMilitary)
@@ -160,7 +161,7 @@ public class DefaultBuilding : Building
             float DMG = (Damage - this.Armor) * (1.0f - this.Protection / 100.0f);
             if (DMG <= 0.0f) DMG=0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) OnDeath();
+            if (this.CurrentHitpoints <= 0.0f) onDestroy();
             else
             {
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints));
@@ -172,7 +173,7 @@ public class DefaultBuilding : Building
             float DMG = Damage * (1.0f - this.Protection / 100.0f) - this.Armor;
             if (DMG <= 0.0f) DMG = 0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) OnDeath();
+            if (this.CurrentHitpoints <= 0.0f) onDestroy();
             else 
             { 
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints)); 
@@ -181,7 +182,7 @@ public class DefaultBuilding : Building
         }
         return false;
     }
-    public virtual bool OnDeath()
+    public virtual bool onDestroy()
     {
         //return base.OnDeath();
         if (this.CanDie)
