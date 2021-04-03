@@ -15,7 +15,34 @@ public class Lookout : DefaultBuilding
     {
         base.Update();
     }
+    public Lookout()
+    {
+        this.ObjectName = "Lookout";
+        this.ObjectDescription = "This is a lookout, with high view range.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Lookout";
+        this.ObjectSubtypeID = 2;
 
+        this.IsMilitary = true;
+        this.IsCivilian = false;
+
+        this.Armor = 1.0f;
+        this.Protection = 5.0f;
+
+        this.MaxHitpoints = 100.0f;
+        this.SightRange = 5.0f;
+        this.ActiveAtNight = true;
+
+        this.PositionValue = 1.0f;
+        this.PositionObstacle = 1.0f;
+        this.PositionDanger = 2.5f;
+
+        this.BaseCost = new DataStructures.Cost(50.0f, 15.0f, 5.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 10.0f;
+        this.RequiredHumans = 5;
+    }
+    /*
     public override string ObjectName { get; protected set; } = "Lookout";
     public override string ObjectDescription { get; protected set; } = "This is a lookout, with high view range.";
     public override string ObjectType { get; protected set; } = "Building";
@@ -40,7 +67,7 @@ public class Lookout : DefaultBuilding
     public override DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(50.0f, 15.0f, 5.0f, 0.0f, 0.0f, 0.0f);
     public override float EnergyToBuild { get; protected set; } = 10.0f;
     public override int RequiredHumans { get; protected set; } = 5;
-
+    */
     public override bool onCreate()
     {
 

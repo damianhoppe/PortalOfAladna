@@ -15,8 +15,30 @@ public class SmallBank : DefaultBuilding
     {
         base.Update();
     }
-    
+    public SmallBank()
+    {
+        this.ObjectName = "Small Bank";
+        this.ObjectDescription= "This is bank. You can store gold here.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Small Default Bank";
+        this.ObjectSubtypeID = 3;
+
+        this.MaxHitpoints = 200.0f;
+        this.BuildingStorage = new DataStructures.Cost(500.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+
+        this.Armor = 1.0f;
+        this.Protection = 10.0f;
+
+        this.PositionValue = 4.0f;
+        this.PositionObstacle = 2.0f;
+
+        this.BaseCost = new DataStructures.Cost(150.0f, 20.0f, 10.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 20.0f;
+        this.RequiredHumans = 10;
+    }
     /*
+
     public override string ObjectName { get; protected set; } = "Small Bank";
     public override string ObjectDescription { get; protected set; } = "This is bank. You can store gold here.";
     public override string ObjectType { get; protected set; } = "Building";

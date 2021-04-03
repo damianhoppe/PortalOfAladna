@@ -15,7 +15,27 @@ public class SmallHouse : DefaultBuilding
     {
         base.Update();
     }
+    public SmallHouse()
+    {
+        this.ObjectName = "Small House";
+        this.ObjectDescription = "This is a small house for 5 people.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Small House";
+        this.ObjectSubtypeID = 1;
 
+        this.MaxHitpoints = 50.0f;
+        this.ActiveAtNight = true;
+
+        this.PositionValue = 2.0f;
+        this.PositionObstacle = 1.0f;
+
+        this.BaseCost = new DataStructures.Cost(50.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 10.0f;
+
+        //this.LivingSpace = 5;
+    }
+    /*
     public override string ObjectName { get; protected set; } = "Small House";
     public override string ObjectDescription { get; protected set; } = "This is a small house for 5 people.";
     public override string ObjectType { get; protected set; } = "Building";
@@ -25,15 +45,15 @@ public class SmallHouse : DefaultBuilding
 
     public override float MaxHitpoints { get; protected set; } = 50.0f;
     public override bool ActiveAtNight { get; protected set; } = true;
-
+    
     public override float PositionValue { get; protected set; } = 2.0f;
     public override float PositionObstacle { get; protected set; } = 1.0f;
 
     public override DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(50.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     public override float EnergyToBuild { get; protected set; } = 10.0f;
-
+    */
     public virtual int LivingSpace { get; protected set; } = 5;
-
+    
     public override bool onCreate()
     {
         //PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
