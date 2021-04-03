@@ -189,4 +189,22 @@ public class DefaultBuilding : Building
         }
         else return false; 
     }
+    public virtual bool StoreResources(DataStructures.Cost StoredResources)
+    {
+        if (DataStructures.Cost.IsLesser(StoredResources + this.ResourcesInside, this.BuildingStorage))
+        {
+            this.ResourcesInside += StoredResources;
+            return true;
+        }
+        else return false;
+    }
+    public virtual bool TakeResources(DataStructures.Cost TakenResources)
+    {
+        if (DataStructures.Cost.IsLesser(TakenResources, this.ResourcesInside))
+        {
+            this.ResourcesInside -= TakenResources;
+            return true;
+        }
+        else return false;
+    }
 }
