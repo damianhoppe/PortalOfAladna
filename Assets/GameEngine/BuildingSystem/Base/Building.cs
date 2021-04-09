@@ -15,6 +15,7 @@ public class Building : Structure, IBuilding
 
     int lvl;
     bool updateEnabled;
+    bool initialized = false;
     float upgradePercentage;
 
     public int Danger; //test
@@ -25,6 +26,7 @@ public class Building : Structure, IBuilding
     Status status;
     BuildingRequirements buildingRequirements;
     BuildingStatusBehaviour buildingStatus;
+    GridManager gridManager;
 
     public Building() : base(EStructureType.Building)
     {
@@ -36,14 +38,22 @@ public class Building : Structure, IBuilding
     protected override void Start()
     {
         base.Start();
+        this.gridManager = FindObjectOfType<GridManager>();
+        Debug.Log("Start: " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count);
         buildingRequirements.initDictionary(nearbyStructuresRequired, requiredMinimalDistance);
+        initialized = true;
+        if (this.updateEnabled)
+            onCreate();
     }
 
     protected override void Update()
     {
-        if(this.updateEnabled)
+        if(this.initialized)
         {
-            this.update();
+            if (this.updateEnabled)
+            {
+                this.update();
+            }
         }
     }
 
@@ -69,6 +79,22 @@ public class Building : Structure, IBuilding
         }
     }
 
+    public BuildingStatusBehaviour.Status canBuild()
+    {
+        if(gridManager == null)
+            this.gridManager = FindObjectOfType<GridManager>();
+        Debug.Log(getPosition().toString());
+        if(!gridManager.isInGrid(getPosition()) || !gridManager.isEmpty(getPosition()))
+        {
+            return BuildingStatusBehaviour.Status.INCORRECT_PLACE;
+        }
+        if(!this.buildingRequirements.areMet(this.gridManager))
+        {
+            return BuildingStatusBehaviour.Status.LACK_OF_REQUIRED_BUILDING;
+        }
+        return BuildingStatusBehaviour.Status.ALLOW_BUILDING;
+    }
+
     public virtual BuildingRequirements getBuildingRequirements()
     {
         return this.buildingRequirements;
@@ -89,7 +115,11 @@ public class Building : Structure, IBuilding
     public virtual void onCreate()
     {
         this.upgradePercentage = 0;
-        this.updateEnabled = true;
+        Structure structure = this.buildingRequirements.findNearestStructure(this.gridManager);
+        if(structure != null)
+            Debug.Log("Nearest structure: " + structure.gameObject.name);
+        else
+            Debug.Log("Nearest structure: null");
     }
 
     public virtual void onDestroy()
@@ -115,5 +145,10 @@ public class Building : Structure, IBuilding
     public enum Status
     {
         IS_BEING_BUILT, WORKS
+    }
+
+    public void setEnabled(bool enabled)
+    {
+        this.updateEnabled = enabled;
     }
 }

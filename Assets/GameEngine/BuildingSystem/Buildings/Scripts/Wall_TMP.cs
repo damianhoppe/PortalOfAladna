@@ -9,7 +9,7 @@ public class Wall_TMP : Building
     protected override void Start()
     {
         base.Start();
-        DNS = GameObject.Find("DayNightSystem").GetComponent<DayNightController>();
+        DNS = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         HP = 100;
     }
 

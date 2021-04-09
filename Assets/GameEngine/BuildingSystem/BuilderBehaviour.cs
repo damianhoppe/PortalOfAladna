@@ -13,10 +13,12 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
 
     private GridManager gridManager;
     private GameObject buildingPreview;
+    private Building building;
     private BuildingStatusBehaviour buildingStatus;
     private CursorBehaviour cursor;
     private Mode mode;
     private SpriteRenderer buildingReqSprite;
+    private int buildingInitialized = 0;
 
     void Start()
     {
@@ -30,6 +32,20 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
 
     void Update()
     {
+        if(this.buildingInitialized > 0)
+        {
+            if (this.buildingInitialized == 2)
+            {
+                this.buildingReqSprite.size = new Vector2((float)this.building.requiredMinimalDistance * 2 + 1, (float)this.building.requiredMinimalDistance * 2 + 1);
+                this.buildingReqSprite.enabled = true;
+                onPositionChanged(cursor.getPosition(), cursor.getPosition());
+                this.buildingInitialized = 0;
+            }
+            else
+            {
+                this.buildingInitialized++;
+            }
+        }
         if(this.mode == Mode.BUILDING)
         {
             this.buildingPreview.transform.position = new Vector3(cursor.transform.position.x, cursor.transform.position.y, this.defaultZPreview);
@@ -37,24 +53,22 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         }
         if (Input.GetMouseButtonDown(0) && this.mode != Mode.NONE)
         {
-            Building building;
-            Position position = cursor.getPosition();
-            switch(this.mode)
+            Position position = building.getPosition();
+            switch (this.mode)
             {
                 case Mode.BUILDING:
-                    if (gridManager.isInGrid(position.getX(), position.getY()) && gridManager.isEmpty(position.getX(), position.getY()))
+                    if (this.buildingInitialized != 0)
+                        break;
+                    if (building.canBuild() == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
                     {
-                        Building buildingScript = this.buildingPreview.GetComponent<Building>();
-                        if (buildingScript.getBuildingRequirements().areMet(this.gridManager))
-                        {
-                            GameObject buildingObject = Instantiate(buildingPreview);
-                            building = buildingObject.GetComponent<Building>();
-                            building.setPosition(cursor.getPosition());
-                            buildingObject.name = building.getName();
-                            buildingObject.transform.position = new Vector3(cursor.getPosition().x, cursor.getPosition().y, this.defaultZBuilding);
-                            gridManager.addStructure((Structure)building, position.getX(), position.getY());
-                            building.onCreate();
-                        }
+                        GameObject buildingObject = Instantiate(buildingPreview);
+                        Building buildingTemp = buildingObject.GetComponent<Building>();
+                        buildingTemp.setPosition(position);
+                        Debug.Log("Test: " + buildingTemp.getBuildingRequirements().positionsToCheck.Count);
+                        buildingObject.name = buildingTemp.getName();
+                        buildingObject.transform.position = new Vector3(cursor.getPosition().x, cursor.getPosition().y, this.defaultZBuilding);
+                        gridManager.addStructure((Structure)buildingTemp, position.getX(), position.getY());
+                        buildingTemp.setEnabled(true);
                     }
                     break;
                 case Mode.DESTRUCTION:
@@ -73,20 +87,20 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
     {
         if (this.mode == Mode.BUILDING)
         {
-            Building building = this.buildingPreview.GetComponent<Building>();
-            building.setPosition(newPosition);
-            if (gridManager.isInGrid(newPosition.getX(), newPosition.getY()) && gridManager.isEmpty(newPosition.getX(), newPosition.getY()) && building.getBuildingRequirements().areMet(this.gridManager))
+            this.building.setPosition(new Position(newPosition));
+            BuildingStatusBehaviour.Status status = this.building.canBuild();
+            Debug.Log(status);
+            if (status == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
             {
                 this.buildingReqSprite.color = new Color(0,255,0,0.25f);
                 this.cursor.setColor(Color.green);
-                this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.ALLOW_BUILDING);
             }
             else
             {
                 this.buildingReqSprite.color = new Color(255, 0, 0, 0.25f);
                 this.cursor.setColor(Color.red);
-                this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.LACK_OF_REQUIRED_BUILDING);
             }
+            this.buildingStatus.setStatus(status);
         }
     }
 
@@ -117,7 +131,8 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                 this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.NONE);
                 break;
         }
-        switch (newMode)
+        this.mode = newMode;
+        switch (this.mode)
         {
             case Mode.BUILDING:
                 if (building == null)
@@ -128,11 +143,17 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                 this.buildingPreview = Instantiate(building);
                 Structure structure = this.buildingPreview.GetComponent<Structure>();
                 this.buildingPreview.name = structure.getName() + " - preview";
-                setBuildingPreviewPosition(cursor.getPosition());
 
-                Building b = this.buildingPreview.GetComponent<Building>();
-                this.buildingReqSprite.size = new Vector2((float)b.requiredMinimalDistance * 2+1, (float)b.requiredMinimalDistance * 2+1);
-                this.buildingReqSprite.enabled = true;
+                this.building = this.buildingPreview.GetComponent<Building>();
+                if (this.building == null)
+                {
+                    setBuildingMode(Mode.NONE);
+                    break;
+                }
+                setBuildingPreviewPosition(cursor.getPosition());
+                this.building.setPosition(cursor.getPosition());
+                this.buildingInitialized = 1;
+                this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.NONE);
                 break;
             case Mode.NONE:
                 this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.NONE);
@@ -142,7 +163,6 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                 this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.DESTRUCTION);
                 break;
         }
-        this.mode = newMode;
     }
 
     public enum Mode

@@ -28,6 +28,11 @@ public class GridManager : MonoBehaviour
         return true;
     }
 
+    public bool isInGrid(Position p)
+    {
+        return isInGrid(p.x, p.y);
+    }
+
     public int getWidth()
     {
         return this.width;

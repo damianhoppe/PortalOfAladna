@@ -48,4 +48,16 @@ public class Position
     {
         this.y = y;
     }
+
+    public float distanceTo(Position position)
+    {
+        return Position.distanceBetween(this, position);
+    }
+
+    public static float distanceBetween(Position pos1, Position pos2)
+    {
+        float distanceX = Mathf.Abs((float)(pos1.x - pos2.x));
+        float distanceY = Mathf.Abs((float)(pos1.y - pos2.y));
+        return Mathf.Sqrt(distanceX * distanceX + distanceY * distanceY);
+    }
 }

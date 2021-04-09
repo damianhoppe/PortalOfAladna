@@ -6,7 +6,7 @@ public class BuildingRequirements
 {
     List<string> nearbyStructures;
     int minDistance;
-    List<Position> positionsToCheck;
+    public List<Position> positionsToCheck;
     bool initialized;
 
     Building building;
@@ -37,6 +37,7 @@ public class BuildingRequirements
                 positionsToCheck.Add(new Position(x-this.minDistance, y-this.minDistance));
             }
         }
+        positionsToCheck.Sort(new PositionDistanceComparison(building.getPosition()));
     }
 
     public bool areMet(GridManager gridManager)
@@ -67,5 +68,26 @@ public class BuildingRequirements
     public int getMinDistance()
     {
         return this.minDistance;
+    }
+
+    public Structure findNearestStructure(GridManager gridManager)
+    {
+        Debug.Log("Count: " + this.positionsToCheck.Count);
+        Debug.Log("Is: " + isStructureNear(gridManager));
+        Debug.Log("Pos: " + this.building.getPosition().toString());
+        Position buildingPosition = this.building.getPosition();
+        foreach (Position pos in positionsToCheck)
+        {
+            Debug.Log(pos.distanceTo(building.getPosition()));
+            Structure structure = gridManager.getStructure(buildingPosition.getX() + pos.getX(), buildingPosition.getY() + pos.getY());
+            if (structure != null)
+            {
+                if (this.nearbyStructures.Contains(structure.getName()))
+                {
+                    return structure;
+                }
+            }
+        }
+        return null;
     }
 }

@@ -97,6 +97,6 @@ MonoBehaviour:
   Name: 
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0
-  buildSpeed: 0
+  buildSpeed: 10
   maxLvl: 0
   Danger: 0

@@ -37,38 +37,26 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
         {
             Position oldPosition = this.position;
             this.position = getCursorPosition();
-            if (this.position != oldPosition)
+            if (this.position.x != oldPosition.x || this.position.y != oldPosition.y)
             {
                 this.positionInterpolator.setValues(new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z), this.position.toVector3(this.transform.position.z));
                 this.positionInterpolator.reset();
                 foreach (IOnCursorPositionChanged listener in this.onPositionChangedListeners)
                 {
-                    listener.onPositionChanged(this.position, oldPosition);
+                    listener.onPositionChanged(oldPosition, this.position);
                 }
             }
         }
         this.positionInterpolator.update();
 
-        if (Input.GetKeyDown("1"))
+        for(int i = 0; i < 10 && i < this.builderBehaviour.getBuildings().Count; i++)
         {
-            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[0].gameObject);
-            //this.canEnterOnTakenPlace = false;
+            if(Input.GetKeyDown(i.ToString()))
+            {
+                this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[i].gameObject);
+            }
         }
-        if (Input.GetKeyDown("2"))
-        {
-            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[1].gameObject);
-            //this.canEnterOnTakenPlace = false;
-        }
-        if (Input.GetKeyDown("3"))
-        {
-            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[2].gameObject);
-            //this.canEnterOnTakenPlace = false;
-        }
-        if (Input.GetKeyDown("4"))
-        {
-            this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[3].gameObject);
-            //this.canEnterOnTakenPlace = false;
-        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.NONE);
