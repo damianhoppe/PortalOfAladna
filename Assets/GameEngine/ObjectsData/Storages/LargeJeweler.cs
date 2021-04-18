@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LargeJeweler : MediumJeweler
 {
-    public Large()
+    public LargeJeweler()
     {
         this.ObjectName = "Large Jeweler";
         this.ObjectDescription = "This is large jeweler. Crystal is stored here.";
