@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MediumCarpenter : MonoBehaviour
+public class MediumCarpenter : SmallCarpenter
 {
-    public MediumBank()
+    public MediumCarpenter()
     {
-        this.ObjectName = "Medium Bank";
-        this.ObjectDescription = "This is medium bank. Gold is stored here.";
+        this.ObjectName = "Medium Carpenter";
+        this.ObjectDescription = "This is medium carpenter. Wood is stored here.";
         this.ObjectType = "Building";
         this.ObjectTypeID = 1;
-        this.ObjectSubtype = "Medium Default Bank";
+        this.ObjectSubtype = "Medium Default Carpenter";
         this.ObjectSubtypeID = 3;
 
         this.MaxHitpoints = 500.0f;
