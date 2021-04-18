@@ -24,10 +24,9 @@ public class SmallBank : DefaultBuilding
         this.ObjectSubtype = "Small Default Bank";
         this.ObjectSubtypeID = 3;
 
-
         this.MaxHitpoints = 200.0f;
-        this.Armor = 1.0f;
-        this.Protection = 10.0f;
+        this.Armor = 2.0f;
+        this.Protection = 5.0f;
 
         this.PositionValue = 4.0f;
         this.PositionObstacle = 2.0f;
