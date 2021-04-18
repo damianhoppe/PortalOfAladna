@@ -20,6 +20,7 @@ public class PopulationController : MonoBehaviour
     public int CurrentPopulation { get; protected set; }
     public int FreePopulation { get; protected set; }
     public int BusyPopulation { get; protected set; }
+    public float Efficiency { get; protected set; }
 
     public bool EnoughPeopleTEST(int ludzie)
     {
@@ -31,20 +32,32 @@ public class PopulationController : MonoBehaviour
         this.MaxPopulation -= Casualities;
         this.BusyPopulation -= Casualities;
         this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
+        EfficiencyCalculation();
     }
     public void FireHumans(int Workers)
     {
         this.BusyPopulation -= Workers;
         this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
+        EfficiencyCalculation();
     }
     public void IncreasePopulation(int Population)
     {
         this.CurrentPopulation += Population;
         this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
+        EfficiencyCalculation();
     }
     public void DecreasePopulation(int Population)
     {
         this.CurrentPopulation -= Population;
         this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
+        EfficiencyCalculation();
+    }
+    public void EfficiencyCalculation()
+    {
+        if (this.FreePopulation < 0)
+        {
+            this.Efficiency = this.CurrentPopulation / this.BusyPopulation;
+        }
+        else this.Efficiency = 100.0f;
     }
 }

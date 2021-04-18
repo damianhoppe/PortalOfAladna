@@ -93,6 +93,8 @@ public class DefaultBuilding : Building
     public virtual bool RequiresResearcher { get; protected set; } = false;
     public virtual bool RequiresAcademy { get; protected set; } = false;
 
+    public virtual int LivingSpace { get; protected set; } = 0;
+
     public virtual bool onCreate()
     {
         if (this.CanBuild)
