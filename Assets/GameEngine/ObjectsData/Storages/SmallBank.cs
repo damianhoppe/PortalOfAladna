@@ -18,24 +18,25 @@ public class SmallBank : DefaultBuilding
     public SmallBank()
     {
         this.ObjectName = "Small Bank";
-        this.ObjectDescription= "This is bank. You can store gold here.";
+        this.ObjectDescription= "This is small bank. Gold is stored here.";
         this.ObjectType = "Building";
         this.ObjectTypeID = 1;
         this.ObjectSubtype = "Small Default Bank";
         this.ObjectSubtypeID = 3;
 
-        this.MaxHitpoints = 200.0f;
-        this.BuildingStorage = new DataStructures.Cost(500.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
+        this.MaxHitpoints = 200.0f;
         this.Armor = 1.0f;
         this.Protection = 10.0f;
 
         this.PositionValue = 4.0f;
         this.PositionObstacle = 2.0f;
 
-        this.BaseCost = new DataStructures.Cost(150.0f, 20.0f, 10.0f, 0.0f, 0.0f, 0.0f);
-        this.EnergyToBuild = 20.0f;
-        this.RequiredHumans = 10;
+        this.PlayerObjectID = 7;
+        this.BuildingStorage = new DataStructures.Cost(200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this.BaseCost = new DataStructures.Cost(50.0f, 50.0f, 25.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 10.0f;
+        this.RequiredHumans = 0;
     }
     /*
 

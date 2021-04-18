@@ -38,7 +38,22 @@ public class UpgradeController : MonoBehaviour
     {
 
     }
-
+    public bool CanBuild(bool metal, bool crystal, bool magic)
+    {
+        if(metal == true)
+        {
+            if (AllowMetalBuildings == false) return false;
+        }
+        if(crystal == true)
+        {
+            if (AllowCrystalBuildings == false) return false;
+        }
+        if(magic == true)
+        {
+            if (AllowMagicBuildings == false) return false;
+        }
+        return true;
+    }
     public void InventorBuilt()
     {
         Inventors++;

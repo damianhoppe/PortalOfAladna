@@ -42,6 +42,7 @@ public class DefaultBuilding : Building
     public virtual int ObjectTypeID { get; protected set; } = 1;
     public virtual string ObjectSubtype { get; protected set; } = "Default";
     public virtual int ObjectSubtypeID { get; protected set; } = 0;
+    public virtual int PlayerObjectID { get; protected set; } = 0;
 
     public virtual bool IsFriendly { get; protected set; } = true;
     public virtual bool IsHostile { get; protected set; } = false;
@@ -88,13 +89,25 @@ public class DefaultBuilding : Building
     public virtual DataStructures.Cost BuildingStorage { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     public virtual DataStructures.Cost ResourcesInside { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
 
+    public virtual bool RequiresInventor { get; protected set; } = false;
+    public virtual bool RequiresResearcher { get; protected set; } = false;
+    public virtual bool RequiresAcademy { get; protected set; } = false;
+
     public virtual bool onCreate()
     {
         if (this.CanBuild)
         {
-            base.onCreate();
-            //
-            return true;
+            if (EC.CanAffordTEST(this.BaseCost))
+            {
+                if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
+                {
+                    base.onCreate();
+                    //
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
         }
         else return false;
     }
@@ -107,11 +120,15 @@ public class DefaultBuilding : Building
             //EconomyController EC =GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.UpgradeCost))
             {
-                EC.ResourcesSpent(this.UpgradeCost);
-                this.TotalCost += this.UpgradeCost;
-                this.UpgradeCost = TotalCost * 0.5f;
-                this.BuildingLevel++;
-                return true;
+                if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
+                {
+                    EC.ResourcesSpent(this.UpgradeCost);
+                    this.TotalCost += this.UpgradeCost;
+                    this.UpgradeCost = TotalCost * 0.5f;
+                    this.BuildingLevel++;
+                    return true;
+                }
+                else return false;
             }
             else return false;
         }
