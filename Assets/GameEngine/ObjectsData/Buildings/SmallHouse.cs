@@ -26,6 +26,8 @@ public class SmallHouse : DefaultBuilding
 
         this.MaxHitpoints = 50.0f;
         this.ActiveAtNight = true;
+        this.Armor = 1.0f;
+        this.Protection = 0.0f;
 
         this.PositionValue = 3.0f;
         this.PositionObstacle = 1.0f;

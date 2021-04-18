@@ -24,11 +24,13 @@ public class LargeHouse : MediumHouse
         this.ObjectSubtype = "Default Large House";
         this.ObjectSubtypeID = 1;
 
-        this.MaxHitpoints = 50.0f;
+        this.MaxHitpoints = 750.0f;
         this.ActiveAtNight = true;
+        this.Armor = 5.0f;
+        this.Protection = 15.0f;
 
-        this.PositionValue = 3.0f;
-        this.PositionObstacle = 1.0f;
+        this.PositionValue = 10.0f;
+        this.PositionObstacle = 4.0f;
 
         this.BaseCost = new DataStructures.Cost(600.0f, 150.0f, 60.0f, 25.0f, 5.0f, 0.0f);
         this.EnergyToBuild = 20.0f;
