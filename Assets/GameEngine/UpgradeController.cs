@@ -11,6 +11,14 @@ public class UpgradeController : MonoBehaviour
     public const int HP_TROOPS = 3;
     public const int BUILDING_SPEED = 4;
 
+    public static int Inventors = 0;
+    public static int Researchers = 0;
+    public static int Academies = 0;
+
+    public static bool AllowMetalBuildings = false;
+    public static bool AllowCrystalBuildings = false;
+    public static bool AllowMagicBuildings = false;
+
     public UpgradeController()
     {
         this.upgrades = new Dictionary<int, Upgrade>();
@@ -31,6 +39,45 @@ public class UpgradeController : MonoBehaviour
 
     }
 
+    public void InventorBuilt()
+    {
+        Inventors++;
+        AllowMetalBuildings = true;
+    }
+    public void InventorDestroyed()
+    {
+        Inventors--;
+        if (Inventors <= 0)
+        {
+            AllowMetalBuildings = false;
+        }
+    }
+    public void ResearcherBuilt()
+    {
+        Researchers++;
+        AllowCrystalBuildings = true;
+    }
+    public void ResearcherDestroyed()
+    {
+        Researchers--;
+        if (Researchers <= 0)
+        {
+            AllowCrystalBuildings = false;
+        }
+    }
+    public void AcademyBuilt()
+    {
+        Academies++;
+        AllowMagicBuildings = true;
+    }
+    public void AcademyDestroyed()
+    {
+        Academies--;
+        if (Academies <= 0)
+        {
+            AllowMagicBuildings = false;
+        }
+    }
     public bool CanAffordTEST(DataStructures.Cost koszt)
     {
         return true;
