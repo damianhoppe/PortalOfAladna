@@ -15,7 +15,7 @@ public class LargeHouse : MediumHouse
     {
         base.Update();
     }
-    LargeHouse()
+    public LargeHouse()
     {
         this.ObjectName = "Large House";
         this.ObjectDescription = "This is a large house for 40 people.";

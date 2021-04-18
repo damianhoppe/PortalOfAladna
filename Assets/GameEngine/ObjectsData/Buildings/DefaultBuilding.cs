@@ -97,14 +97,19 @@ public class DefaultBuilding : Building
 
     public virtual bool onCreate()
     {
+        if (CreateAvailable())
+        {
+            base.onCreate();
+        }
+    }
+    public virtual bool CreateAvailable()
+    {
         if (this.CanBuild)
         {
             if (EC.CanAffordTEST(this.BaseCost))
             {
                 if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
                 {
-                    base.onCreate();
-                    //
                     return true;
                 }
                 else return false;
@@ -113,21 +118,24 @@ public class DefaultBuilding : Building
         }
         else return false;
     }
-
-    public virtual bool OnUpgrade()
+    public virtual void onUpgrade()
+    {
+        if (this.UpgradeAvailable())
+        {
+            EC.ResourcesSpent(this.UpgradeCost);
+            this.TotalCost += this.UpgradeCost;
+            this.UpgradeCost = TotalCost * 0.5f;
+            this.BuildingLevel++;
+        }
+    }
+    public virtual bool UpgradeAvailable()
     {
         if (this.CanUpgrade)
         {
-            //base.OnUpgrade();
-            //EconomyController EC =GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.UpgradeCost))
             {
                 if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
                 {
-                    EC.ResourcesSpent(this.UpgradeCost);
-                    this.TotalCost += this.UpgradeCost;
-                    this.UpgradeCost = TotalCost * 0.5f;
-                    this.BuildingLevel++;
                     return true;
                 }
                 else return false;
@@ -136,39 +144,52 @@ public class DefaultBuilding : Building
         }
         else return false;
     }
-    public virtual bool OnRepair()
+    public virtual void onRepair()
+    {
+        if (this.RepairAvailable())
+        {
+            EC.ResourcesSpent(this.RepairCost);
+            this.RepairCost = this.TotalCost * 0.0f;
+            this.CurrentHitpoints = this.MaxHitpoints;
+        }
+    }
+    public virtual bool RepairAvailable()
     {
         if (this.CanRepair)
         {
-            //base.OnRepair();
-            //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
             if (EC.CanAffordTEST(this.RepairCost))
             {
-                EC.ResourcesSpent(this.RepairCost);
-                this.RepairCost = this.TotalCost * 0.0f;
-                this.CurrentHitpoints = this.MaxHitpoints;
                 return true;
             }
             return false;
         }
         else return false;
     }
-    public virtual bool OnSell()
+    public virtual void OnSell()
+    {
+        if (this.SellAvailable())
+        {
+            EC.ResourcesGained(this.TotalCost * this.RefundRate);
+            PC.FireHumans(this.RequiredHumans);
+        }
+    }
+    public virtual bool SellAvailable()
     {
         if (this.CanSell)
         {
-            //base.OnSell();
-            //EconomyController EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
-            EC.ResourcesGained(this.TotalCost * this.RefundRate);
-            //PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
-            PC.FireHumans(this.RequiredHumans);
             return true;
         }
         else return false;
     }
-    public virtual bool OnSelect()
+    public virtual void onSelect()
     {
-        //return base.OnSelect();
+        if (SelectAvailable())
+        {
+            //return base.OnSelect();
+        }
+    }
+    public virtual bool SelectAvailable()
+    {
         if (this.CanSelect) return true;
         else return false;
     }
@@ -201,23 +222,26 @@ public class DefaultBuilding : Building
         }
         return false;
     }
-    public virtual bool onDestroy()
+    public virtual void onDestroy()
     {
-        //return base.OnDeath();
-        if (this.CanDie)
+        if (this.DestoryAvailable)
         {
             this.IsAlive = false;
             this.IsDead = true;
             if (this.ActiveAtNight)
             {
-                //PopulationController PC= GameObject.Find("PopulationController").GetComponent<PopulationController>();
                 PC.KillHumans(this.RequiredHumans);
             }
-            //zabij budynek itp.
-
+            //base.OnDeath();
+        }
+    }
+    public virtual bool DestoryAvailable()
+    {
+        if (this.CanDie)
+        {
             return true;
         }
-        else return false; 
+        else return false;
     }
     public virtual bool StoreResources(DataStructures.Cost StoredResources)
     {
