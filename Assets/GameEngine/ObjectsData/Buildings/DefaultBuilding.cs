@@ -95,10 +95,12 @@ public class DefaultBuilding : Building
 
     public virtual int LivingSpace { get; protected set; } = 0;
 
-    public virtual bool onCreate()
+    public virtual void onCreate()
     {
         if (CreateAvailable())
         {
+            this.PC.IncreasePopulation(this.LivingSpace);
+            this.EC.StorageIncrease(this.BuildingStorage);
             base.onCreate();
         }
     }
@@ -171,6 +173,8 @@ public class DefaultBuilding : Building
         {
             EC.ResourcesGained(this.TotalCost * this.RefundRate);
             PC.FireHumans(this.RequiredHumans);
+            this.EC.StorageDecrease(this.BuildingStorage);
+            this.PC.DecreasePopulation(this.LivingSpace);
         }
     }
     public virtual bool SellAvailable()
@@ -224,7 +228,7 @@ public class DefaultBuilding : Building
     }
     public virtual void onDestroy()
     {
-        if (this.DestoryAvailable)
+        if (this.DestroyAvailable())
         {
             this.IsAlive = false;
             this.IsDead = true;
@@ -232,10 +236,12 @@ public class DefaultBuilding : Building
             {
                 PC.KillHumans(this.RequiredHumans);
             }
+            this.EC.StorageDecrease(this.BuildingStorage);
+            this.PC.DecreasePopulation(this.LivingSpace);
             //base.OnDeath();
         }
     }
-    public virtual bool DestoryAvailable()
+    public virtual bool DestroyAvailable()
     {
         if (this.CanDie)
         {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lookout : DefaultBuilding
+public class WoodenLookout : DefaultBuilding
 {
     // Start is called before the first frame update
     protected override void Start()
@@ -15,13 +15,13 @@ public class Lookout : DefaultBuilding
     {
         base.Update();
     }
-    public Lookout()
+    public WoodenLookout()
     {
-        this.ObjectName = "Lookout";
-        this.ObjectDescription = "This is a lookout, with high view range.";
+        this.ObjectName = "Wooden Lookout";
+        this.ObjectDescription = "This is a wooden lookout, with high view range.";
         this.ObjectType = "Building";
         this.ObjectTypeID = 1;
-        this.ObjectSubtype = "Default Lookout";
+        this.ObjectSubtype = "Default Wooden Lookout";
         this.ObjectSubtypeID = 2;
 
         this.IsMilitary = true;
@@ -38,9 +38,10 @@ public class Lookout : DefaultBuilding
         this.PositionObstacle = 1.0f;
         this.PositionDanger = 2.5f;
 
-        this.BaseCost = new DataStructures.Cost(50.0f, 15.0f, 5.0f, 0.0f, 0.0f, 0.0f);
-        this.EnergyToBuild = 10.0f;
+        this.BaseCost = new DataStructures.Cost(50.0f, 25.0f, 5.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 5.0f;
         this.RequiredHumans = 5;
+        this.PlayerObjectID = 71;
     }
     /*
     public override string ObjectName { get; protected set; } = "Lookout";
@@ -68,14 +69,18 @@ public class Lookout : DefaultBuilding
     public override float EnergyToBuild { get; protected set; } = 10.0f;
     public override int RequiredHumans { get; protected set; } = 5;
     */
-    public override bool onCreate()
+    public override void onCreate()
     {
-
-        return base.onCreate();
+        if (this.CreateAvailable())
+        {
+            base.onCreate();
+        }
     }
-    public override bool onDestroy()
+    public override void onDestroy()
     {
-
-        return base.onDestroy();
+        if (this.DestroyAvailable())
+        {
+            base.onDestroy();
+        }
     }
 }

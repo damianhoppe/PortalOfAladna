@@ -58,16 +58,20 @@ public class SmallHouse : DefaultBuilding
     */
     //public virtual int LivingSpace { get; protected set; } = 10;
     
-    public override bool onCreate()
+    public override void onCreate()
     {
-        //PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
-        this.PC.IncreasePopulation(this.LivingSpace);
-        return base.onCreate();
+        if (this.CreateAvailable())
+        {
+            //this.PC.IncreasePopulation(this.LivingSpace);
+            base.onCreate();
+        }
     }
-    public override bool onDestroy()
+    public override void onDestroy()
     {
-        //PopulationController PC = GameObject.Find("PopulationController").GetComponent<PopulationController>();
-        this.PC.DecreasePopulation(this.LivingSpace);
-        return base.onDestroy();
+        if (this.DestroyAvailable())
+        {
+            //this.PC.DecreasePopulation(this.LivingSpace);
+            base.onDestroy();
+        }
     }
 }
