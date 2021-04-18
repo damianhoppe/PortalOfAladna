@@ -32,8 +32,8 @@ public class SmallBank : DefaultBuilding
         this.PositionObstacle = 2.0f;
 
         this.PlayerObjectID = 7;
-        this.BuildingStorage = new DataStructures.Cost(200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        this.BaseCost = new DataStructures.Cost(50.0f, 50.0f, 25.0f, 0.0f, 0.0f, 0.0f);
+        this.BuildingStorage = new DataStructures.Cost(250.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this.BaseCost = new DataStructures.Cost(50.0f, 30.0f, 15.0f, 0.0f, 0.0f, 0.0f);
         this.EnergyToBuild = 10.0f;
         this.RequiredHumans = 0;
     }

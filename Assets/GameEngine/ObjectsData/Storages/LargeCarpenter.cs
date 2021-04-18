@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LargeBank : MediumBank
+public class LargeCarpenter : MonoBehaviour
 {
     public LargeBank()
     {
@@ -20,9 +20,9 @@ public class LargeBank : MediumBank
         this.PositionValue = 8.0f;
         this.PositionObstacle = 6.0f;
 
-        this.PlayerObjectID = 9;
-        this.BuildingStorage = new DataStructures.Cost(5000.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        this.BaseCost = new DataStructures.Cost(1000.0f, 300.0f, 200.0f, 100.0f, 10.0f, 0.0f);
+        this.PlayerObjectID = 12;
+        this.BuildingStorage = new DataStructures.Cost(0.0f, 2000.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this.BaseCost = new DataStructures.Cost(800.0f, 400.0f, 200.0f, 100.0f, 10.0f, 0.0f);
         this.EnergyToBuild = 20.0f;
         this.RequiredHumans = 15;
 
