@@ -24,15 +24,43 @@ public class Inventor : DefaultBuilding
         this.ObjectSubtype = "Default Inventor";
         this.ObjectSubtypeID = 1;
 
-        this.MaxHitpoints = 50.0f;
+        this.MaxHitpoints = 500.0f;
+        this.Armor = 3.0f;
+        this.Protection = 5.0f;
         this.ActiveAtNight = true;
 
-        this.PositionValue = 2.0f;
-        this.PositionObstacle = 1.0f;
+        this.PositionValue = 5.0f;
+        this.PositionObstacle = 3.0f;
+        this.PositionDanger = 4.0f;
 
-        this.BaseCost = new DataStructures.Cost(50.0f, 10.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        this.EnergyToBuild = 10.0f;
+        this.BaseCost = new DataStructures.Cost(500.0f, 200.0f, 150.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 50.0f;
         this.PlayerObjectID = 28;
+        this.RequiredHumans = 25;
         
+    }
+    public override void onCreate()
+    {
+        if (this.CreateAvailable())
+        {
+            this.UC.InventorBuilt();
+            base.onCreate();
+        }
+    }
+    public override void onDestroy()
+    {
+        if (this.DestroyAvailable())
+        {
+            this.UC.InventorDestroyed();
+            base.onDestroy();
+        }
+    }
+    public override void onSell()
+    {
+        if (this.SellAvailable())
+        {
+            this.UC.InventorDestroyed();
+            base.onSell();
+        }
     }
 }

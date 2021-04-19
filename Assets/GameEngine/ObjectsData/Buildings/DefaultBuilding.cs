@@ -167,7 +167,7 @@ public class DefaultBuilding : Building
         }
         else return false;
     }
-    public virtual void OnSell()
+    public virtual void onSell()
     {
         if (this.SellAvailable())
         {
