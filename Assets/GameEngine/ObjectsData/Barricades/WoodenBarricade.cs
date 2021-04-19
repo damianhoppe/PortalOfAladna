@@ -31,7 +31,6 @@ public class WoodenBarricade : DefaultBuilding
         this.Armor = 1.0f;
         this.Protection = 5.0f;
 
-
         this.PositionValue = -2.0f;
         this.PositionObstacle = 1.0f;
         this.PositionDanger = -2.0f;
@@ -46,8 +45,8 @@ public class WoodenBarricade : DefaultBuilding
 
         this.RequiresAccess = false;
         this.BlocksPlayerUnits = false;
-
-    }
+        this.CanBuildAtNight = true;
+}
     public override void onSell()
     {
         this.RefundRate = this.CurrentHitpoints / this.MaxHitpoints;

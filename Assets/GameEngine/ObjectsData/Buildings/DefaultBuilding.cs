@@ -97,7 +97,7 @@ public class DefaultBuilding : Building
 
     public virtual bool BlocksPlayerUnits { get; protected set; } = true;
     public virtual bool RequiresAccess { get; protected set; } = true;
-    public virtual bool CanBuildAtNight { get; protected set; } = true;
+    public virtual bool CanBuildAtNight { get; protected set; } = false;
     
 
     public virtual void onCreate()
