@@ -43,7 +43,7 @@ public class WoodenLookout : DefaultBuilding
         this.RequiredHumans = 5;
         this.PlayerObjectID = 71;
 
-        this.RquiresAccess = false;
+        this.RequiresAccess = false;
     }
     /*
     public override string ObjectName { get; protected set; } = "Lookout";
