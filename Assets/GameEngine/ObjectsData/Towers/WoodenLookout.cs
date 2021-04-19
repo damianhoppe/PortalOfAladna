@@ -18,7 +18,7 @@ public class WoodenLookout : DefaultBuilding
     public WoodenLookout()
     {
         this.ObjectName = "Wooden Lookout";
-        this.ObjectDescription = "This is a wooden lookout, with high view range.";
+        this.ObjectDescription = "This is a wooden lookout, with higher view range.";
         this.ObjectType = "Building";
         this.ObjectTypeID = 1;
         this.ObjectSubtype = "Default Wooden Lookout";
@@ -27,11 +27,11 @@ public class WoodenLookout : DefaultBuilding
         this.IsMilitary = true;
         this.IsCivilian = false;
 
+        this.MaxHitpoints = 100.0f;
         this.Armor = 1.0f;
         this.Protection = 5.0f;
 
-        this.MaxHitpoints = 100.0f;
-        this.SightRange = 5.0f;
+        this.SightRange = 3.0f;
         this.ActiveAtNight = true;
 
         this.PositionValue = 1.0f;
