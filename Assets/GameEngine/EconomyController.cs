@@ -8,6 +8,10 @@ public class EconomyController : MonoBehaviour
     void Start()
     {
         //this.PlayerResources = LOAD POSIADANE SUROWCE xD
+        this.EnergyLimit = this.DefaultEnergyLimit; //+X*EnergyLimit_UpgradeLevel
+        this.EnergyRegeneration = this.DefaultEnergyRegeneration; //+ X*EnergyRegen_UpgradeLevel
+        this.StartEnergy = this.DefaultStartEnergy; // + X*StartEnergy_UpgradeLevel
+        this.CurrentEnergy = this.StartEnergy;
     }
 
     // Update is called once per frame
@@ -17,7 +21,18 @@ public class EconomyController : MonoBehaviour
     }
 
     public DataStructures.Cost PlayerResources { get; protected set; }// = new DataStructures.Cost();
+    //portal może mieć pewną wartość magazynu - wtedy TotalStorage powinno być (0,0,0,0,0,0,)
     public DataStructures.Cost TotalStorage { get; protected set; } = new DataStructures.Cost(500.0f, 50.0f, 50.0f, 50.0f, 50.0f, 0.0f);
+    
+    public float DefaultEnergyLimit { get; protected set; } = 100.0f;
+    public float DefaultEnergyRegeneration { get; protected set; } = 50.0f;
+    public float DefaultStartEnergy { get; protected set; } = 100.0f;
+
+    public float EnergyLimit { get; protected set; }
+    public float EnergyRegeneration { get; protected set; }
+    public float StartEnergy { get; protected set; }
+    public float CurrentEnergy { get; protected set; }
+
     public bool CanAffordTEST(DataStructures.Cost koszt)
     {
         
@@ -49,4 +64,5 @@ public class EconomyController : MonoBehaviour
     {
         this.TotalStorage -= storage;
     }
+    
 }
