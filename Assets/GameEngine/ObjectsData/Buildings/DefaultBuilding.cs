@@ -97,7 +97,7 @@ public class DefaultBuilding : Building
 
     public virtual int LivingSpace { get; protected set; } = 0;
     public virtual float EnergyStorage { get; protected set; } = 0.0f;
-    public virtual float EnergyChange { get; protected set; } = 0.0f;
+    public virtual float EnergyUse { get; protected set; } = 0.0f;
 
     public virtual bool BlocksPlayerUnits { get; protected set; } = true;
     public virtual bool RequiresAccess { get; protected set; } = true;
