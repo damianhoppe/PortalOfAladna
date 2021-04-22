@@ -106,6 +106,7 @@ public class DefaultBuilding : Building
         {
             this.PC.IncreasePopulation(this.LivingSpace);
             this.EC.StorageIncrease(this.BuildingStorage);
+            this.EC.DrainEnergy(this.EnergyToBuild);
             base.onCreate();
         }
     }
@@ -113,7 +114,7 @@ public class DefaultBuilding : Building
     {
         if (this.CanBuild)
         {
-            if (EC.CanAffordTEST(this.BaseCost))
+            if (EC.CanAffordTEST(this.BaseCost,this.EnergyToBuild))
             {
                 if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
                 {

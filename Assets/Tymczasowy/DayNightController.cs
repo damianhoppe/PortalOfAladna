@@ -82,6 +82,9 @@ public class DayNightController : MonoBehaviour
             Destroy(enemy);
         }
         spawners.Clear();
+        
+        EconomyController EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        EC.DailyEnergyGain();
     }
     void NightTime()
     {

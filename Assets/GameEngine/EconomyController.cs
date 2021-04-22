@@ -33,12 +33,12 @@ public class EconomyController : MonoBehaviour
     public float StartEnergy { get; protected set; }
     public float CurrentEnergy { get; protected set; }
 
-    public bool CanAffordTEST(DataStructures.Cost koszt)
+    public bool CanAffordTEST(DataStructures.Cost koszt, float energy_cost)
     {
         
         return true;
     }
-    public bool CanAfford(DataStructures.Cost koszt)
+    public bool CanAfford(DataStructures.Cost koszt,float energy_cost)
     {
         if (koszt.Gold > PlayerResources.Gold) return false;
         else if (koszt.Wood > PlayerResources.Wood) return false;
@@ -46,6 +46,7 @@ public class EconomyController : MonoBehaviour
         else if (koszt.Metal > PlayerResources.Metal) return false;
         else if (koszt.Crystals > PlayerResources.Crystals) return false;
         else if (koszt.Humans > PlayerResources.Humans) return false;
+        else if (this.EnoughEnergy(energy_cost) != true) return false;
         else return true;
     }
     public void ResourcesSpent(DataStructures.Cost koszt)
@@ -87,5 +88,18 @@ public class EconomyController : MonoBehaviour
     public void DecreaseEnergyRegeneration(float energy)
     {
         this.EnergyRegeneration -= energy;
+    }
+    public bool EnoughEnergy(float energy)
+    {
+        if (this.CurrentEnergy > energy) return true;
+        else return false;
+    }
+    public void DailyEnergyGain()
+    {
+        this.CurrentEnergy += this.EnergyRegeneration;
+        if (this.CurrentEnergy >= this.EnergyLimit)
+        {
+            this.CurrentEnergy = this.EnergyLimit;
+        }
     }
 }
