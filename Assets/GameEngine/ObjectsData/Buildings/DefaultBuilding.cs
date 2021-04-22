@@ -76,6 +76,8 @@ public class DefaultBuilding : Building
 
     public virtual int RequiredHumans { get; protected set; } = 0;
     public virtual float EnergyToBuild { get; protected set; } = 0.0f;
+    public virtual float EnergyToUpgrade { get; protected set; } = 0.0f;
+    public virtual float EnergyToRepair { get; protected set; } = 0.0f;
     public virtual int BuildingLevel { get; protected set; } = 1;
 
     public virtual float UpgradeRate { get; protected set; } = 0.50f;
@@ -130,6 +132,7 @@ public class DefaultBuilding : Building
     {
         if (this.UpgradeAvailable())
         {
+            EC.DrainEnergy(this.EnergyToUpgrade);
             EC.ResourcesSpent(this.UpgradeCost);
             this.TotalCost += this.UpgradeCost;
             this.UpgradeCost = TotalCost * 0.5f;
@@ -140,7 +143,7 @@ public class DefaultBuilding : Building
     {
         if (this.CanUpgrade)
         {
-            if (EC.CanAffordTEST(this.UpgradeCost))
+            if (EC.CanAffordTEST(this.UpgradeCost,this.EnergyToUpgrade))
             {
                 if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
                 {
@@ -157,6 +160,7 @@ public class DefaultBuilding : Building
         if (this.RepairAvailable())
         {
             EC.ResourcesSpent(this.RepairCost);
+            EC.DrainEnergy(this.EnergyToRepair);
             this.RepairCost = this.TotalCost * 0.0f;
             this.CurrentHitpoints = this.MaxHitpoints;
         }
@@ -165,7 +169,7 @@ public class DefaultBuilding : Building
     {
         if (this.CanRepair)
         {
-            if (EC.CanAffordTEST(this.RepairCost))
+            if (EC.CanAffordTEST(this.RepairCost,this.EnergyToRepair))
             {
                 return true;
             }
