@@ -72,6 +72,10 @@ public class EconomyController : MonoBehaviour
     public void DrainEnergy(float energy)
     {
         this.CurrentEnergy -= energy;
+        if (this.CurrentEnergy >= this.EnergyLimit)
+        {
+            this.CurrentEnergy = this.EnergyLimit;
+        }
     }
     public void IncreaseEnergyLimit(float energy)
     {
