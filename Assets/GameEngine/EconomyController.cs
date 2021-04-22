@@ -64,5 +64,28 @@ public class EconomyController : MonoBehaviour
     {
         this.TotalStorage -= storage;
     }
-    
+    public void AddEnergy(float energy)
+    {
+        this.CurrentEnergy += energy;
+    }
+    public void DrainEnergy(float energy)
+    {
+        this.CurrentEnergy -= energy;
+    }
+    public void IncreaseEnergyLimit(float energy)
+    {
+        this.DefaultEnergyLimit += energy;
+    }
+    public void DecreaseEnergyLimit(float energy)
+    {
+        this.DefaultEnergyLimit -= energy;
+    }
+    public void IncreaseEnergyRegeneration(float energy)
+    {
+        this.EnergyRegeneration += energy;
+    }
+    public void DecreaseEnergyRegeneration(float energy)
+    {
+        this.EnergyRegeneration -= energy;
+    }
 }
