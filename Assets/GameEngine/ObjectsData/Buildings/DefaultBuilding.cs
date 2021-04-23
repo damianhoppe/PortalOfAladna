@@ -112,27 +112,35 @@ public class DefaultBuilding : Building
         }
     }
 
-    public override void onCursorOver()
-    {
-        base.onCursorOver();
-        if (!this.works())
-            return;
-        this.CurrentHitpoints -= 50 * Time.deltaTime;
-        if (this.CurrentHitpoints <= 0)
-            this.destroy();
-    }
-
     public override void onCreate()
     {
         base.onCreate();
         this.CurrentHitpoints = 100;
         this.hpBar.setMaxHealth(this.MaxHitpoints);
-        if (CreateAvailable())
+        /*if (CreateAvailable())
         {
             this.PC.IncreasePopulation(this.LivingSpace);
             this.EC.StorageIncrease(this.BuildingStorage);
             this.EC.DrainEnergy(this.EnergyToBuild);
-        }
+        }*/
+    }
+
+    public override void subtractRequirements()
+    {
+        this.PC.IncreasePopulation(this.LivingSpace);
+        this.EC.StorageIncrease(this.BuildingStorage);
+        this.EC.DrainEnergy(this.EnergyToBuild);
+    }
+
+    
+    public override BuildingStatusBehaviour.Status canBuild()
+    {
+        BuildingStatusBehaviour.Status baseStatus = base.canBuild();
+        if (baseStatus != BuildingStatusBehaviour.Status.ALLOW_BUILDING)
+            return baseStatus;
+        if (!CreateAvailable())
+            return BuildingStatusBehaviour.Status.LACK_OF_MATERIALS;
+        return BuildingStatusBehaviour.Status.ALLOW_BUILDING;
     }
 
     public virtual bool CreateAvailable()
@@ -211,6 +219,7 @@ public class DefaultBuilding : Building
             this.PC.DecreasePopulation(this.LivingSpace);
         }
     }
+
     public virtual bool SellAvailable()
     {
         if (this.CanSell)

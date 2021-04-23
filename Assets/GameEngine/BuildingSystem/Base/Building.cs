@@ -169,4 +169,6 @@ public class Building : Structure, IBuilding
     {
         return this.status == Status.WORKS;
     }
+
+    public virtual void subtractRequirements() { }
 }

@@ -57,7 +57,7 @@ public class BuildingStatusBehaviour : MonoBehaviour
                 this.image.sprite = Resources.Load<Sprite>("BuildingStatus/1");
                 break;
             case Status.LACK_OF_MATERIALS:
-                this.image.sprite = Resources.Load<Sprite>("BuildingStatus/1");
+                this.image.sprite = Resources.Load<Sprite>("BuildingStatus/4");
                 break;
             case Status.DESTRUCTION:
                 this.image.sprite = Resources.Load<Sprite>("BuildingStatus/2");

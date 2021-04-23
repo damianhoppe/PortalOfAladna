@@ -69,6 +69,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                         buildingObject.transform.position = new Vector3(cursor.getPosition().x, cursor.getPosition().y, this.defaultZBuilding);
                         gridManager.addStructure((Structure)buildingTemp, position.getX(), position.getY());
                         buildingTemp.setEnabled(true);
+                        buildingTemp.subtractRequirements();
                     }
                     break;
                 case Mode.DESTRUCTION:
