@@ -102,16 +102,37 @@ public class DefaultBuilding : Building
     public virtual bool BlocksPlayerUnits { get; protected set; } = true;
     public virtual bool RequiresAccess { get; protected set; } = true;
     public virtual bool CanBuildAtNight { get; protected set; } = false;
-    
 
-    public virtual void onCreate()
+    protected override void update()
     {
+        base.update();
+        if (this.works())
+        {
+            this.hpBar.setHealth(this.CurrentHitpoints);
+        }
+    }
+
+    public override void onCursorOver()
+    {
+        base.onCursorOver();
+        if (!this.works())
+            return;
+        this.CurrentHitpoints -= 50 * Time.deltaTime;
+        Debug.Log(this.CurrentHitpoints);
+        if (this.CurrentHitpoints <= 0)
+            this.destroy();
+    }
+
+    public override void onCreate()
+    {
+        base.onCreate();
+        this.CurrentHitpoints = 100;
+        this.hpBar.setMaxHealth(this.MaxHitpoints);
         if (CreateAvailable())
         {
             this.PC.IncreasePopulation(this.LivingSpace);
             this.EC.StorageIncrease(this.BuildingStorage);
             this.EC.DrainEnergy(this.EnergyToBuild);
-            base.onCreate();
         }
     }
     public virtual bool CreateAvailable()
@@ -130,8 +151,11 @@ public class DefaultBuilding : Building
         }
         else return false;
     }
-    public virtual void onUpgrade()
+    public override void onUpgrade()
     {
+        base.onUpgrade();
+        if (this.lvl == 1)
+            return;
         if (this.UpgradeAvailable())
         {
             EC.DrainEnergy(this.EnergyToUpgrade);
@@ -238,8 +262,10 @@ public class DefaultBuilding : Building
         }
         return false;
     }
-    public virtual void onDestroy()
+    public override void onDestroy()
     {
+        base.onDestroy();
+        return;
         if (this.DestroyAvailable())
         {
             this.IsAlive = false;

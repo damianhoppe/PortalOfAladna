@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IOnCursorPositionChanged
 {
     Grid grid;
     [SerializeField]
@@ -11,14 +11,26 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     int height = 11;
 
-    private void Start()
+    private CursorBehaviour cursor;
+
+    public void Start()
     {
         if (width % 2 == 0)
             width++;
         if (height % 2 == 0)
             height++;
         grid = new Grid(width, height);
+        this.cursor = GameObject.Find("Cursor").GetComponent<CursorBehaviour>();
+        this.cursor.addOnPositionChangedListener(this);
     }
+
+    public void Update()
+    {
+        Structure structure = getStructure(this.cursor.getPosition());
+        if (structure != null)
+            structure.onCursorOver();
+    }
+
     public bool isInGrid(int x, int y)
     {
         if (x > width / 2 || x < -width / 2)
@@ -89,23 +101,35 @@ public class GridManager : MonoBehaviour
         addStructure(structure, (int)x, (int)y);
     }
 
-    public void destroyStructure(int x, int y)
+    public void destroyStructure(int x, int y, bool callOnDestroy = true)
     {
         Structure structure = getStructure(x, y);
         if(structure != null)
         {
+            if (callOnDestroy)
+                structure.onDestroy();
             Destroy(structure.gameObject);
             grid.setGameObject(null, x, y);
         }
     }
 
-    public void destroyStructure(Position position)
+    public void destroyStructure(Position position, bool callOnDestroy = true)
     {
-        destroyStructure(position.x, position.y);
+        destroyStructure(position.x, position.y, callOnDestroy);
     }
 
-    public void destroyStructure(float x, float y)
+    public void destroyStructure(float x, float y, bool callOnDestroy = true)
     {
-        destroyStructure((int)x, (int)y);
+        destroyStructure((int)x, (int)y, callOnDestroy);
+    }
+
+    public void onPositionChanged(Position oldPosition, Position newPosition)
+    {
+        Structure structure1 = getStructure(oldPosition);
+        if (structure1 != null)
+            structure1.onCursorLeft();
+        Structure structure2 = getStructure(newPosition);
+        if (structure2 != null)
+            structure2.onCursorEnter();
     }
 }

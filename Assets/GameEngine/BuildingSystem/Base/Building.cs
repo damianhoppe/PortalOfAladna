@@ -13,7 +13,7 @@ public class Building : Structure, IBuilding
     [SerializeField]
     int maxLvl;
 
-    int lvl;
+    protected int lvl;
     bool updateEnabled;
     bool initialized = false;
     float upgradePercentage;
@@ -23,10 +23,11 @@ public class Building : Structure, IBuilding
     int maxNumberOfEmployees;
     float currentPerformance;
 
-    Status status;
+    protected Status status;
     BuildingRequirements buildingRequirements;
     BuildingStatusBehaviour buildingStatus;
     GridManager gridManager;
+    protected HPBar hpBar;
 
     public Building() : base(EStructureType.Building)
     {
@@ -64,18 +65,17 @@ public class Building : Structure, IBuilding
         {
             Color color = this.spriteRenderer.color;
             this.upgradePercentage += this.currentPerformance * buildSpeed * Time.deltaTime;
-            color.a = this.upgradePercentage / 100;
+            color.a = this.upgradePercentage / 200 + 0.5f;
             this.spriteRenderer.color = color;
+            this.hpBar.setHealth(this.upgradePercentage);
             if (this.upgradePercentage >= 100)
             {
+                this.hpBar.setHealth(100);
                 this.upgradePercentage = 0;
                 this.lvl++;
                 this.onUpgrade();
                 this.status = Status.WORKS;
             }
-        }
-        else
-        {
         }
     }
 
@@ -114,6 +114,10 @@ public class Building : Structure, IBuilding
 
     public virtual void onCreate()
     {
+        this.hpBar = HPBar.create(this.gameObject);
+        this.hpBar.hide();
+        this.hpBar.setHealth(0);
+        this.hpBar.setFillColor(Color.white);
         this.upgradePercentage = 0;
         Structure structure = this.buildingRequirements.findNearestStructure(this.gridManager);
         if(structure != null)
@@ -122,15 +126,12 @@ public class Building : Structure, IBuilding
             Debug.Log("Nearest structure: null");
     }
 
-    public virtual void onDestroy()
-    {
-    }
-
     public virtual void onUpgrade()
     {
         switch(this.lvl)
         {
             case 1:
+                this.hpBar.setTargetFillColor(Color.red);
                 break;
             case 2:
                 break;
@@ -150,5 +151,22 @@ public class Building : Structure, IBuilding
     public void setEnabled(bool enabled)
     {
         this.updateEnabled = enabled;
+    }
+
+    public override void onCursorOver()
+    {
+        if (this.hpBar != null)
+            this.hpBar.show();
+    }
+
+    public override void onCursorLeft()
+    {
+        if (this.hpBar != null)
+            this.hpBar.hideWithDelay(1);
+    }
+
+    public bool works()
+    {
+        return this.status == Status.WORKS;
     }
 }

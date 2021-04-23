@@ -8,4 +8,9 @@ public interface IStructure
     Position getPosition();
     void setPosition(Position position);
     void onClick();
+    void destroy(bool forceDestruction);
+    void onDestroy();
+    void onCursorOver();
+    void onCursorEnter();
+    void onCursorLeft();
 }

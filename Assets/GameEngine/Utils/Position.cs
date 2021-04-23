@@ -19,6 +19,10 @@ public class Position
     {
         return (this.x == other.x && this.y == other.y);
     }
+    public bool Equals(int x, int y)
+    {
+        return (this.x == x && this.y == y);
+    }
 
     public Vector3 toVector3(float z = 0)
     {

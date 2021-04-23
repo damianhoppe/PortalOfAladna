@@ -53,7 +53,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         }
         if (Input.GetMouseButtonDown(0) && this.mode != Mode.NONE)
         {
-            Position position = building.getPosition();
+            Position position = cursor.getPosition();
             switch (this.mode)
             {
                 case Mode.BUILDING:
@@ -75,8 +75,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                     building = (Building)this.gridManager.getStructure(position.x, position.y);
                     if (building != null)
                     {
-                        building.onDestroy();
-                        this.gridManager.destroyStructure(position.x, position.y);
+                        building.destroy();
                     }
                     break;
             }
