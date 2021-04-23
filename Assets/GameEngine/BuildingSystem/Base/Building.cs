@@ -79,7 +79,7 @@ public class Building : Structure, IBuilding
         }
     }
 
-    public BuildingStatusBehaviour.Status canBuild()
+    public virtual BuildingStatusBehaviour.Status canBuild()
     {
         if(gridManager == null)
             this.gridManager = FindObjectOfType<GridManager>();

@@ -13,7 +13,6 @@ public class DefaultBuilding : Building
 
     protected override void Start()
     {
-        base.Start();
         //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
 
         UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
@@ -29,6 +28,7 @@ public class DefaultBuilding : Building
         //zapytanie do EconomyControllera "czy nas stac" aby utworzyc budynek
         //EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
         //this.OnBuild();
+        base.Start();
     }
 
     // Update is called once per frame
@@ -118,7 +118,6 @@ public class DefaultBuilding : Building
         if (!this.works())
             return;
         this.CurrentHitpoints -= 50 * Time.deltaTime;
-        Debug.Log(this.CurrentHitpoints);
         if (this.CurrentHitpoints <= 0)
             this.destroy();
     }
@@ -135,6 +134,7 @@ public class DefaultBuilding : Building
             this.EC.DrainEnergy(this.EnergyToBuild);
         }
     }
+
     public virtual bool CreateAvailable()
     {
         if (this.CanBuild)
@@ -154,8 +154,6 @@ public class DefaultBuilding : Building
     public override void onUpgrade()
     {
         base.onUpgrade();
-        if (this.lvl == 1)
-            return;
         if (this.UpgradeAvailable())
         {
             EC.DrainEnergy(this.EnergyToUpgrade);
@@ -265,7 +263,6 @@ public class DefaultBuilding : Building
     public override void onDestroy()
     {
         base.onDestroy();
-        return;
         if (this.DestroyAvailable())
         {
             this.IsAlive = false;
