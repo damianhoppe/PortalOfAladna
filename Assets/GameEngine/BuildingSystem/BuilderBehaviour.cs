@@ -118,7 +118,17 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
     {
         return this.mode;
     }
-
+    public void LoadBuilding(int x, int y, GameObject building)
+    {
+        GameObject buildingObject = Instantiate(building);
+        Building buildingTemp = buildingObject.GetComponent<Building>();
+        buildingTemp.setPosition(new Position(x, y));
+        Debug.Log("Test: " + buildingTemp.getBuildingRequirements().positionsToCheck.Count);
+        buildingObject.name = buildingTemp.getName();
+        buildingObject.transform.position = new Vector3(x,y, this.defaultZBuilding);
+        gridManager.addStructure((Structure)buildingTemp, x, y);
+        buildingTemp.setEnabled(true);
+    }
     public void setBuildingMode(Mode newMode, GameObject building = null)
     {
         this.cursor.resetColor();

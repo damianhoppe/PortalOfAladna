@@ -34,13 +34,13 @@ public class Grid
         {
             Vector3 v1 = GetWorldPositionLine(x, 0);
             Vector3 v2 = GetWorldPositionLine(x, this.height);
-            Debug.DrawLine(v1, v2, Color.white, 9999f);
+            Debug.DrawLine(v1, v2, Color.white, 99999999999999f);
         }
         for (int y = 0; y <= gridArray.GetLength(1); y++)
         {
             Vector3 v1 = GetWorldPositionLine(0, y);
             Vector3 v2 = GetWorldPositionLine(this.width, y);
-            Debug.DrawLine(v1, v2, Color.white, 9999f);
+            Debug.DrawLine(v1, v2, Color.white, 99999999999999f);
         }
     }
 
