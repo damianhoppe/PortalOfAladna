@@ -42,31 +42,75 @@ public class DefaultMine : DefaultBuilding
     public virtual DataStructures.Cost NightProduction { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     public virtual DataStructures.Cost AccumulatedResources { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
     public virtual DataStructures.Cost DeliverySize { get; protected set; } = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    public virtual float ExtractionPerCycle { get; protected set; } = 0.0f; //do podglądu produkcji dziennej?
 
-    public virtual float MinningPower { get; protected set; } = 1.0f; // ile surowcow na cykl
-    public virtual float MinningSpeed { get; protected set; } = 1.0f; // ile trwa cykl (mniejsze==szybciej)
-    public virtual float MinningDelay { get; protected set; } // ile do nast. dostawy
+    public virtual float MiningPower { get; protected set; } = 1.0f; // ile surowcow na cykl
+    public virtual float MiningSpeed { get; protected set; } = 1.0f; // ile trwa cykl (mniejsze==szybciej)
+    public virtual float MiningDelay { get; protected set; } // ile do nast. dostawy
     public virtual int MinedResource { get; protected set; } = 0; //PlayerObjectID dla rodzaju zloza
 
     public List<DefaultResource> SurroundingOres = new List<DefaultResource>();
 
     public virtual void CheckSurroundings()
     {
-        Position tmpPosition = new Position((int)this.transform.position.x+1, (int)this.transform.position.y);
+        //WYLICZ PortalDistance
+
+        //this.MiningPower = 1.0f * (this.BuildingLevel) * (1.0f + this.PortalDistance / 2);
+        this.ExtractionPerCycle = 0.0f;
+
+        Position tmpPosition = new Position((int)this.transform.position.x + 1, (int)this.transform.position.y);
         Structure tmpStructure = GM.getStructure(tmpPosition);
+        SurroundingOres = new List<DefaultResource>();
+
         if (tmpStructure.PlayerObjectID == this.MinedResource && tmpStructure.getType()==EStructureType.Ore)
         {
             SurroundingOres.Add((DefaultResource)tmpStructure);
         }
+
+        tmpPosition = new Position((int)this.transform.position.x - 1, (int)this.transform.position.y);
+        tmpStructure = GM.getStructure(tmpPosition);
+
+        if (tmpStructure.PlayerObjectID == this.MinedResource && tmpStructure.getType() == EStructureType.Ore)
+        {
+            SurroundingOres.Add((DefaultResource)tmpStructure);
+        }
+
+        tmpPosition = new Position((int)this.transform.position.x, (int)this.transform.position.y - 1);
+        tmpStructure = GM.getStructure(tmpPosition);
+
+        if (tmpStructure.PlayerObjectID == this.MinedResource && tmpStructure.getType() == EStructureType.Ore)
+        {
+            SurroundingOres.Add((DefaultResource)tmpStructure);
+        }
+
+        tmpPosition = new Position((int)this.transform.position.x, (int)this.transform.position.y + 1);
+        tmpStructure = GM.getStructure(tmpPosition);
+
+        if (tmpStructure.PlayerObjectID == this.MinedResource && tmpStructure.getType() == EStructureType.Ore)
+        {
+            SurroundingOres.Add((DefaultResource)tmpStructure);
+        }
+        
+        ExtractionPerCycle = 0.0f;
+        foreach (DefaultResource Resource in SurroundingOres)
+        {
+            ExtractionPerCycle += Resource.OreRichness*this.MiningPower;
+        }
+
         //if tmpStructure to kopalnia X albo kopalnia Y
         //  dodaj do listy
     }
     public virtual void MineResources()
     {
+        DataStructures.Cost yield = new DataStructures.Cost();
         foreach(DefaultResource Resource in SurroundingOres)
         {
-           this.AccumulatedResources+=Resource.Mine();
+           yield+=Resource.Mine(this.MiningPower);
         }
+        if (DNC.IsDay) this.DailyProduction = yield;
+        else this.NightProduction = yield;
+        
+        this.AccumulatedResources += yield;
         DeliverResources();
     }
     public virtual void ChangeActivity()
