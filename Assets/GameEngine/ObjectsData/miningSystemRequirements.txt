@@ -1,0 +1,84 @@
+Surowce:
+
+Podzia³ kopalni z³ó¿ na p³ytkie i g³êbokie
+
+	P³ytkie - limit zasobów, szybkie wydobycie, niski koszt
+	G³êbokie - brak limitu, wolne wydobycie, wiêkszy koszt, wymaga zaawansowanego budynku wydobywczego
+
+Z³o¿a mog¹ byæ:
+
+	Ubogie - du¿y limit albo najlepiej bez limitu
+	Normalne - limit albo bez	
+	Bogate - dobrze gdyby siê koñczy³y
+
+Wp³yw ulepszeñ - do ustalenia, aby g³êbokie nie by³y zbyt OP ale ¿eby by³ sens ulepszania p³ytkich
+
+Surowce
+
+Z³oto - z 'potoków' i 'kopalni' oraz przeciwników
+Drewno - z 'lasów' i 'g³êbokich lasów'
+Kamieñ - z 'kup kamieni' i 'kamienio³omów'
+Metal - ze 'z³omu' oraz 'kopalni'
+Kryszta³ - ze 'zbieractwa' oraz 'kopalni'
+
+Zak³adany (minimalny) uk³ad surowców:
+
+P³ytkie Z³oto, Drewno, Kamieñ blisko spawnu
+P³ytki Metal w pewnej odleg³oœci
+P³ytki kryszta³ w dalszej odleg³oœci
+
+G³êboki kamieñ/z³oto/drewno/metal w daleszej
+G³eboki kryszta³ - najdalej
+
+Mog¹ byæ dodatkowe z³o¿a 'losowe' ale powy¿sze to jest minimum aby to by³o grywalne
+Dodatkowe mog¹ byæ np. 'Rich/Large', z bonusem do wydobycia ale limitem iloœci
+'Pewniaki' mog¹ byæ ubogie ale nieskoñczone
+
+Jakiœ odstêp od krawêdzi mapy gdyby tam mieli siê spawnowaæ przeciwnicy aby da³o siê chroniæ kopalnie
+
+
+
+V===PROGRESS===V
+
+Pocz¹tkowe surowce: trochê z³ota i drewna, mo¿e trochê kamienia na wie¿e obronne
+
+	Wydobycie z³ota z potoku - tylko drewno
+	Wydobycie drewna z lasu - z³oto i drewno
+
+Maj¹c z³oto i drewno:
+
+	Wydobycie kamienia z kupy kamieni - z³oto i drewno
+
+Maj¹c z³oto, drewno i kamieñ
+
+	Budowa inventora
+	Drewniane podstawowe wie¿yczki
+	
+Maj¹c inventor:
+
+	Wydobycie metalu ze z³omu
+
+Maj¹c metal:
+
+	Kamienne i metalowe podstawowe wie¿yczki
+	Drewniane i kammienne specjalne wie¿yczki
+	G³ebokie wydobycie z³ota
+	G³ebokie wydobycie drewna
+	G³êbokie wydobycie kamienia
+	Budowa Researchera
+
+Maj¹c Researchera
+
+	Wydobycie kryszta³ów
+
+Maj¹c kryszta³y
+
+	Magiczne zwyk³e wie¿yczki
+	Metalowe specjalne wie¿yczki
+	G³êbokie wydobycie metalu
+	Budowa Akademii
+
+Maj¹c akademiê
+
+	G³êbokie wydobycie kryszta³ów
+	Magiczne specjalne wie¿yczki
