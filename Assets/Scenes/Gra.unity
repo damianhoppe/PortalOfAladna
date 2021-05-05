@@ -656,7 +656,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec847f6a9f83cb448a2cc0911f991ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingsList: []
+  BuildingsList:
+  - {fileID: 7741259248687653769, guid: 96cf314a5aa6a8645ab5c11f14cb4ab6, type: 3}
+  - {fileID: 2636172962504869162, guid: acec2ed86fc69254ebc276ddba5d1c03, type: 3}
+  - {fileID: 5758435661246925814, guid: 8e2efe20978b7054c9acd3d1792b22e7, type: 3}
+  - {fileID: 7049006272243802083, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
+  - {fileID: 3819513532995537054, guid: 190ae8740ef4abf44a3470bd2644c5bf, type: 3}
+  - {fileID: 261802891652193934, guid: 01840ae91176dfe4b83d72e1dafae929, type: 3}
+  - {fileID: 6060954136686214630, guid: 83d1458f2c309b544bd1ae1e3634d15e, type: 3}
+  - {fileID: 6341111254424058046, guid: a8e935e404842044191c2523aef3a617, type: 3}
 --- !u!4 &815722085
 Transform:
   m_ObjectHideFlags: 0
