@@ -25,24 +25,6 @@ public class DataStructures : MonoBehaviour
         public float Crystals { get; protected set; } = 0.0f;
         public float Humans { get; protected set; } = 0.0f;
 
-        public Cost()
-        {
-            this.Gold = 0.0f; 
-            this.Wood = 0.0f; 
-            this.Stone = 0.0f;
-            this.Metal = 0.0f;
-            this.Crystals = 0.0f;
-            this.Humans = 0.0f;
-        }
-        public Cost(int G, int W, int S, int M, int C, int H)
-        {
-            this.Gold = (float)G;
-            this.Wood = (float)W;
-            this.Stone = (float)S;
-            this.Metal = (float)M;
-            this.Crystals = (float)C;
-            this.Humans = (float)H;
-        }
         public Cost(float G, float W, float S, float M, float C, float H)
         {
             this.Gold = G;
@@ -137,66 +119,6 @@ public class DataStructures : MonoBehaviour
             CostString += "Crystals:" + this.Crystals.ToString() + ";";
             CostString += "Humans:" + this.Humans.ToString() + ";";
             return CostString;
-        }
-        public static Cost ChangeGold(Cost koszt,float gold)
-        {
-            koszt.Gold += gold;
-            return koszt;
-        }
-        public static Cost ChangeWood(Cost koszt, float wood)
-        {
-            koszt.Wood += wood;
-            return koszt;
-        }
-        public static Cost ChangeStone(Cost koszt, float stone)
-        {
-            koszt.Stone += stone;
-            return koszt;
-        }
-        public static Cost ChangeMetal(Cost koszt, float metal)
-        {
-            koszt.Metal += metal;
-            return koszt;
-        }
-        public static Cost ChangeCrystal(Cost koszt, float crystal)
-        {
-            koszt.Crystals += crystal;
-            return koszt;
-        }
-        public static Cost ChangeHumans(Cost koszt, float humans)
-        {
-            koszt.Humans += humans;
-            return koszt;
-        }
-        public static Cost ChangeGold(Cost koszt, int gold)
-        {
-            koszt.Gold += (float)gold;
-            return koszt;
-        }
-        public static Cost ChangeWood(Cost koszt, int wood)
-        {
-            koszt.Wood += (float)wood;
-            return koszt;
-        }
-        public static Cost ChangeStone(Cost koszt, int stone)
-        {
-            koszt.Stone += (float)stone;
-            return koszt;
-        }
-        public static Cost ChangeMetal(Cost koszt, int metal)
-        {
-            koszt.Metal += (float)metal;
-            return koszt;
-        }
-        public static Cost ChangeCrystal(Cost koszt, int crystal)
-        {
-            koszt.Crystals += (float)crystal;
-            return koszt;
-        }
-        public static Cost ChangeHumans(Cost koszt, int humans)
-        {
-            koszt.Humans += (float)humans;
-            return koszt;
         }
     }
 }

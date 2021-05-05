@@ -107,5 +107,4 @@ public class EconomyController : MonoBehaviour
             this.CurrentEnergy = this.EnergyLimit;
         }
     }
-
 }

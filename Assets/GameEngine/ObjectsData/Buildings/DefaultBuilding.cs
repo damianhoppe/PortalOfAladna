@@ -10,7 +10,6 @@ public class DefaultBuilding : Building
     public virtual EconomyController EC { get; protected set; }
     public virtual PopulationController PC { get; protected set; }
     public virtual DayNightController DNC { get; protected set; }
-    public virtual GridManager GM { get; protected set; }
 
     protected override void Start()
     {
@@ -19,7 +18,6 @@ public class DefaultBuilding : Building
         UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
         EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
         PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
-        GM = GameObject.FindObjectOfType<GridManager>();
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
 
         this.CurrentHitpoints = this.MaxHitpoints;
@@ -44,7 +42,7 @@ public class DefaultBuilding : Building
     public virtual int ObjectTypeID { get; protected set; } = 1;
     public virtual string ObjectSubtype { get; protected set; } = "Default";
     public virtual int ObjectSubtypeID { get; protected set; } = 0;
-    //public virtual int PlayerObjectID { get; protected set; } = 0;
+    public virtual int PlayerObjectID { get; protected set; } = 0;
 
     public virtual bool IsFriendly { get; protected set; } = true;
     public virtual bool IsHostile { get; protected set; } = false;
