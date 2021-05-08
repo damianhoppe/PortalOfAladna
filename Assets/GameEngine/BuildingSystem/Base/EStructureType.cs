@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum EStructureType
 {
-    Building, Ore
+    Building, Ore, Enemy
 }
