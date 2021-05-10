@@ -107,7 +107,7 @@ public class DefaultMine : DefaultBuilding
         {
            yield+=Resource.Mine(this.MiningPower);
         }
-        if (DNC.IsDay) this.DailyProduction = yield;
+        if (DNC.IsDay()) this.DailyProduction = yield;
         else this.NightProduction = yield;
         
         this.AccumulatedResources += yield;
