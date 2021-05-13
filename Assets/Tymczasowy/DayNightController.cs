@@ -7,12 +7,14 @@ using UnityEngine;
 public class DayNightController : MonoBehaviour
 {
     bool day = true;
+    int DayNum;
     [SerializeField]
     List<Spawner_TMP> spawners;
     Light light;
     // Start is called before the first frame update
     void Start()
     {
+        DayNum = 0;
         light = GameObject.Find("Light").GetComponent<Light>();
     }
 
@@ -27,7 +29,25 @@ public class DayNightController : MonoBehaviour
     private void LateUpdate()
     {
     }
-    
+
+    public Dictionary<string, float> SaveMe()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+        save.Add("DayNum", DayNum);
+
+
+
+        return save;
+    }
+    public void LoadMe(Dictionary<string, float> save)
+    {
+        float data;
+        save.TryGetValue("DayNym", out data);
+        DayNum = (int)data;
+
+
+    }
+
     public void UpdatePathfinding()
     {
         ScanPathfinding();

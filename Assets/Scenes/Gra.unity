@@ -621,7 +621,6 @@ GameObject:
   - component: {fileID: 815722085}
   - component: {fileID: 815722084}
   - component: {fileID: 815722083}
-  - component: {fileID: 815722086}
   m_Layer: 0
   m_Name: SaveController
   m_TagString: Untagged
@@ -657,14 +656,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuildingsList:
-  - {fileID: 7741259248687653769, guid: 96cf314a5aa6a8645ab5c11f14cb4ab6, type: 3}
-  - {fileID: 2636172962504869162, guid: acec2ed86fc69254ebc276ddba5d1c03, type: 3}
-  - {fileID: 5758435661246925814, guid: 8e2efe20978b7054c9acd3d1792b22e7, type: 3}
   - {fileID: 7049006272243802083, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
+  - {fileID: 2387167614866670930, guid: 1a55f295cd38dc340a68e94488172103, type: 3}
   - {fileID: 3819513532995537054, guid: 190ae8740ef4abf44a3470bd2644c5bf, type: 3}
   - {fileID: 261802891652193934, guid: 01840ae91176dfe4b83d72e1dafae929, type: 3}
-  - {fileID: 6060954136686214630, guid: 83d1458f2c309b544bd1ae1e3634d15e, type: 3}
-  - {fileID: 6341111254424058046, guid: a8e935e404842044191c2523aef3a617, type: 3}
 --- !u!4 &815722085
 Transform:
   m_ObjectHideFlags: 0
@@ -679,26 +674,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &815722086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815722082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ec847f6a9f83cb448a2cc0911f991ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BuildingsList:
-  - {fileID: 2636172962504869162, guid: acec2ed86fc69254ebc276ddba5d1c03, type: 3}
-  - {fileID: 5758435661246925814, guid: 8e2efe20978b7054c9acd3d1792b22e7, type: 3}
-  - {fileID: 7049006272243802083, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
-  - {fileID: 3819513532995537054, guid: 190ae8740ef4abf44a3470bd2644c5bf, type: 3}
-  - {fileID: 261802891652193934, guid: 01840ae91176dfe4b83d72e1dafae929, type: 3}
-  - {fileID: 6060954136686214630, guid: 83d1458f2c309b544bd1ae1e3634d15e, type: 3}
-  - {fileID: 6341111254424058046, guid: a8e935e404842044191c2523aef3a617, type: 3}
 --- !u!1 &1150630769
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +908,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildings:
   - {fileID: 5622522296184841837, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
-  - {fileID: 3993969840122632321, guid: acec2ed86fc69254ebc276ddba5d1c03, type: 3}
+  - {fileID: 5573503752129296303, guid: 01840ae91176dfe4b83d72e1dafae929, type: 3}
   - {fileID: 5876004205862889053, guid: a8e935e404842044191c2523aef3a617, type: 3}
   - {fileID: 7921114905061562079, guid: 83d1458f2c309b544bd1ae1e3634d15e, type: 3}
   - {fileID: 2555713118682852835, guid: 1a55f295cd38dc340a68e94488172103, type: 3}

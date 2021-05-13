@@ -22,6 +22,34 @@ public class PopulationController : MonoBehaviour
     public int BusyPopulation { get; protected set; }
     public float Efficiency { get; protected set; }
 
+    public Dictionary<string, float> SaveMe()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+
+        save.Add("MaxPopulation", MaxPopulation);
+        save.Add("CurrentPopulation", CurrentPopulation);
+        save.Add("FreePopulation", FreePopulation);
+        save.Add("BusyPopulation", BusyPopulation);
+        save.Add("Efficiency", Efficiency);
+
+        return save;
+    }
+    public void LoadMe(Dictionary<string,float> save)
+    {
+        float data;
+        save.TryGetValue("MaxPopulation",out data);
+        MaxPopulation = (int)data;
+        save.TryGetValue("CurrentPopulation", out data);
+        CurrentPopulation = (int)data;
+        save.TryGetValue("FreePopulation", out data);
+        FreePopulation = (int)data;
+        save.TryGetValue("BusyPopulation", out data);
+        BusyPopulation = (int)data;
+        save.TryGetValue("Efficiency", out data);
+        Efficiency = data;
+
+    }
+
     public bool EnoughPeopleTEST(int ludzie)
     {
 

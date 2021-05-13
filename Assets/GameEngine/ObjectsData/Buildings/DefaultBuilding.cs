@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ public class DefaultBuilding : Building
         PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
         GM = GameObject.FindObjectOfType<GridManager>();
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
-
+        
         this.CurrentHitpoints = this.MaxHitpoints;
 
         //czy zmiana TotalCost zmieni BaseCost?
@@ -41,6 +42,7 @@ public class DefaultBuilding : Building
     public virtual string ObjectName { get; protected set; } = "Default Building";
     public virtual string ObjectDescription { get; protected set; } = "Default Building description";
     public virtual string ObjectType { get; protected set; } = "Building";
+    
     public virtual int ObjectTypeID { get; protected set; } = 1;
     public virtual string ObjectSubtype { get; protected set; } = "Default";
     public virtual int ObjectSubtypeID { get; protected set; } = 0;
@@ -73,6 +75,24 @@ public class DefaultBuilding : Building
     
     public virtual DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(100.0f, 10.0f, 5.0f, 0.0f, 0.0f, 5.0f);
     public virtual DataStructures.Cost TotalCost { get; protected set; }
+
+    public Dictionary<string,float> save()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+
+        save.Add("CurrentHitpoints", CurrentHitpoints);
+        save.Add("MaxHitpoints", MaxHitpoints);
+        return save;
+    }
+    public void load(Dictionary<string,float> save)
+    {
+        float data;
+        save.TryGetValue("CurrentHitpoints",out data);
+        CurrentHitpoints = data;
+        save.TryGetValue("MaxHitpoints", out data);
+        MaxHitpoints = data;
+    }
+
     public virtual DataStructures.Cost UpgradeCost { get; protected set; }
     public virtual DataStructures.Cost RepairCost { get; protected set; }
 

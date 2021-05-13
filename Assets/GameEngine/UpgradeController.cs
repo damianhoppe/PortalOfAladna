@@ -38,6 +38,43 @@ public class UpgradeController : MonoBehaviour
     {
 
     }
+
+    public Dictionary<string, float> SaveMe()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+
+        save.Add("Inventors", Inventors);
+        save.Add("Researchers", Researchers);
+        save.Add("Academies", Academies);
+        if(AllowMetalBuildings) save.Add("AllowMetalBuildings", 1f);
+        else save.Add("AllowMetalBuildings", 0f);
+        if (AllowCrystalBuildings) save.Add("AllowCrystalBuildings", 1f);
+        else save.Add("AllowCrystalBuildings", 0f);
+        if (AllowMagicBuildings) save.Add("AllowMagicBuildings", 1f);
+        else save.Add("AllowMagicBuildings", 0f);
+
+        return save;
+    }
+    public void LoadMe(Dictionary<string,float> save)
+    {
+        float data;
+        save.TryGetValue("Inventors", out data);
+        Inventors = (int)data;
+        save.TryGetValue("Researchers", out data);
+        Researchers = (int)data;
+        save.TryGetValue("Academies", out data);
+        Academies = (int)data;
+        save.TryGetValue("AllowMetalBuildings", out data);
+        if (data == 1) AllowMetalBuildings = true;
+        else AllowMetalBuildings = false;
+        save.TryGetValue("AllowCrystalBuildings", out data);
+        if (data == 1) AllowCrystalBuildings = true;
+        else AllowCrystalBuildings = false;
+        save.TryGetValue("AllowMagicBuildings", out data);
+        if (data == 1) AllowMagicBuildings = true;
+        else AllowMagicBuildings = false;
+    }
+
     public bool CanBuild(bool metal, bool crystal, bool magic)
     {
         if(metal == true)

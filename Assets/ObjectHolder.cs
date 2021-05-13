@@ -6,7 +6,7 @@ public class ObjectHolder : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    public Dictionary<string, GameObject> Buildings = new Dictionary<string, GameObject>();
+    public Dictionary<int, GameObject> Buildings = new Dictionary<int, GameObject>();
     [SerializeField]
     List<GameObject> BuildingsList = new List<GameObject>();
     void Start()
@@ -16,12 +16,8 @@ public class ObjectHolder : MonoBehaviour
         foreach(var building in BuildingsList)
         {
             Debug.Log(building);
-            Buildings.Add(building.GetComponent<Building>().name, building);
+            Buildings.Add(building.GetComponent<Building>().PlayerObjectID, building);
 
-        }
-        foreach (string key in Buildings.Keys)
-        {
-            Debug.Log(key);
         }
     }
 
