@@ -2,34 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class defaultEnemy : MonoBehaviour
+public class defaultEnemy : unitObject
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        GM = GameObject.FindObjectOfType<GridManager>();
-        DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
-        EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
     }
-    [SerializeField] string Name;
-    protected EStructureType Type;
-    Position CurrentPosition;
-    Position TargetPosition;
+    
 
-    public virtual DayNightController DNC { get; protected set; }
-    public virtual GridManager GM { get; protected set; }
-    public virtual EconomyController EC { get; protected set; }
-
-    public virtual int PlayerObjectID { get; protected set; } = 0;
-    public virtual string ObjectName { get; protected set; } = "Default Building";
-    public virtual string ObjectDescription { get; protected set; } = "Default Building description";
-    public virtual string ObjectType { get; protected set; } = "Building";
+    public virtual string UnitName { get; protected set; } = "Default Enemy";
+    public virtual string UnitDescription { get; protected set; } = "Default Enemy description";
+    public virtual string UnitType { get; protected set; } = "Enemy";
 
     public virtual bool IsFriendly { get; protected set; } = true;
     public virtual bool IsHostile { get; protected set; } = false;
@@ -54,44 +44,6 @@ public class defaultEnemy : MonoBehaviour
         //this.type = type;
     }
 
-    public Position getCurrentPosition()
-    {
-        return this.CurrentPosition;
-    }
-    public Position getTargetPosition()
-    {
-        return this.TargetPosition;
-    }
-
-    public void setCurrentPosition(Position position)
-    {
-        this.CurrentPosition = position;
-    }
-    public void setTargetPosition(Position position)
-    {
-        this.TargetPosition = position;
-    }
-    public virtual void onClick()
-    {
-        Debug.Log(this.Name + " - onClick()");
-    }
-    public EStructureType getType()
-    {
-        return this.Type;
-    }
-
-    public virtual void onCursorOver()
-    {
-    }
-
-
-    public virtual void onCursorEnter()
-    {
-    }
-
-    public virtual void onCursorLeft()
-    {
-    }
     public virtual void onHit()
     {
 
@@ -100,14 +52,7 @@ public class defaultEnemy : MonoBehaviour
     {
 
     }
-    public virtual void onSpawn()
-    {
 
-    }
-    public virtual void onDespawn()
-    {
-
-    }
     public virtual void AttackTarget()
     {
 
