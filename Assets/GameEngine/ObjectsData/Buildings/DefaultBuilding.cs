@@ -333,4 +333,9 @@ public class DefaultBuilding : Building
         }
         else return false;
     }
+    public virtual float[] Modifiers()
+    {
+        float[] values = new float[]{ this.PositionObstacle, this.PositionValue, this.PositionDanger };
+        return values;
+    }
 }
