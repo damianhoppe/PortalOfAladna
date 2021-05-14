@@ -273,7 +273,7 @@ public class DefaultBuilding : Building
             float DMG = (Damage - this.Armor) * (1.0f - this.Protection / 100.0f);
             if (DMG <= 0.0f) DMG=0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) onDestroy();
+            if (this.CurrentHitpoints <= 0.0f) destroy();
             else
             {
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints));
@@ -285,7 +285,7 @@ public class DefaultBuilding : Building
             float DMG = Damage * (1.0f - this.Protection / 100.0f) - this.Armor;
             if (DMG <= 0.0f) DMG = 0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) onDestroy();
+            if (this.CurrentHitpoints <= 0.0f) destroy();
             else 
             { 
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints)); 
@@ -294,22 +294,29 @@ public class DefaultBuilding : Building
         }
         return false;
     }
+    public override void destroy(bool forceDestruction = false)
+    {
+        if (this.DestroyAvailable())
+        {
+            base.destroy(forceDestruction);
+        }
+        
+
+    }
     public override void onDestroy()
     {
         base.onDestroy();
-        if (this.DestroyAvailable())
+
+        this.IsAlive = false;
+        this.IsDead = true;
+        if (this.ActiveAtNight)
         {
-            this.IsAlive = false;
-            this.IsDead = true;
-            if (this.ActiveAtNight)
-            {
-                PC.KillHumans(this.RequiredHumans);
-            }
-            this.EC.StorageDecrease(this.BuildingStorage);
-            this.PC.DecreasePopulation(this.LivingSpace);
-            Destroy(this.gameObject);
-            //base.OnDeath();
+            PC.KillHumans(this.RequiredHumans);
         }
+        this.EC.StorageDecrease(this.BuildingStorage);
+        this.PC.DecreasePopulation(this.LivingSpace);
+        //destroy();
+        //base.OnDeath();
     }
     public virtual bool DestroyAvailable()
     {
