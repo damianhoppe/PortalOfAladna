@@ -307,6 +307,7 @@ public class DefaultBuilding : Building
             }
             this.EC.StorageDecrease(this.BuildingStorage);
             this.PC.DecreasePopulation(this.LivingSpace);
+            Destroy(this.gameObject);
             //base.OnDeath();
         }
     }

@@ -28,8 +28,10 @@ public class biednaPierdolonaPiechota : defaultEnemy
     public float movePrecision = 0.2f;
 
     public float moveSpeed = 10.0f;
+    public int attackSpeed { get; protected set; } = 200;
+    public int attackReady { get; protected set; } = 0;
 
-    
+
 
     protected override void Start()
     {
@@ -65,13 +67,20 @@ public class biednaPierdolonaPiechota : defaultEnemy
         }
         if (IsAttacking)
         {
-            AttackTarget.OnHit(200000.0f);
-            Debug.Log("Job z paticku w " + AttackTarget);
-            if (AttackTarget.IsDead)
+            this.attackReady++;
+            if (this.attackReady >= this.attackSpeed)
             {
-                IsMoving = true;
-                IsAttacking = false;
+                this.attackReady -= this.attackSpeed;
+                AttackTarget.OnHit(100.0f);
+                Debug.Log("Job z paticku w " + AttackTarget);
+                if (AttackTarget.IsDead)
+                {
+                    //Destroy(AttackTarget);
+                    IsMoving = true;
+                    IsAttacking = false;
+                }
             }
+            
         }
     }
     public void setPosition()
