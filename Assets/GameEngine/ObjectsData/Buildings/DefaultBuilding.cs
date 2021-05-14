@@ -7,6 +7,8 @@ public class DefaultBuilding : Building
 {
     // Start is called before the first frame update
 
+    
+
     public virtual UpgradeController UC { get; protected set; }
     public virtual EconomyController EC { get; protected set; }
     public virtual PopulationController PC { get; protected set; }
@@ -15,6 +17,7 @@ public class DefaultBuilding : Building
 
     protected override void Start()
     {
+        this.IsPlayerBuilding = true;
         //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
 
         UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();

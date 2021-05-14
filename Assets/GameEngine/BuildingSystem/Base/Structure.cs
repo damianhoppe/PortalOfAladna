@@ -11,6 +11,8 @@ public class Structure : MonoBehaviour, IStructure
     Position position;
     public bool cursorOver = true;
 
+    public virtual bool IsPlayerBuilding { get; protected set; } = false;
+
     public virtual int PlayerObjectID { get; protected set; } = 0;
 
     public Structure(EStructureType type)
