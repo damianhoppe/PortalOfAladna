@@ -66,11 +66,19 @@ public class Position
     }
     public static Position operator +(Position A, int[] B)
     {
-        return new Position(A.x + B[0], A.x + B[1]);
+        return new Position(A.x + B[0], A.y + B[1]);
     }
     public static Position operator -(Position A, int[] B)
     {
-        return new Position(A.x - B[0], A.x - B[1]);
+        return new Position(A.x - B[0], A.y - B[1]);
+    }
+    public static Position operator +(Position A, Vector2Int B)
+    {
+        return new Position(A.x + B.x, A.y + B.y);
+    }    
+    public static Position operator -(Position A, Vector2Int B)
+    {
+        return new Position(A.x - B.x, A.y - B.y);
     }
     public Position ShiftPosition(int X, int Y)
     {
