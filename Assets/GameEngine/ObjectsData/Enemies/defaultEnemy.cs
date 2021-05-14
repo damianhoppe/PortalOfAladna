@@ -17,9 +17,9 @@ public class defaultEnemy : unitObject
     }
     
 
-    public virtual string UnitName { get; protected set; } = "Default Enemy";
-    public virtual string UnitDescription { get; protected set; } = "Default Enemy description";
-    public virtual string UnitType { get; protected set; } = "Enemy";
+    public virtual string EnemyName { get; protected set; } = "Default Enemy";
+    public virtual string EnemyDescription { get; protected set; } = "Default Enemy description";
+    public virtual string EnemyType { get; protected set; } = "Enemy";
 
     public virtual bool IsFriendly { get; protected set; } = true;
     public virtual bool IsHostile { get; protected set; } = false;
