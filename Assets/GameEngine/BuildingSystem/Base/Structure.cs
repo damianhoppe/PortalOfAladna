@@ -14,6 +14,8 @@ public class Structure : MonoBehaviour, IStructure
     public virtual bool IsPlayerBuilding { get; protected set; } = false;
 
     public virtual int PlayerObjectID { get; protected set; } = 0;
+    public virtual int DistanceToCenter { get; protected set; } = 0;
+    public virtual int DistanceToPortal { get; protected set; } = 999;
 
     public Structure(EStructureType type)
     {
@@ -84,5 +86,9 @@ public class Structure : MonoBehaviour, IStructure
 
     public virtual void onCursorLeft()
     {
+    }
+    public virtual void setDistanceToCenter()
+    {
+        this.DistanceToCenter = (Mathf.Abs(this.position.x) + Mathf.Abs(this.position.y));
     }
 }
