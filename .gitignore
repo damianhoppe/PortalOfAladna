@@ -38,3 +38,7 @@ ehthumbs.db
 Library/SourceAssetDB
 Library/ArtifactDB
 *.zip
+Assets/Biblioteki itd/JsonDotNet/JsonDotNet201Source.zip.meta
+Assets/Save/Economy.dat
+Assets/Save/Map.dat
+Assets/Save/Population.dat

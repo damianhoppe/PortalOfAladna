@@ -27,7 +27,6 @@ public class SaveController : MonoBehaviour
     DayNightController DNC;
     [SerializeField]
     List<string> jsons;
-    List<SaveObject> mapStructures = new List<SaveObject>();
     ObjectHolder OH;
     // Start is called before the first frame update
     void Start()
@@ -93,7 +92,7 @@ public class SaveController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            GetDataFromGrid();
+            
             SaveMap();
             Save();
         }
@@ -105,12 +104,12 @@ public class SaveController : MonoBehaviour
                         
         }
     }
-    void GetDataFromGrid()
+    List<SaveObject> GetDataFromGrid()
     {
         
         int width = GM.getWidth();
         int height = GM.getHeight();
-        mapStructures.Clear();
+        List<SaveObject> mapStructures = new List<SaveObject>();
         for (int x = -width / 2; x <= width / 2; x++) {
 
             for (int y = -height / 2; y <= height / 2; y++)
@@ -127,11 +126,15 @@ public class SaveController : MonoBehaviour
 
         }
 
+        return mapStructures;
+
     }
 
     void SaveMap()
     {
+        
         Debug.Log("Saving...");
+        List<SaveObject> mapStructures = GetDataFromGrid();
         int width = GM.getWidth();
         int height = GM.getHeight();
         File.WriteAllText(saveMap, string.Empty);
@@ -155,6 +158,7 @@ public class SaveController : MonoBehaviour
     void LoadMap()
     {
         Debug.Log("Loading...");
+        ClearMap();
         using (FileStream fs = new FileStream(saveMap, FileMode.Open, FileAccess.Read))
         using (StreamReader sr = new StreamReader(fs))
         {
@@ -313,4 +317,25 @@ public class SaveController : MonoBehaviour
         DNC.LoadMe(dnc);
     }
 
+    void ClearMap()
+    {
+        int width = GM.getWidth();
+        int height = GM.getHeight();
+        List<SaveObject> mapStructures = new List<SaveObject>();
+        for (int x = -width / 2; x <= width / 2; x++)
+        {
+
+            for (int y = -height / 2; y <= height / 2; y++)
+            {
+                Debug.Log(x + " " + y);
+                Structure objectOnGrid = GM.getStructure(x, y);
+                if (objectOnGrid != null)
+                {
+                    DefaultBuilding DB = (DefaultBuilding)objectOnGrid;
+                    DB.destroy();
+                }
+            }
+
+        }
+    }
 }

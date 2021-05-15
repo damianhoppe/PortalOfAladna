@@ -15,5 +15,6 @@ public class SaveObject
         this.posY = posY;
         this.id = id;
         this.save = save;
+
     }
 }
