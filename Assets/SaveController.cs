@@ -28,9 +28,10 @@ public class SaveController : MonoBehaviour
     [SerializeField]
     List<string> jsons;
     ObjectHolder OH;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
+        Debug.Log("Start");
         savePath = Application.dataPath + "/Save/";
         saveDayNight = savePath+ "/DayNight.dat";
         saveMap = savePath + "/Map.dat";
@@ -119,7 +120,6 @@ public class SaveController : MonoBehaviour
                 if (objectOnGrid != null)
                 {
                     DefaultBuilding DB = (DefaultBuilding)objectOnGrid;
-
                     mapStructures.Add(new SaveObject(x, y, DB.PlayerObjectID, DB.save()));
                 }
             }
@@ -132,8 +132,12 @@ public class SaveController : MonoBehaviour
 
     void SaveMap()
     {
-        
         Debug.Log("Saving...");
+        if (GM == null)
+        {
+            Debug.Log("GM is null");
+            return;
+        }
         List<SaveObject> mapStructures = GetDataFromGrid();
         int width = GM.getWidth();
         int height = GM.getHeight();
@@ -151,13 +155,16 @@ public class SaveController : MonoBehaviour
             sw.Close();
         }
         Debug.Log("Saved");
-
-        
     }
 
     void LoadMap()
     {
         Debug.Log("Loading...");
+        if (GM == null)
+        {
+            Debug.Log("GM is null");
+            return;
+        }
         ClearMap();
         using (FileStream fs = new FileStream(saveMap, FileMode.Open, FileAccess.Read))
         using (StreamReader sr = new StreamReader(fs))
@@ -217,104 +224,143 @@ public class SaveController : MonoBehaviour
         return save;
     }
 
-    void Save()
+    public void Save()
     {
+
         Debug.Log("Saving...");
-        Dictionary<string, float> saveEC = EC.SaveMe();
-        Dictionary<string, float> savePC = PC.SaveMe();
-        Dictionary<string, float> saveUC = UC.SaveMe();
-        Dictionary<string, float> saveDNC = DNC.SaveMe();
-
-        File.WriteAllText(saveEconomy, string.Empty);
-        using (FileStream fs = new FileStream(saveEconomy, FileMode.Open, FileAccess.Write))
-        using (StreamWriter sw = new StreamWriter(fs))
-        {
-
-            foreach (KeyValuePair<string,float> kvp in EC.SaveMe())
+        if (EC != null) {
+            Dictionary<string, float> saveEC = EC.SaveMe();
+            File.WriteAllText(saveEconomy, string.Empty);
+            using (FileStream fs = new FileStream(saveEconomy, FileMode.Open, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
             {
-                sw.WriteLine(kvp.Key + ":" + kvp.Value);
+
+                foreach (KeyValuePair<string, float> kvp in EC.SaveMe())
+                {
+                    sw.WriteLine(kvp.Key + ":" + kvp.Value);
+                }
+
+
+                sw.Close();
             }
-
-
-            sw.Close();
-        }
-        Debug.Log("EC Saved");
-
-
-        File.WriteAllText(savePopulation, string.Empty);
-        using (FileStream fs = new FileStream(savePopulation, FileMode.Open, FileAccess.Write))
-        using (StreamWriter sw = new StreamWriter(fs))
+            Debug.Log("EC Saved");
+        } else
         {
-            foreach (KeyValuePair<string, float> kvp in PC.SaveMe())
-            {
-                sw.WriteLine(kvp.Key + ":" + kvp.Value);
-            }
-            sw.Close();
+            Debug.Log("EC is null");
         }
-        Debug.Log("PC Saved");
 
-        File.WriteAllText(saveUpgrades, string.Empty);
-        using (FileStream fs = new FileStream(saveUpgrades, FileMode.Open, FileAccess.Write))
-        using (StreamWriter sw = new StreamWriter(fs))
+
+        if (PC != null)
         {
-            foreach (KeyValuePair<string, float> kvp in UC.SaveMe())
+            Dictionary<string, float> savePC = PC.SaveMe();
+            File.WriteAllText(savePopulation, string.Empty);
+            using (FileStream fs = new FileStream(savePopulation, FileMode.Open, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
             {
-                sw.WriteLine(kvp.Key + ":" + kvp.Value);
+                foreach (KeyValuePair<string, float> kvp in PC.SaveMe())
+                {
+                    sw.WriteLine(kvp.Key + ":" + kvp.Value);
+                }
+                sw.Close();
             }
-            sw.Close();
+            Debug.Log("PC Saved");
         }
-        Debug.Log("UC Saved");
-        
-        File.WriteAllText(saveDayNight, string.Empty);
-        using (FileStream fs = new FileStream(saveDayNight, FileMode.Open, FileAccess.Write))
-        using (StreamWriter sw = new StreamWriter(fs))
+        else
         {
-            foreach (KeyValuePair<string, float> kvp in DNC.SaveMe())
-            {
-                sw.WriteLine(kvp.Key + ":" + kvp.Value);
-            }
-            sw.Close();
+            Debug.Log("PC is null");
         }
-        Debug.Log("DNC Saved");
+
+        if (DNC != null)
+        {
+                Dictionary<string, float> saveDNC = DNC.SaveMe();
+            File.WriteAllText(saveDayNight, string.Empty);
+            using (FileStream fs = new FileStream(saveDayNight, FileMode.Open, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (KeyValuePair<string, float> kvp in DNC.SaveMe())
+                {
+                    sw.WriteLine(kvp.Key + ":" + kvp.Value);
+                }
+                sw.Close();
+            }
+            Debug.Log("DNC Saved");
+        }
+        else
+        {
+            Debug.Log("DNC is null");
+        }
+
+        if (UC != null)
+        {
+            Dictionary<string, float> saveUC = UC.SaveMe();
+            File.WriteAllText(saveUpgrades, string.Empty);
+            using (FileStream fs = new FileStream(saveUpgrades, FileMode.Open, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                foreach (KeyValuePair<string, float> kvp in UC.SaveMe())
+                {
+                    sw.WriteLine(kvp.Key + ":" + kvp.Value);
+                }
+                sw.Close();
+            }
+            Debug.Log("UC Saved");
+        }
+        else
+        {
+            Debug.Log("UC is null");
+        }
     }
 
-    void load()
+    public void load()
     {
-       
-        var ec = new Dictionary<string, float>();
-        var uc = new Dictionary<string, float>();
-        var pc = new Dictionary<string, float>();
-        var dnc = new Dictionary<string, float>();
+        String[] lines;
+        if (DNC != null)
+        {
+            var dnc = new Dictionary<string, float>();
+            lines = File.ReadAllLines(saveDayNight);
+            for (int i = 0; i < lines.Length; i += 1)
+            {
+                string[] x = lines[i].Split(':');
+                dnc.Add(x[0], float.Parse(x[1]));
+            }
+            DNC.LoadMe(dnc);
+        }
 
+        if (EC != null)
+        {
+            var ec = new Dictionary<string, float>();
+            lines = File.ReadAllLines(saveEconomy);
+            for (int i = 0; i < lines.Length; i += 1)
+            {
+                string[] x = lines[i].Split(':');
+                ec.Add(x[0], float.Parse(x[1]));
+            }
+            EC.LoadMe(ec);
+        }
 
-        var lines = File.ReadAllLines(saveDayNight);
-        for (int i = 0; i < lines.Length; i += 1)
+        if (PC != null)
         {
-            string[] x = lines[i].Split(':');
-            dnc.Add(x[0], float.Parse(x[1]));
+            var pc = new Dictionary<string, float>();
+            lines = File.ReadAllLines(savePopulation);
+            for (int i = 0; i < lines.Length; i += 1)
+            {
+                string[] x = lines[i].Split(':');
+                pc.Add(x[0], float.Parse(x[1]));
+            }
+            PC.LoadMe(pc);
         }
-        lines = File.ReadAllLines(saveEconomy);
-        for (int i = 0; i < lines.Length; i += 1)
+
+        if (UC != null)
         {
-            string[] x = lines[i].Split(':');
-            ec.Add(x[0], float.Parse(x[1]));
+            var uc = new Dictionary<string, float>();
+            lines = File.ReadAllLines(saveUpgrades);
+            for (int i = 0; i < lines.Length; i += 1)
+            {
+                string[] x = lines[i].Split(':');
+                uc.Add(x[0], float.Parse(x[1]));
+            }
+            UC.LoadMe(uc);
         }
-        lines = File.ReadAllLines(savePopulation);
-        for (int i = 0; i < lines.Length; i += 1)
-        {
-            string[] x = lines[i].Split(':');
-            pc.Add(x[0], float.Parse(x[1]));
-        }
-        lines = File.ReadAllLines(saveUpgrades);
-        for (int i = 0; i < lines.Length; i += 1)
-        {
-            string[] x = lines[i].Split(':');
-            uc.Add(x[0], float.Parse(x[1]));
-        }
-        EC.LoadMe(ec);
-        PC.LoadMe(pc);
-        UC.LoadMe(uc);
-        DNC.LoadMe(dnc);
     }
 
     void ClearMap()

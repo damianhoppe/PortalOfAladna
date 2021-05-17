@@ -6,10 +6,7 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInterpolation<Color>
 {
-
-    [SerializeField]
-    private Vector3 shift;
-
+    private const string prefabPath = "HUD/HPBar/HPBar";
     public static HPBar create(GameObject gameObject)
     {
         Object obj = Utils.loadPrefabFromFile(prefabPath);
@@ -20,7 +17,9 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
         return hpBar;
     }
 
-    private const string prefabPath = "HUD/HPBar/HPBar";
+
+    [SerializeField]
+    private Vector3 shift;
 
     protected Slider slider;
     protected CanvasGroup canvasGroup;
@@ -29,8 +28,14 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
     private FInterp alphaInterp;
     private ColorInterp fillColorInterp;
 
+    private float minHealthAlwaysShow = 0.3f;
+    private Coroutine hideWithDelayTask;
+    private bool started = false;
+
     public void Start()
     {
+        if (started)
+            return;
         this.slider = this.GetComponentInChildren<Slider>();
         this.canvasGroup = this.GetComponentInChildren<CanvasGroup>();
         this.alphaInterp = new FInterp(0.4f, this);
@@ -38,6 +43,7 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
         this.fillColorInterp = new ColorInterp(0.2f, this);
         this.fillColorInterp.pause();
         this.fill = Utils.getChildGameObject(this.gameObject, "Fill").GetComponent<Image>();
+        started = true;
     }
 
     public void Update()
@@ -49,6 +55,7 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
     public void setHealth(float health)
     {
         this.slider.value = health;
+        checkHealthVisibility();
     }
 
     public void setMaxHealth(float maxHealth)
@@ -69,18 +76,29 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
         setVisibility(true);
     }
 
+    public void showForSeconds(float time)
+    {
+        setVisibility(true);
+        hideWithDelay(time);
+    }
+
     public void hide()
     {
         cancelHideWithDelayTask();
         setVisibility(false);
     }
 
-    public void hideWithDelay(float delay)
+    public void hideWithDelay(float delay, bool force = false)
     {
+        if (!force)
+        {
+            if (!canHidehealthBar())
+                return;
+        }
         cancelHideWithDelayTask();
         this.hideWithDelayTask = StartCoroutine("hideWithDelayRun", delay);
     }
-    Coroutine hideWithDelayTask;
+
     private void cancelHideWithDelayTask()
     {
         if (hideWithDelayTask != null)
@@ -119,8 +137,33 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
         this.fillColorInterp.setValues(this.fill.color, Color.red);
     }
 
+    public float getHealthPercentage()
+    {
+        return this.slider.value / this.slider.maxValue;
+    }
+
+    public void setMinHealthAlwaysShow(float minHealth)
+    {
+        this.minHealthAlwaysShow = minHealth;
+        checkHealthVisibility();
+    }
+
+    private void checkHealthVisibility()
+    {
+        if(!canHidehealthBar())
+        {
+            setVisibility(true);
+        }
+    }
+
+    private bool canHidehealthBar()
+    {
+        return this.getHealthPercentage() > this.minHealthAlwaysShow;
+    }
+
     public void onUpdateInterpolation(Interpolator<float> interpolator, float currentValue)
     {
+        Debug.Log("Set alpha: " + currentValue);
         this.canvasGroup.alpha = currentValue;
     }
 

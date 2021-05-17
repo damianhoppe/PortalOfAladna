@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey.Utils;
+using System;
 
 public class GridManager : MonoBehaviour, IOnCursorPositionChanged
 {
@@ -12,6 +13,14 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
     int height = 11;
 
     private CursorBehaviour cursor;
+    private List<Position> changedPositionsInFrame;
+    private List<OnGridChangedPerFrame> onGridChangedListeners;
+
+    public GridManager()
+    {
+        this.changedPositionsInFrame = new List<Position>();
+        this.onGridChangedListeners = new List<OnGridChangedPerFrame>();
+    }
 
     public void Start()
     {
@@ -29,6 +38,20 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
         Structure structure = getStructure(this.cursor.getPosition());
         if (structure != null)
             structure.onCursorOver();
+    }
+
+    public void LateUpdate()
+    {
+        Debug.Log(this.changedPositionsInFrame.Count);
+        if (this.changedPositionsInFrame.Count > 0)
+        {
+            foreach (OnGridChangedPerFrame listener in this.onGridChangedListeners)
+            {
+                Position pos = listener.getPosition();
+                listener.onGridChanged(this.changedPositionsInFrame);
+            }
+        }
+        this.changedPositionsInFrame.Clear();
     }
 
     public bool isInGrid(int x, int y)
@@ -88,7 +111,10 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
 
     public void addStructure(Structure structure, int x, int y)
     {
+        if (!isEmpty(x, y))
+            return;
         grid.setGameObject(structure, x, y);
+        positionChanged(x, y);
     }
 
     public void addStructure(Structure structure, Position position)
@@ -110,6 +136,7 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
                 structure.onDestroy();
             Destroy(structure.gameObject);
             grid.setGameObject(null, x, y);
+            positionChanged(x, y);
         }
     }
 
@@ -131,5 +158,37 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
         Structure structure2 = getStructure(newPosition);
         if (structure2 != null)
             structure2.onCursorEnter();
+    }
+
+    public void addOnGridChangedListener(OnGridChangedPerFrame listener)
+    {
+        this.onGridChangedListeners.Add(listener);
+    }
+
+    public void removeOnGridChangedListener(OnGridChangedPerFrame listener)
+    {
+        this.onGridChangedListeners.Remove(listener);
+    }
+
+    private void positionChanged(int x, int y)
+    {
+        if (containtPosition(x, y))
+            return;
+        this.changedPositionsInFrame.Add(new Position(x, y));
+    }
+
+    private bool containtPosition(int x, int y)
+    {
+        foreach (Position position in this.changedPositionsInFrame)
+        {
+            if (position.x == x && position.y == y)
+                return true;
+        }
+        return false;
+    }
+
+    private bool containtPosition(Position position)
+    {
+        return containtPosition(position.x, position.y);
     }
 }

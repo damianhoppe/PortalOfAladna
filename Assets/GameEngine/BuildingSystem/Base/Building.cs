@@ -26,8 +26,9 @@ public class Building : Structure, IBuilding
     protected Status status;
     BuildingRequirements buildingRequirements;
     BuildingStatusBehaviour buildingStatus;
-    GridManager gridManager;
+    protected GridManager gridManager;
     protected HPBar hpBar;
+    protected SpriteRenderer spriteRenderer;
 
     public Building() : base(EStructureType.Building)
     {
@@ -40,6 +41,7 @@ public class Building : Structure, IBuilding
     {
         base.Start();
         this.gridManager = FindObjectOfType<GridManager>();
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
         Debug.Log("Start: " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count);
         buildingRequirements.initDictionary(nearbyStructuresRequired, requiredMinimalDistance);
         initialized = true;
@@ -83,7 +85,6 @@ public class Building : Structure, IBuilding
     {
         if(gridManager == null)
             this.gridManager = FindObjectOfType<GridManager>();
-        Debug.Log(getPosition().toString());
         if(!gridManager.isInGrid(getPosition()) || !gridManager.isEmpty(getPosition()))
         {
             return BuildingStatusBehaviour.Status.INCORRECT_PLACE;
@@ -115,7 +116,6 @@ public class Building : Structure, IBuilding
     public virtual void onCreate()
     {
         this.hpBar = HPBar.create(this.gameObject);
-        this.hpBar.hide();
         this.hpBar.setHealth(0);
         this.hpBar.setFillColor(Color.white);
         this.upgradePercentage = 0;
@@ -132,6 +132,7 @@ public class Building : Structure, IBuilding
         {
             case 1:
                 this.hpBar.setTargetFillColor(Color.red);
+                this.hpBar.hideWithDelay(1);
                 break;
             case 2:
                 break;
@@ -171,4 +172,23 @@ public class Building : Structure, IBuilding
     }
 
     public virtual void subtractRequirements() { }
+
+    protected virtual bool isInDistance(Position position, int distance)
+    {
+        int xDiff = Mathf.Abs(position.x - getPosition().x);
+        int yDiff = Mathf.Abs(position.y - getPosition().y);
+        if (xDiff <= distance && yDiff <= distance)
+            return true;
+        return false;
+    }
+    protected virtual bool isAroundInDistance(Position position, int distance)
+    {
+        int xDiff = Mathf.Abs(position.x - getPosition().x);
+        int yDiff = Mathf.Abs(position.y - getPosition().y);
+        if (xDiff == 0 && yDiff == 0)
+            return false;
+        if (xDiff <= distance && yDiff <= distance)
+            return true;
+        return false;
+    }
 }

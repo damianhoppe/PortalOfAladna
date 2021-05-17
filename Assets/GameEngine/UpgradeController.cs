@@ -5,6 +5,7 @@ using UnityEngine;
 public class UpgradeController : MonoBehaviour
 {
     IDictionary<int, Upgrade> upgrades;
+    private int availablePoints = 0;
     public const int ARMOR_BUILDING = 0;
     public const int ARMOR_TROOPS = 1;
     public const int HP_BUILDING = 2;
@@ -52,9 +53,14 @@ public class UpgradeController : MonoBehaviour
         else save.Add("AllowCrystalBuildings", 0f);
         if (AllowMagicBuildings) save.Add("AllowMagicBuildings", 1f);
         else save.Add("AllowMagicBuildings", 0f);
-
+        save.Add("AvailablePoints", this.availablePoints);
+        foreach(KeyValuePair<int, Upgrade> pair in this.upgrades)
+        {
+            save.Add("Upgrade_" + pair.Key.ToString(), pair.Value.getValue());
+        }
         return save;
     }
+
     public void LoadMe(Dictionary<string,float> save)
     {
         float data;
@@ -73,6 +79,17 @@ public class UpgradeController : MonoBehaviour
         save.TryGetValue("AllowMagicBuildings", out data);
         if (data == 1) AllowMagicBuildings = true;
         else AllowMagicBuildings = false;
+        if (save.TryGetValue("AvailablePoints", out data))
+            this.availablePoints = (int)data;
+        else
+            this.availablePoints = 0;
+
+        foreach (KeyValuePair<int, Upgrade> pair in this.upgrades)
+        {
+            Debug.Log(pair.Key);
+            if (save.TryGetValue("Upgrade_" + pair.Key.ToString(), out data))
+                pair.Value.setValue((int)data);
+        }
     }
 
     public bool CanBuild(bool metal, bool crystal, bool magic)
@@ -144,6 +161,36 @@ public class UpgradeController : MonoBehaviour
 
     public Upgrade getUpgrade(int upgradeId)
     {
-        return this.upgrades[upgradeId];
+        Upgrade upgrade = null;
+        this.upgrades.TryGetValue(upgradeId, out upgrade);
+        return upgrade;
+    }
+
+    public IDictionary<int, Upgrade> getUpgrades()
+    {
+        return this.upgrades;
+    }
+
+    public bool upgrade(int upgradeId)
+    {
+        Upgrade upgrade = getUpgrade(upgradeId);
+        if (upgrade == null)
+            return false;
+        if (this.availablePoints <= 0)
+            return false;
+        if (!upgrade.add())
+            return false;
+        this.availablePoints--;
+        return true;
+    }
+
+    public void addAvailablePoints(int v)
+    {
+        this.availablePoints += v;
+    }
+
+    public int getAvailablePoints()
+    {
+        return this.availablePoints;
     }
 }

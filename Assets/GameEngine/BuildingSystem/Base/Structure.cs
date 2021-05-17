@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour, IStructure
 {
-    [SerializeField] string Name;
+    [SerializeField]
+    protected string Name;
     protected EStructureType type;
     protected SpriteRenderer spriteRenderer;
 
@@ -62,6 +63,7 @@ public class Structure : MonoBehaviour, IStructure
 
     public virtual void destroy(bool forceDestruction = false)
     {
+        Debug.Log("DESTROY!!!!!!!!!!!");
         this.onDestroy();
         GridManager gridManager = GameObject.Find("BuildingSystem").GetComponent<GridManager>();
         if(gridManager != null)

@@ -33,7 +33,8 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
 
     void Update()
     {
-        if(this.buildingInitialized > 0)
+
+        if (this.buildingInitialized > 0)
         {
             if (this.buildingInitialized == 2)
             {
@@ -51,6 +52,19 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         {
             this.buildingPreview.transform.position = new Vector3(cursor.transform.position.x, cursor.transform.position.y, this.defaultZPreview);
             this.buildingReqSprite.transform.position = this.buildingPreview.transform.position;
+
+            BuildingStatusBehaviour.Status status = this.building.canBuild();
+            if (status == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
+            {
+                this.buildingReqSprite.color = new Color(0, 255, 0, 0.25f);
+                this.cursor.setColor(Color.green);
+            }
+            else
+            {
+                this.buildingReqSprite.color = new Color(255, 0, 0, 0.25f);
+                this.cursor.setColor(Color.red);
+            }
+            this.buildingStatus.setStatus(status);
         }
         if (Input.GetMouseButtonDown(0) && this.mode != Mode.NONE)
         {
@@ -60,7 +74,8 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                 case Mode.BUILDING:
                     if (this.buildingInitialized != 0)
                         break;
-                    if (building.canBuild() == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
+                    BuildingStatusBehaviour.Status status = building.canBuild();
+                    if (status == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
                     {
                         GameObject buildingObject = Instantiate(buildingPreview);
                         Building buildingTemp = buildingObject.GetComponent<Building>();
@@ -70,7 +85,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                         buildingObject.transform.position = new Vector3(cursor.getPosition().x, cursor.getPosition().y, this.defaultZBuilding);
                         gridManager.addStructure((Structure)buildingTemp, position.getX(), position.getY());
                         buildingTemp.setEnabled(true);
-                        buildingTemp.subtractRequirements();
+                        building.subtractRequirements();
                     }
                     break;
                 case Mode.DESTRUCTION:
@@ -89,19 +104,6 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         if (this.mode == Mode.BUILDING)
         {
             this.building.setPosition(new Position(newPosition));
-            BuildingStatusBehaviour.Status status = this.building.canBuild();
-            Debug.Log(status);
-            if (status == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
-            {
-                this.buildingReqSprite.color = new Color(0,255,0,0.25f);
-                this.cursor.setColor(Color.green);
-            }
-            else
-            {
-                this.buildingReqSprite.color = new Color(255, 0, 0, 0.25f);
-                this.cursor.setColor(Color.red);
-            }
-            this.buildingStatus.setStatus(status);
         }
     }
 

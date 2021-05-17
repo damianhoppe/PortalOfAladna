@@ -21,6 +21,7 @@ public class BuildingRequirements
 
     public void initDictionary(List<Structure> structures, int minDistance)
     {
+        Debug.Log("initDict 1");
         this.initialized = true;
         for (int i = 0; i < structures.Count; i++)
         {
@@ -89,5 +90,26 @@ public class BuildingRequirements
             }
         }
         return null;
+    }
+
+    public List<Position> getAllStructurePositions(GridManager gridManager)
+    {
+        Position buildingPosition = this.building.getPosition();
+        List<Position> positions = new List<Position>();
+        foreach (Position pos in positionsToCheck)
+        {
+            if (pos.x == 0 && pos.y == 0)
+                continue;
+            Structure structure = gridManager.getStructure(buildingPosition.getX() + pos.getX(), buildingPosition.getY() + pos.getY());
+            if (structure != null)
+            {
+                if (this.nearbyStructures.Contains(structure.getName()))
+                {
+                    positions.Add(new Position(pos.x + buildingPosition.x, pos.y + buildingPosition.y));
+                }
+            }
+        }
+        Debug.Log("A: " + positions.Count);
+        return positions;
     }
 }

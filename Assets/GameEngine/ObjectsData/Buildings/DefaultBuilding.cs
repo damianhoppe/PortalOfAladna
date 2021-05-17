@@ -128,13 +128,26 @@ public class DefaultBuilding : Building
     public virtual bool RequiresAccess { get; protected set; } = true;
     public virtual bool CanBuildAtNight { get; protected set; } = false;
 
+
+    float t = 0;
     protected override void update()
     {
         base.update();
-        if (this.works())
+        /*if (this.works())
         {
-            this.hpBar.setHealth(this.CurrentHitpoints);
-        }
+            t += Time.deltaTime;
+            if(t >= 2)
+            {
+                this.CurrentHitpoints -= 40;
+                this.hpBar.setHealth(this.CurrentHitpoints);
+                this.hpBar.showForSeconds(1f);
+                if (this.CurrentHitpoints <= 0)
+                {
+                    this.destroy();
+                }
+                t -= 2;
+            }
+        }*/
     }
 
     public override void onCreate()
@@ -196,6 +209,7 @@ public class DefaultBuilding : Building
             this.BuildingLevel++;
         }
     }
+
     public virtual bool UpgradeAvailable()
     {
         if (this.CanUpgrade)
