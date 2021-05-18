@@ -62,14 +62,15 @@ public class defaultEnemy : unitObject
         //this.type = type;
     }
 
-    public virtual void onHit()
+    public virtual void onHit(float damage)
     {
         this.hpBar.setHealth(this.CurrentHitpoints);
         this.hpBar.showForSeconds(0.5f);
     }
     public virtual void onDeath()
     {
-
+        this.IsDead = true;
+        this.IsAlive = false;
     }
 
 
