@@ -5,8 +5,13 @@ using UnityEngine;
 public class defaultEnemy : unitObject
 {
     protected HPBar hpBar;
+    private CircleCollider2D collider;
+    private Rigidbody2D rigidbody;
 
-
+    public void HelloWorld()
+    {
+        Debug.Log("Hello world!");
+    }
     protected override void Start()
     {
         base.Start();
@@ -14,6 +19,13 @@ public class defaultEnemy : unitObject
         this.hpBar.setMaxHealth(this.MaxHitpoints);
         this.hpBar.setHealth(this.CurrentHitpoints);
         this.hpBar.setVisibility(true);
+
+        collider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
+        collider.radius = 0.5f;
+        collider.isTrigger = true;
+
+        rigidbody = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;
+        rigidbody.bodyType = RigidbodyType2D.Kinematic;
     }
 
     // Update is called once per frame

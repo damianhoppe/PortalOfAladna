@@ -42,7 +42,7 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
 
     public void LateUpdate()
     {
-        Debug.Log(this.changedPositionsInFrame.Count);
+        //Debug.Log(this.changedPositionsInFrame.Count);
         if (this.changedPositionsInFrame.Count > 0)
         {
             foreach (OnGridChangedPerFrame listener in this.onGridChangedListeners)

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WoodenBasicTower : DefaultTower
 {
-    CircleCollider2D AttackRange;
+    //CircleCollider2D AttackRange;
+    
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -22,6 +24,4 @@ public class WoodenBasicTower : DefaultTower
     {
 
     }
-
-
 }
