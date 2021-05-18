@@ -84,7 +84,7 @@ public class biednaPierdolonaPiechota : defaultEnemy
         {
             this.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
             this.attackReady -= this.attackSpeed;
-            AttackTarget.OnHit(100.0f);
+            AttackTarget.OnHit(20.0f);
             //Debug.Log("Job z paticku w " + AttackTarget);
             if (AttackTarget.IsDead)
             {
@@ -96,10 +96,15 @@ public class biednaPierdolonaPiechota : defaultEnemy
         }
         else
         {
+            /*
+            this.transform.localScale.y = 1.0f + 0.5f * this.attackPercent;
+            this.transform.localScale.x = 1.0f + 0.5f * this.attackPercent;
             this.transform.localScale = new Vector3(
                 1.0f + (0.5f * this.attackPercent),
                 1.0f + (0.5f * this.attackPercent),
                 1.0f + (0.5f * this.attackPercent));
+            */
+            this.transform.localScale += new Vector3(0.0015f, 0.0015f, 0.00f);
         }
 
         return false;
@@ -117,16 +122,23 @@ public class biednaPierdolonaPiechota : defaultEnemy
         float tmpMin=0.0f;
         int tmpIndex = -1;
         int tmpRand = -1;
-        
-        for (int i = 0; i < SurroundingValues.Length; i++)
+        tmpRand = Random.Range(0, 4);
+
+        for (int j = 0; j < SurroundingValues.Length; j++)
         {
-            tmpRand = Random.Range(0, 2);
-            if (i == 0) { tmpMin = SurroundingValues[i];tmpIndex = i; continue; }
-            if (SurroundingValues[i] < tmpMin) tmpIndex = i; tmpMin = SurroundingValues[i];
-            if (SurroundingValues[i] == tmpMin)
+            int i = tmpRand + j;
+            if (i >= SurroundingValues.Length) i = 0;
+
+            if (j == 0)
+            {
+                tmpMin = SurroundingValues[i]; tmpIndex = i;
+            }
+            else if (SurroundingValues[i] < tmpMin) { tmpIndex = i; tmpMin = SurroundingValues[i]; }
+            /*
+            else if (SurroundingValues[i] == tmpMin)
             {
                 if (tmpRand == 1) tmpIndex = i; tmpMin = SurroundingValues[i];
-            }
+            }*/
         }
 
         //Debug.Log("Going to:" + (CurrentPosition + moveRange[tmpIndex]));

@@ -958,6 +958,7 @@ MonoBehaviour:
   - {fileID: 5876004205862889053, guid: a8e935e404842044191c2523aef3a617, type: 3}
   - {fileID: 7921114905061562079, guid: 83d1458f2c309b544bd1ae1e3634d15e, type: 3}
   - {fileID: 2555713118682852835, guid: 1a55f295cd38dc340a68e94488172103, type: 3}
+  - {fileID: 5528826818472766329, guid: 2cd1b5966db67d9408563b16835ba141, type: 3}
   defaultZBuilding: 0
   defaultZPreview: 0
 --- !u!4 &1626289833

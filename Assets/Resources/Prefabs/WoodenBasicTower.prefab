@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6860177350766593785}
   - component: {fileID: 1065281245139127679}
   - component: {fileID: 349608797354260853}
+  - component: {fileID: -8272505782003445935}
   m_Layer: 0
   m_Name: WoodenBasicTower
   m_TagString: Tower
@@ -101,3 +102,19 @@ MonoBehaviour:
   buildSpeed: 50
   maxLvl: 0
   Danger: 0
+--- !u!58 &-8272505782003445935
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5763800063347924007}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

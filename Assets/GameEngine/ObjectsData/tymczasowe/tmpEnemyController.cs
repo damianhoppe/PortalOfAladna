@@ -21,7 +21,7 @@ public class tmpEnemyController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             Enemies.Add(Instantiate(Prefabs[0]));
-            Enemies[spawnedUnits].transform.position = new Vector3(0.0f, 5.0f, -0.5f);
+            Enemies[spawnedUnits].transform.position = new Vector3(5.0f, 0.0f, -0.5f);
             //Enemies.Add(Instantiate(Prefabs[0]).transform.position = new Vector3(0.0f, 0.0f, 0.5f));
             spawnedUnits++;
             Debug.Log("Spawned enemies: " + Enemies.Count.ToString());
