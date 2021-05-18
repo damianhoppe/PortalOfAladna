@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodenWall : Wall
+public class WoodenWall : DefaultBuilding
 {
     protected override void Start()
     {

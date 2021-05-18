@@ -98,6 +98,6 @@ MonoBehaviour:
   cursorOver: 1
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0
-  buildSpeed: 0
+  buildSpeed: 50
   maxLvl: 0
   Danger: 0

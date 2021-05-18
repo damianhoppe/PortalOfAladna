@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class biednaPierdolonaPiechota : defaultEnemy
 {
-    [SerializeField]
+    //[SerializeField]
 
     public Vector3 DestinationPosition { get; protected set; }
     public Vector3 StartPosition { get; protected set; }

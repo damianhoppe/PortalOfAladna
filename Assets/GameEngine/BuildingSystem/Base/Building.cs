@@ -28,7 +28,7 @@ public class Building : Structure, IBuilding
     BuildingStatusBehaviour buildingStatus;
     protected GridManager gridManager;
     protected HPBar hpBar;
-    protected SpriteRenderer spriteRenderer;
+    //protected SpriteRenderer spriteRenderer;
 
     public Building() : base(EStructureType.Building)
     {
