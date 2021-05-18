@@ -30,6 +30,7 @@ public class biednaPierdolonaPiechota : defaultEnemy
     public float moveSpeed = 10.0f;
     public int attackSpeed { get; protected set; } = 200;
     public int attackReady { get; protected set; } = 0;
+    public int attackPercent { get; protected set; }
 
 
 
@@ -47,7 +48,6 @@ public class biednaPierdolonaPiechota : defaultEnemy
 
         setPosition();
         CheckSurroundings();
-
         setDestination();
     }
     // Update is called once per frame
@@ -57,31 +57,52 @@ public class biednaPierdolonaPiechota : defaultEnemy
 
         if (IsMoving)
         {
-            this.transform.position += moveVector;
-            if (Vector3.Distance(this.transform.position, this.DestinationPosition) < movePrecision)
-            {
-                setPosition();
-                CheckSurroundings();
-                setDestination();
-            }
+            this.Move();
         }
         if (IsAttacking)
         {
-            this.attackReady++;
-            if (this.attackReady >= this.attackSpeed)
-            {
-                this.attackReady -= this.attackSpeed;
-                AttackTarget.OnHit(100.0f);
-                Debug.Log("Job z paticku w " + AttackTarget);
-                if (AttackTarget.IsDead)
-                {
-                    //Destroy(AttackTarget);
-                    IsMoving = true;
-                    IsAttacking = false;
-                }
-            }
-            
+            this.Attack();
         }
+    }
+    public bool Move()
+    {
+        this.transform.position += moveVector;
+        if (Vector3.Distance(this.transform.position, this.DestinationPosition) < movePrecision)
+        {
+            setPosition();
+            CheckSurroundings();
+            setDestination();
+            return true;
+        }
+        else return false;
+    }
+    public bool Attack()
+    {
+        this.attackReady++;
+        this.attackPercent = this.attackReady / this.attackSpeed;
+        if (this.attackReady >= this.attackSpeed)
+        {
+            this.transform.localScale = new Vector3(1.0f,1.0f,1.0f);
+            this.attackReady -= this.attackSpeed;
+            AttackTarget.OnHit(100.0f);
+            //Debug.Log("Job z paticku w " + AttackTarget);
+            if (AttackTarget.IsDead)
+            {
+                //Destroy(AttackTarget);
+                IsMoving = true;
+                IsAttacking = false;
+            }
+            return true;
+        }
+        else
+        {
+            this.transform.localScale = new Vector3(
+                1.0f + (0.5f * this.attackPercent),
+                1.0f + (0.5f * this.attackPercent),
+                1.0f + (0.5f * this.attackPercent));
+        }
+
+        return false;
     }
     public void setPosition()
     {
@@ -92,20 +113,25 @@ public class biednaPierdolonaPiechota : defaultEnemy
     }
     public void setDestination()
     {
-        //Position target = trasa[elementTrasy];
-        //Vector3 punkt_docelowy = new Vector3((float)target.x, (float)target.y, -0.5f);
+
         float tmpMin=0.0f;
         int tmpIndex = -1;
+        int tmpRand = -1;
         
         for (int i = 0; i < SurroundingValues.Length; i++)
         {
+            tmpRand = Random.Range(0, 2);
             if (i == 0) { tmpMin = SurroundingValues[i];tmpIndex = i; continue; }
             if (SurroundingValues[i] < tmpMin) tmpIndex = i; tmpMin = SurroundingValues[i];
+            if (SurroundingValues[i] == tmpMin)
+            {
+                if (tmpRand == 1) tmpIndex = i; tmpMin = SurroundingValues[i];
+            }
         }
 
-        Debug.Log("Going to:" + (CurrentPosition + moveRange[tmpIndex]));
-        Debug.Log("Trace value:" + SurroundingValues[tmpIndex]);
-        Debug.Log("Can go there:" + CanGo[tmpIndex]);
+        //Debug.Log("Going to:" + (CurrentPosition + moveRange[tmpIndex]));
+        //Debug.Log("Trace value:" + SurroundingValues[tmpIndex]);
+        //Debug.Log("Can go there:" + CanGo[tmpIndex]);
 
         if (CanGo[tmpIndex])
         {
@@ -124,15 +150,13 @@ public class biednaPierdolonaPiechota : defaultEnemy
             punkt_docelowy.x += Random.Range(-movePrecision, movePrecision);
             punkt_docelowy.y += Random.Range(-movePrecision, movePrecision);
             this.DestinationPosition = punkt_docelowy;
-            Debug.Log("Target detected");
+            //Debug.Log("Target detected");
             calculateVector();
 
             AttackTarget = (DefaultBuilding)GM.getStructure(target);
             IsMoving = false;
             IsAttacking = true;
-            
         }
-        
     }
     public void calculateVector()
     {
@@ -140,7 +164,6 @@ public class biednaPierdolonaPiechota : defaultEnemy
         float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
         float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
         this.moveVector = new Vector3(speedX, speedY, 0.0f);
-
     }
     public void CheckSurroundings()
     {

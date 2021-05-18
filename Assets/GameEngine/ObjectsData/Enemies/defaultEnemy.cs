@@ -60,8 +60,5 @@ public class defaultEnemy : unitObject
 
     }
 
-    public virtual void AttackTarget()
-    {
 
-    }
 }
