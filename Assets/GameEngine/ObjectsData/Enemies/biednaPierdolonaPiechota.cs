@@ -9,6 +9,8 @@ public class biednaPierdolonaPiechota : defaultEnemy
 
     protected override void Start()
     {
+        base.Start();
+
         this.moveSpeed = 0.0025f;
         this.movePrecision = 0.2f;
         
@@ -24,7 +26,7 @@ public class biednaPierdolonaPiechota : defaultEnemy
         this.PriorityObstacle = 20.0f;
         this.PriorityValue = 0.0f;
 
-        base.Start();
+       
 
     }
     // Update is called once per frame

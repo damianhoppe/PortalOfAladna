@@ -69,7 +69,7 @@ public class defaultEnemy : unitObject
         {
             this.Attack();
         }
-        
+        /*
         Debug.Log("Position:" + this.transform.position);
         Debug.Log("Destination:" + this.DestinationPosition);
         Debug.Log("Move speed:" + this.moveSpeed);
@@ -79,7 +79,7 @@ public class defaultEnemy : unitObject
         float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
         float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
         //Debug.Log("Proporcja:" + proporcja);
-        //Debug.Log(new Vector3(speedX, speedY, 0.0f));
+        //ebug.Log(new Vector3(speedX, speedY, 0.0f));*/
     }
 
     public Vector2Int[] attackRange = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
