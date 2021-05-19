@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tmpTowerController : MonoBehaviour
+public class TowerController : MonoBehaviour
 {
     public List<defaultTower> ActiveTowers { get; protected set; } = new List<defaultTower>();
 

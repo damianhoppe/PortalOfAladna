@@ -10,7 +10,7 @@ public class defaultTower : DefaultBuilding
     public List<GameObject> myBulletObjects = new List<GameObject>();
     public List<RedBullet> myBullets = new List<RedBullet>();
 
-    public tmpTowerController TC { get; protected set; }
+    public TowerController TC { get; protected set; }
 
     public defaultEnemy CurrentTarget { get; protected set; }
     public bool hasTarget { get; protected set; } = false;
@@ -40,7 +40,7 @@ public class defaultTower : DefaultBuilding
     protected override void Start()
     {
         base.Start();
-        this.TC = GameObject.Find("tmpTowerController").GetComponent<tmpTowerController>();
+        this.TC = GameObject.Find("tmpTowerController").GetComponent<TowerController>();
         this.BulletType = Resources.Load<GameObject>("RedBullet");
         this.AttackRange = this.GetComponent<CircleCollider2D>();
         AttackRange.radius = 3.0f;

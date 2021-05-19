@@ -7,6 +7,8 @@ public class defaultEnemy : unitObject
     protected HPBar hpBar;
     private CircleCollider2D collider;
     private Rigidbody2D rigidbody;
+    public EnemyControllerV2 EnC { get; protected set; }
+    public TowerController TC { get; protected set; }
 
     public void HelloWorld()
     {
@@ -19,6 +21,9 @@ public class defaultEnemy : unitObject
         this.hpBar.setMaxHealth(this.MaxHitpoints);
         this.hpBar.setHealth(this.CurrentHitpoints);
         this.hpBar.setVisibility(true);
+
+        this.EnC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
+        this.TC = GameObject.Find("tmpTowerController").GetComponent<TowerController>();
 
         collider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
         collider.radius = 0.5f;
@@ -55,6 +60,8 @@ public class defaultEnemy : unitObject
     public virtual float PriorityValue { get; protected set; } = 1.0f;
     public virtual float PriorityObstacle { get; protected set; } = 1.0f;
 
+    public virtual bool IsTank { get; protected set; } = false;
+
     public virtual DataStructures.Cost KillReward { get; protected set; } = new DataStructures.Cost(100.0f, 10.0f, 5.0f, 0.0f, 0.0f, 5.0f);
 
     public defaultEnemy(EStructureType Type=EStructureType.Enemy)
@@ -64,8 +71,30 @@ public class defaultEnemy : unitObject
 
     public virtual void onHit(float damage)
     {
+        if (this.IsTank)
+        {
+            float DMG = (damage - this.Armor) * (1.0f - this.Protection / 100.0f);
+            if (DMG <= 0.0f) DMG = 0.0f;
+            this.CurrentHitpoints -= DMG;
+            if (this.CurrentHitpoints <= 0.0f) destroy();
+        }
+        else
+        {
+            float DMG = damage * (1.0f - this.Protection / 100.0f) - this.Armor;
+            if (DMG <= 0.0f) DMG = 0.0f;
+            this.CurrentHitpoints -= DMG;
+            if (this.CurrentHitpoints <= 0.0f) destroy();
+        }
+
+
         this.hpBar.setHealth(this.CurrentHitpoints);
         this.hpBar.showForSeconds(0.5f);
+    }
+    public virtual void destroy()
+    {
+        onDeath();
+        TC.EnemyKilled(this);
+        EnC.ReportDeath(this);
     }
     public virtual void onDeath()
     {
