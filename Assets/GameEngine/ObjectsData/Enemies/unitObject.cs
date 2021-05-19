@@ -104,7 +104,8 @@ public class unitObject : MonoBehaviour
     }
     public virtual bool Move()
     {
-        this.transform.position += moveVector;
+        this.transform.position += moveVector*Time.deltaTime*100;
+        //Debug.Log(Time.deltaTime*1000000);
         if (Vector3.Distance(this.transform.position, this.DestinationPosition) < movePrecision)
         {
             setPosition();

@@ -38,7 +38,8 @@ public class RedBullet : MonoBehaviour
     }
     public void moveToTarget()
     {
-        this.transform.position += BulletMove;
+        this.transform.position += BulletMove*Time.deltaTime*100;
+
     }
     public void recalculateVector()
     {
