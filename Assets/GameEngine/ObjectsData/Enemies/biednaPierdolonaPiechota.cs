@@ -41,7 +41,7 @@ public class biednaPierdolonaPiechota : defaultEnemy
         this.moveSpeed = 0.0025f;
         this.PriorityDanger = 0.0f;
         this.PriorityObstacle = 20.0f;
-        this.PriorityValue = 20.0f;
+        this.PriorityValue = 0.0f;
 
         SurroundingValues = new float[moveRange.Length];
         CanGo = new bool[moveRange.Length];
@@ -198,9 +198,9 @@ public class biednaPierdolonaPiechota : defaultEnemy
                     DefaultBuilding tmpBuilding = (DefaultBuilding)tmpStruct;
                     Surroundings.Add(tmpBuilding);
                     SurroundingValues[i] = Mathf.Abs((CurrentPosition + moveRange[i]).x) + Mathf.Abs((CurrentPosition + moveRange[i]).y);
-                    SurroundingValues[i] += tmpBuilding.PositionDanger * this.PriorityDanger;
-                    SurroundingValues[i] += tmpBuilding.PositionValue * this.PriorityValue;
-                    SurroundingValues[i] += tmpBuilding.PositionObstacle * this.PriorityObstacle;
+                    SurroundingValues[i] -= tmpBuilding.PositionDanger * this.PriorityDanger;
+                    SurroundingValues[i] -= tmpBuilding.PositionValue * this.PriorityValue;
+                    SurroundingValues[i] -= tmpBuilding.PositionObstacle * this.PriorityObstacle;
                     CanGo[i] = false;
                 }
             }
