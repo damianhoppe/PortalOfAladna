@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultTower : DefaultBuilding
+public class defaultTower : DefaultBuilding
 
 {
     public CircleCollider2D AttackRange;
     public List<defaultEnemy> DetectedEnemies = new List<defaultEnemy>();
+    public List<RedBullet> myBullets = new List<RedBullet>();
 
     public defaultEnemy CurrentTarget { get; protected set; }
     public bool hasTarget { get; protected set; } = false;

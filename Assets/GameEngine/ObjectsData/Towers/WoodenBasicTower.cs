@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodenBasicTower : DefaultTower
+public class WoodenBasicTower : defaultTower
 {
     //CircleCollider2D AttackRange;
     
