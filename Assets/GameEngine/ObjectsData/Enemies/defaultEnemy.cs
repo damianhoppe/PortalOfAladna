@@ -17,11 +17,7 @@ public class defaultEnemy : unitObject
     protected override void Start()
     {
         base.Start();
-        this.hpBar = HPBar.create(this.gameObject);
-        this.hpBar.setMaxHealth(this.MaxHitpoints);
-        this.hpBar.setHealth(this.CurrentHitpoints);
-        this.hpBar.setVisibility(true);
-
+        
         this.EnC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
         this.TC = GameObject.Find("TowerController").GetComponent<TowerController>();
 
@@ -37,7 +33,7 @@ public class defaultEnemy : unitObject
 
         this.moveSpeed = 0.0025f;
         this.movePrecision = 0.2f;
-        this.moveSpeed = 10.0f;
+
 
         this.Armor = 1.0f;
         this.Protection = 0.0f;
@@ -45,6 +41,11 @@ public class defaultEnemy : unitObject
         this.CurrentHitpoints = this.MaxHitpoints;
         this.IsTank = false;
         this.attackValue = 0.0f;
+
+        this.hpBar = HPBar.create(this.gameObject);
+        this.hpBar.setMaxHealth(this.MaxHitpoints);
+        this.hpBar.setHealth(this.CurrentHitpoints);
+        this.hpBar.setVisibility(true);
 
         this.PriorityDanger = 0.0f;
         this.PriorityObstacle = -1.0f;
@@ -68,6 +69,17 @@ public class defaultEnemy : unitObject
         {
             this.Attack();
         }
+        
+        Debug.Log("Position:" + this.transform.position);
+        Debug.Log("Destination:" + this.DestinationPosition);
+        Debug.Log("Move speed:" + this.moveSpeed);
+        Debug.Log(Vector3.Distance(this.transform.position, this.DestinationPosition));
+        //Debug.Log("Vector:" + this.moveVector);
+        float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
+        float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
+        float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
+        //Debug.Log("Proporcja:" + proporcja);
+        //Debug.Log(new Vector3(speedX, speedY, 0.0f));
     }
 
     public Vector2Int[] attackRange = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
@@ -115,7 +127,15 @@ public class defaultEnemy : unitObject
     {
         //this.type = type;
     }
-
+    public override void calculateVector()
+    {
+        base.calculateVector();
+        float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
+        float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
+        float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
+        Debug.Log("Proporcja:"+proporcja);
+        Debug.Log(new Vector3(speedX, speedY, 0.0f));
+    }
     public virtual void onHit(float damage)
     {
         if (this.IsTank)
@@ -193,16 +213,8 @@ public class defaultEnemy : unitObject
                 tmpMin = SurroundingValues[i]; tmpIndex = i;
             }
             else if (SurroundingValues[i] < tmpMin) { tmpIndex = i; tmpMin = SurroundingValues[i]; }
-            /*
-            else if (SurroundingValues[i] == tmpMin)
-            {
-                if (tmpRand == 1) tmpIndex = i; tmpMin = SurroundingValues[i];
-            }*/
-        }
 
-        //Debug.Log("Going to:" + (CurrentPosition + moveRange[tmpIndex]));
-        //Debug.Log("Trace value:" + SurroundingValues[tmpIndex]);
-        //Debug.Log("Can go there:" + CanGo[tmpIndex]);
+        }
 
         if (CanGo[tmpIndex])
         {

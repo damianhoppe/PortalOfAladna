@@ -16,8 +16,8 @@ public class unitObject : MonoBehaviour
         this.GM = GameObject.FindObjectOfType<GridManager>();
         this.DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         this.EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        this.moveSpeed = 0.0025f;
         this.movePrecision = 0.2f;
-        this.moveSpeed = 10.0f;
     }
 
     // Update is called once per frame
@@ -39,9 +39,9 @@ public class unitObject : MonoBehaviour
     //public Position[] trasa = { new Position(2, 0), new Position(2, 2), new Position(0, 2), new Position(0, 0) };
     public Vector2Int[] moveRange = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
 
-    public float movePrecision = 0.2f;
+    public float movePrecision { get; protected set; }
 
-    public float moveSpeed = 10.0f;
+    public float moveSpeed { get; protected set; }
 
 
     public virtual int UnitObjectID { get; protected set; } = 0;
@@ -95,14 +95,14 @@ public class unitObject : MonoBehaviour
     {
 
     }
-    public void setPosition()
+    public virtual void setPosition()
     {
         int x = Mathf.RoundToInt(this.transform.position.x);
         int y = Mathf.RoundToInt(this.transform.position.y);
         this.CurrentPosition = new Position(x, y);
 
     }
-    public bool Move()
+    public virtual bool Move()
     {
         this.transform.position += moveVector;
         if (Vector3.Distance(this.transform.position, this.DestinationPosition) < movePrecision)
@@ -122,7 +122,7 @@ public class unitObject : MonoBehaviour
     {
 
     }
-    public void calculateVector()
+    public virtual void calculateVector()
     {
         float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
         float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);

@@ -11,7 +11,7 @@ public class biednaPierdolonaPiechota : defaultEnemy
     {
         this.moveSpeed = 0.0025f;
         this.movePrecision = 0.2f;
-        this.moveSpeed = 10.0f;
+        
 
         this.Armor = 1.0f;
         this.Protection = 0.0f;
