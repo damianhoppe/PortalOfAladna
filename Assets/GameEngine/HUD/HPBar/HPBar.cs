@@ -163,7 +163,7 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
 
     public void onUpdateInterpolation(Interpolator<float> interpolator, float currentValue)
     {
-        Debug.Log("Set alpha: " + currentValue);
+        //Debug.Log("Set alpha: " + currentValue);
         this.canvasGroup.alpha = currentValue;
     }
 

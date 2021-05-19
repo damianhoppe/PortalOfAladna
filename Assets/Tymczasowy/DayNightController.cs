@@ -95,6 +95,7 @@ public class DayNightController : MonoBehaviour
     }
     void DayTime()
     {
+        DayNum++;
         light.intensity = 5;
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(var enemy in enemys)

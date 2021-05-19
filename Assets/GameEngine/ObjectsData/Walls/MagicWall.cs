@@ -61,7 +61,7 @@ public class MagicWall : MetalWall
         this.BaseCost = new DataStructures.Cost(200.0f, 30.0f, 30.0f, 30.0f, 40.0f, 0.0f);
         this.EnergyToBuild = 5.0f;
         this.RequiredHumans = 0;
-        this.PlayerObjectID = 93;
+        this.PlayerObjectID = 94;
 
         this.RequiresInventor = true;
         this.RequiresResearcher = true;

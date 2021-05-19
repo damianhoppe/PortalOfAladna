@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour, IStructure
 {
-    [SerializeField]
+    
     protected string Name;
     protected EStructureType type;
     protected SpriteRenderer spriteRenderer;
@@ -13,7 +13,7 @@ public class Structure : MonoBehaviour, IStructure
     public bool cursorOver = true;
 
     public virtual bool IsPlayerBuilding { get; protected set; } = false;
-
+    [SerializeField]
     public virtual int PlayerObjectID { get; protected set; } = 0;
     public virtual int DistanceToCenter { get; protected set; } = 0;
     public virtual int DistanceToPortal { get; protected set; } = 999;

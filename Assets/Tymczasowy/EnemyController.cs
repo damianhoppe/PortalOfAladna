@@ -27,11 +27,11 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ai.canMove = true;
-            DayNightController.ScanPathfinding();
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    ai.canMove = true;
+        //    DayNightController.ScanPathfinding();
+        //}
 
     }
 

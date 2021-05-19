@@ -48,6 +48,7 @@ public class WoodenBasicTower : defaultTower
         this.BaseCost = new DataStructures.Cost(50.0f, 25.0f, 5.0f, 0.0f, 0.0f, 0.0f);
         this.EnergyToBuild = 10.0f;
         this.RequiredHumans = 5;
+
         this.PlayerObjectID = 75;
 
         this.RequiresAccess = false;
@@ -60,8 +61,8 @@ public class WoodenBasicTower : defaultTower
     {
         base.Update();
     }
-    WoodenBasicTower()
+    public WoodenBasicTower()
     {
-
+        this.PlayerObjectID = 75;
     }
 }

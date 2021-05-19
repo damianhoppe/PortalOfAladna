@@ -47,7 +47,7 @@ public class WoodenLookout : DefaultBuilding
     }
     public WoodenLookout()
     {
-        
+        this.PlayerObjectID = 71;
     }
     /*
     public override string ObjectName { get; protected set; } = "Lookout";
