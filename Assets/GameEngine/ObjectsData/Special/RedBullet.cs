@@ -66,11 +66,13 @@ public class RedBullet : MonoBehaviour
     public void targetDestroyed()
     {
         this.BulletTarget = null;
+        this.NoTarget = true;
         this.BulletSource.targetDestroyed();
     }
     public void targetLost()
     {
         this.NoTarget = true;
+        this.BulletTarget = null;
     }
 
     public void bulletExpired()

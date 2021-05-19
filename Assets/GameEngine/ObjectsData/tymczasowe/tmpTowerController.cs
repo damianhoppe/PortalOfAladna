@@ -15,6 +15,14 @@ public class tmpTowerController : MonoBehaviour
         if (ActiveTowers.Contains(tower)) this.ActiveTowers.Remove(tower);
         else Debug.Log("Error! Unknown tower got delet.");
     }
+    public void EnemyKilled(defaultEnemy enemy)
+    {
+        foreach(defaultTower tower in ActiveTowers)
+        {
+            tower.reportKill(enemy);
+        }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {

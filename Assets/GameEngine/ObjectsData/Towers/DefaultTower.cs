@@ -84,6 +84,27 @@ public class defaultTower : DefaultBuilding
 
         return false;
     }
+    public override void onSell()
+    {
+        if (this.SellAvailable())
+        {
+            this.TC.UnregisterTower(this);
+        }
+        base.onSell();
+    }
+    public override void destroy(bool forceDestruction = false)
+    {
+        if (this.DestroyAvailable())
+        {
+            this.TC.UnregisterTower(this);
+        }
+        base.destroy(forceDestruction);
+    }
+    public override void onCreate()
+    {
+        base.onCreate();
+        this.TC.RegisterTower(this);
+    }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")
@@ -156,6 +177,17 @@ public class defaultTower : DefaultBuilding
             bullet.targetLost();
         }
         FindTarget();
+    }
+    public void reportKill(defaultEnemy enemy)
+    {
+        if (this.DetectedEnemies.Contains(enemy))
+        {
+            this.DetectedEnemies.Remove(enemy);
+        }
+        if (enemy == this.CurrentTarget)
+        {
+            targetDestroyed();
+        }
     }
 
     public void targetFirst()
