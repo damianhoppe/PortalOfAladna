@@ -103,8 +103,8 @@ public class defaultEnemy : unitObject
     public virtual string EnemyDescription { get; protected set; } = "Default Enemy description";
     public virtual string EnemyType { get; protected set; } = "Enemy";
 
-    public virtual bool IsFriendly { get; protected set; } = true;
-    public virtual bool IsHostile { get; protected set; } = false;
+    public virtual bool IsFriendly { get; protected set; } = false;
+    public virtual bool IsHostile { get; protected set; } = true;
     public virtual bool CanSelect { get; protected set; } = true;
     public virtual bool IsAlive { get; protected set; } = true;
     public virtual bool IsDead { get; protected set; } = false;
