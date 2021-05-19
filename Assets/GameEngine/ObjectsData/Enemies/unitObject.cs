@@ -16,6 +16,8 @@ public class unitObject : MonoBehaviour
         this.GM = GameObject.FindObjectOfType<GridManager>();
         this.DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         this.EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        this.movePrecision = 0.2f;
+        this.moveSpeed = 10.0f;
     }
 
     // Update is called once per frame

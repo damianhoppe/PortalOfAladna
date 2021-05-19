@@ -36,6 +36,16 @@ public class defaultEnemy : unitObject
         this.CanGo = new bool[moveRange.Length];
 
         this.moveSpeed = 0.0025f;
+        this.movePrecision = 0.2f;
+        this.moveSpeed = 10.0f;
+
+        this.Armor = 1.0f;
+        this.Protection = 0.0f;
+        this.MaxHitpoints = 100.0f;
+        this.CurrentHitpoints = this.MaxHitpoints;
+        this.IsTank = false;
+        this.attackValue = 0.0f;
+
         this.PriorityDanger = 0.0f;
         this.PriorityObstacle = -1.0f;
         this.PriorityValue = 1.0f;
@@ -74,6 +84,7 @@ public class defaultEnemy : unitObject
     public int attackSpeed { get; protected set; } = 200;
     public int attackReady { get; protected set; } = 0;
     public int attackPercent { get; protected set; }
+    public float attackValue { get; protected set; } = 0.0f;
 
 
     public virtual string EnemyName { get; protected set; } = "Default Enemy";
@@ -146,7 +157,7 @@ public class defaultEnemy : unitObject
         {
             this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             this.attackReady -= this.attackSpeed;
-            AttackTarget.OnHit(20.0f);
+            AttackTarget.OnHit(this.attackValue);
             //Debug.Log("Job z paticku w " + AttackTarget);
             if (AttackTarget.IsDead)
             {
