@@ -8,6 +8,28 @@ public class Inventor : DefaultBuilding
     protected override void Start()
     {
         base.Start();
+        this.ObjectName = "Inventor";
+        this.ObjectDescription = "This is an Inventor. Allows extraction of metal and unlocks metal buildings.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Inventor";
+        this.ObjectSubtypeID = 1;
+
+        this.MaxHitpoints = 500.0f;
+        this.Armor = 3.0f;
+        this.Protection = 5.0f;
+        this.ActiveAtNight = true;
+
+        this.PositionValue = 5.0f;
+        this.PositionObstacle = 3.0f;
+        this.PositionDanger = 4.0f;
+
+        this.BaseCost = new DataStructures.Cost(500.0f, 200.0f, 150.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 50.0f;
+        this.PlayerObjectID = 28;
+        this.RequiredHumans = 25;
+
+        this.CurrentHitpoints = this.MaxHitpoints;
     }
 
     // Update is called once per frame

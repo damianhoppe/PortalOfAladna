@@ -8,6 +8,32 @@ public class MagicGate : MetalGate
     protected override void Start()
     {
         base.Start();
+        this.ObjectName = "Metal Gate";
+        this.ObjectDescription = "This is a metal gate.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Metal Gate";
+        this.ObjectSubtypeID = 2;
+
+        this.MaxHitpoints = 1500.0f;
+        this.Armor = 20.0f;
+        this.Protection = 15.0f;
+
+        this.PositionValue = -6.0f;
+        this.PositionObstacle = 4.0f;
+        this.PositionDanger = -6.0f;
+
+        this.BaseCost = new DataStructures.Cost(250.0f, 45.0f, 45.0f, 45.0f, 60.0f, 0.0f);
+        this.EnergyToBuild = 10.0f;
+        this.RequiredHumans = 10;
+        this.PlayerObjectID = 98;
+
+        this.RequiresInventor = true;
+        this.RequiresResearcher = true;
+
+        this.IsMilitary = true;
+        this.IsCivilian = false;
+        this.CurrentHitpoints = this.MaxHitpoints;
     }
 
     // Update is called once per frame

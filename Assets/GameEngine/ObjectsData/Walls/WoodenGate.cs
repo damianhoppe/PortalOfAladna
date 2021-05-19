@@ -8,6 +8,34 @@ public class WoodenGate : DefaultBuilding
     protected override void Start()
     {
         base.Start();
+        this.ObjectName = "Wooden Gate";
+        this.ObjectDescription = "This is a wooden gate.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Wooden Gate";
+        this.ObjectSubtypeID = 2;
+
+        this.IsMilitary = true;
+        this.IsCivilian = false;
+
+        this.MaxHitpoints = 200.0f;
+        this.Armor = 5.0f;
+        this.Protection = 5.0f;
+
+        this.PositionValue = -3.0f;
+        this.PositionObstacle = 1.5f;
+        this.PositionDanger = -3.0f;
+
+        this.BaseCost = new DataStructures.Cost(30.0f, 30.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 10.0f;
+        this.RequiredHumans = 5;
+        this.PlayerObjectID = 95;
+
+        this.BlocksPlayerUnits = false;
+
+        this.IsMilitary = true;
+        this.IsCivilian = false;
+        this.CurrentHitpoints = this.MaxHitpoints;
     }
 
     // Update is called once per frame
