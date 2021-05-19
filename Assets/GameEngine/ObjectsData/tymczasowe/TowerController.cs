@@ -22,7 +22,10 @@ public class TowerController : MonoBehaviour
             tower.reportKill(enemy);
         }
     }
-    
+    public void ConnectionTest()
+    {
+        Debug.Log("TC działa.");
+    }
     // Start is called before the first frame update
     void Start()
     {

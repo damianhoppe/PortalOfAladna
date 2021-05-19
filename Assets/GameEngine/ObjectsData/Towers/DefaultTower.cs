@@ -39,11 +39,14 @@ public class defaultTower : DefaultBuilding
     // Start is called before the first frame update
     protected override void Start()
     {
-        base.Start();
-        this.TC = GameObject.Find("tmpTowerController").GetComponent<TowerController>();
+        
+        this.TC = GameObject.Find("TowerController").GetComponent<TowerController>();
+        //TC.ConnectionTest();
         this.BulletType = Resources.Load<GameObject>("RedBullet");
         this.AttackRange = this.GetComponent<CircleCollider2D>();
         AttackRange.radius = 3.0f;
+
+        base.Start();
     }
 
     // Update is called once per frame
@@ -51,7 +54,14 @@ public class defaultTower : DefaultBuilding
     {
         if (this.hasTarget && this.canAttack)
         {
-            Attack(CurrentTarget);
+            if (this.CurrentTarget == null)
+            {
+                hasTarget = false;
+                
+            }
+            else { 
+                Attack(CurrentTarget);
+            }
         }
         base.Update();
     }
@@ -73,6 +83,7 @@ public class defaultTower : DefaultBuilding
             this.myBulletObjects.Add(tmpBulletObject);
             this.myBullets.Add(tmpBullet);
 
+            tmpBulletObject.transform.position = this.transform.position + new Vector3(0.0f, 0.0f, -0.5f);
             tmpBullet.launchBullet();
 
             return true;
@@ -104,6 +115,7 @@ public class defaultTower : DefaultBuilding
     {
         base.onCreate();
         this.TC.RegisterTower(this);
+        //TC.ConnectionTest();
     }
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {

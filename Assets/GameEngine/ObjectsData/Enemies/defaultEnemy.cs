@@ -23,10 +23,10 @@ public class defaultEnemy : unitObject
         this.hpBar.setVisibility(true);
 
         this.EnC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
-        this.TC = GameObject.Find("tmpTowerController").GetComponent<TowerController>();
+        this.TC = GameObject.Find("TowerController").GetComponent<TowerController>();
 
         collider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
-        collider.radius = 0.5f;
+        collider.radius = 0.1f;
         collider.isTrigger = true;
 
         rigidbody = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;

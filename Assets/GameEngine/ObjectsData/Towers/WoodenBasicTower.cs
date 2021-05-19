@@ -12,8 +12,19 @@ public class WoodenBasicTower : defaultTower
     {
 
         base.Start();
-        
-    }
+
+        this.AttackRange.radius = 3.0f;
+        this.TowerBulletDamage = 10.0f;
+        this.TowerBulletSpeed = 0.0125f;
+        this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
+        this.TowerBulletSize = 1.0f;
+
+        this.canAttack = true;
+
+        this.attackSpeed = 200;
+        this.attackReady = 0;
+
+}
 
     // Update is called once per frame
     protected override void Update()

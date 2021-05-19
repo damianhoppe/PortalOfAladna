@@ -42,7 +42,7 @@ public class RedBullet : MonoBehaviour
     }
     public void recalculateVector()
     {
-        if (NoTarget) return;
+        if (this.NoTarget || this.BulletTarget==null) return;
         else
         {
             float proporcja = this.BulletSpeed / Vector3.Distance(this.transform.position, this.BulletTarget.transform.position);
@@ -60,7 +60,7 @@ public class RedBullet : MonoBehaviour
             {
                 targetDestroyed();
             }
-            this.BulletArmed = false;
+            this.bulletExpired();
         }
     }
     public void targetDestroyed()
@@ -77,13 +77,14 @@ public class RedBullet : MonoBehaviour
 
     public void bulletExpired()
     {
+        Debug.Log("Hey, I expired!");
         this.BulletArmed = false;
         this.BulletSource.bulletExpired(this);
     }
     void Start()
     {
         BulletCollider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
-        BulletCollider.radius = 0.5f;
+        BulletCollider.radius = 0.1f;
         BulletCollider.isTrigger = true;
     }
 
@@ -92,7 +93,7 @@ public class RedBullet : MonoBehaviour
     {
         if (this.BulletArmed)
         {
-            if (this.BulletTime > this.BulletLifetime)
+            if (this.BulletTime >= this.BulletLifetime)
             {
                 this.bulletExpired();
             }
@@ -112,7 +113,7 @@ public class RedBullet : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             defaultEnemy enemyHit = collision.gameObject.GetComponent<defaultEnemy>();
-            hitTarget(enemyHit);
+            if(BulletArmed)hitTarget(enemyHit);
         }
     }
 }
