@@ -998,7 +998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildings:
   - {fileID: 5622522296184841837, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
-  - {fileID: 5573503752129296303, guid: 01840ae91176dfe4b83d72e1dafae929, type: 3}
+  - {fileID: 8600940687554557911, guid: c561f249fdf1b8c4caf940f0b420acc9, type: 3}
   - {fileID: 5876004205862889053, guid: a8e935e404842044191c2523aef3a617, type: 3}
   - {fileID: 7921114905061562079, guid: 83d1458f2c309b544bd1ae1e3634d15e, type: 3}
   - {fileID: 349608797354260853, guid: 8a5f4ee39c16d4b4c83e70c8e61b2255, type: 3}
