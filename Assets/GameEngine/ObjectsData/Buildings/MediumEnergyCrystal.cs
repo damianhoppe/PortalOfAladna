@@ -29,7 +29,7 @@ public class MediumEnergyCrystal : SmallEnergyCrystal
         this.EnergyToBuild = 50.0f;
         this.EnergyUse = -50.0f;
 
-        this.PlayerObjectID = 22;
+        this.PlayerObjectID = 23;
 
         this.RequiresInventor = true;
         this.RequiresResearcher = true;

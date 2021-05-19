@@ -8,15 +8,7 @@ public class WoodenLookout : DefaultBuilding
     protected override void Start()
     {
         base.Start();
-    }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-    public WoodenLookout()
-    {
         this.ObjectName = "Wooden Lookout";
         this.ObjectDescription = "This is a wooden lookout, with higher view range.";
         this.ObjectType = "Building";
@@ -44,6 +36,18 @@ public class WoodenLookout : DefaultBuilding
         this.PlayerObjectID = 71;
 
         this.RequiresAccess = false;
+
+        this.CurrentHitpoints = this.MaxHitpoints;
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+    }
+    public WoodenLookout()
+    {
+        
     }
     /*
     public override string ObjectName { get; protected set; } = "Lookout";

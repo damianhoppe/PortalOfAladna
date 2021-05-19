@@ -29,7 +29,7 @@ public class StoneBarricade : WoodenBarricade
         this.BaseCost = new DataStructures.Cost(50.0f, 0.0f, 25.0f, 0.0f, 0.0f, 0.0f);
         this.EnergyToBuild = 5.0f;
         this.RequiredHumans = 0;
-        this.PlayerObjectID = 101;
+        this.PlayerObjectID = 100;
     }
 
     // Update is called once per frame
