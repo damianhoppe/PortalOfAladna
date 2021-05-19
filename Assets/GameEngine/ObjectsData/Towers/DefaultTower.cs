@@ -7,7 +7,10 @@ public class defaultTower : DefaultBuilding
 {
     public CircleCollider2D AttackRange;
     public List<defaultEnemy> DetectedEnemies = new List<defaultEnemy>();
+    public List<GameObject> myBulletObjects = new List<GameObject>();
     public List<RedBullet> myBullets = new List<RedBullet>();
+
+    public tmpTowerController TC { get; protected set; }
 
     public defaultEnemy CurrentTarget { get; protected set; }
     public bool hasTarget { get; protected set; } = false;
@@ -25,11 +28,20 @@ public class defaultTower : DefaultBuilding
     public int attackPercent { get; protected set; }
 
     public bool canAttack { get; protected set; } = true;
+    public float TowerBulletDamage { get; protected set; } = 0.0f;
+    public float TowerBulletSpeed { get; protected set; } = 0.01f;
+    public int TowerBulletLifetime { get; protected set; } = 1000;
+    public float TowerBulletSize { get; protected set; } = 1.0f;
+
+    public GameObject BulletType { get; protected set; }
+
 
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        this.TC = GameObject.Find("tmpTowerController").GetComponent<tmpTowerController>();
+        this.BulletType = Resources.Load<GameObject>("RedBullet");
         this.AttackRange = this.GetComponent<CircleCollider2D>();
         AttackRange.radius = 3.0f;
     }
@@ -49,25 +61,25 @@ public class defaultTower : DefaultBuilding
         this.attackPercent = this.attackReady / this.attackSpeed;
         if (this.attackReady >= this.attackSpeed)
         {
-            //this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             this.attackReady -= this.attackSpeed;
-            //target.onHit(20.0f);
-            
 
+            GameObject tmpBulletObject = Instantiate(BulletType);
+            RedBullet tmpBullet = tmpBulletObject.GetComponent<RedBullet>();
+
+            tmpBullet.setBulletParameters(this.TowerBulletDamage, this.TowerBulletSpeed, this.TowerBulletSize, this.TowerBulletLifetime);
+            tmpBullet.setSource(this);
+            tmpBullet.setTarget(this.CurrentTarget);
+
+            this.myBulletObjects.Add(tmpBulletObject);
+            this.myBullets.Add(tmpBullet);
+
+            tmpBullet.launchBullet();
 
             return true;
         }
         else
         {
-            /*
-            this.transform.localScale.y = 1.0f + 0.5f * this.attackPercent;
-            this.transform.localScale.x = 1.0f + 0.5f * this.attackPercent;
-            this.transform.localScale = new Vector3(
-                1.0f + (0.5f * this.attackPercent),
-                1.0f + (0.5f * this.attackPercent),
-                1.0f + (0.5f * this.attackPercent));
-            */
-            //this.transform.localScale += new Vector3(0.0015f, 0.0015f, 0.00f);
+
         }
 
         return false;
@@ -122,6 +134,30 @@ public class defaultTower : DefaultBuilding
             CurrentTarget = DetectedEnemies[0];
         }
     }
+
+    public void bulletExpired(RedBullet bullet)
+    {
+        if (myBullets.Contains(bullet)) 
+        {
+            int tmp = myBullets.IndexOf(bullet);
+
+            Destroy(myBulletObjects[tmp], 0.2f);
+            this.myBulletObjects.RemoveAt(tmp);
+          
+            this.myBullets.RemoveAt(tmp); 
+        }
+    }
+    public void targetDestroyed()
+    {
+        this.CurrentTarget = null;
+
+        foreach(RedBullet bullet in myBullets)
+        {
+            bullet.targetLost();
+        }
+        FindTarget();
+    }
+
     public void targetFirst()
     {
         targetsFirst = true;
