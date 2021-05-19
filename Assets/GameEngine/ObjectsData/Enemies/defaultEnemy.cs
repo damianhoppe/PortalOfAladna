@@ -31,14 +31,50 @@ public class defaultEnemy : unitObject
 
         rigidbody = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;
         rigidbody.bodyType = RigidbodyType2D.Kinematic;
+
+        this.SurroundingValues = new float[moveRange.Length];
+        this.CanGo = new bool[moveRange.Length];
+
+        this.moveSpeed = 0.0025f;
+        this.PriorityDanger = 0.0f;
+        this.PriorityObstacle = -1.0f;
+        this.PriorityValue = 1.0f;
+
+        setPosition();
+        CheckSurroundings();
+        setDestination();
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+
+        if (IsMoving)
+        {
+            this.Move();
+        }
+        if (IsAttacking)
+        {
+            this.Attack();
+        }
     }
-    
+
+    public Vector2Int[] attackRange = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
+
+    public List<DefaultBuilding> Surroundings = new List<DefaultBuilding>();
+
+    public DefaultBuilding AttackTarget { get; protected set; }
+
+    public float[] SurroundingValues { get; protected set; }
+    public bool[] CanGo { get; protected set; }
+    public bool IsMoving { get; protected set; } = true;
+    public bool IsAttacking { get; protected set; } = false;
+
+    public int attackSpeed { get; protected set; } = 200;
+    public int attackReady { get; protected set; } = 0;
+    public int attackPercent { get; protected set; }
+
 
     public virtual string EnemyName { get; protected set; } = "Default Enemy";
     public virtual string EnemyDescription { get; protected set; } = "Default Enemy description";
@@ -102,5 +138,114 @@ public class defaultEnemy : unitObject
         this.IsAlive = false;
     }
 
+    public bool Attack()
+    {
+        this.attackReady++;
+        this.attackPercent = this.attackReady / this.attackSpeed;
+        if (this.attackReady >= this.attackSpeed)
+        {
+            this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            this.attackReady -= this.attackSpeed;
+            AttackTarget.OnHit(20.0f);
+            //Debug.Log("Job z paticku w " + AttackTarget);
+            if (AttackTarget.IsDead)
+            {
+                //Destroy(AttackTarget);
+                IsMoving = true;
+                IsAttacking = false;
+            }
+            return true;
+        }
+        else
+        {
 
+            this.transform.localScale += new Vector3(0.0015f, 0.0015f, 0.00f);
+        }
+
+        return false;
+    }
+    public override void setDestination()
+    {
+
+        float tmpMin = 0.0f;
+        int tmpIndex = -1;
+        int tmpRand = -1;
+        tmpRand = Random.Range(0, 4);
+
+        for (int j = 0; j < SurroundingValues.Length; j++)
+        {
+            int i = tmpRand + j;
+            if (i >= SurroundingValues.Length) i = 0;
+
+            if (j == 0)
+            {
+                tmpMin = SurroundingValues[i]; tmpIndex = i;
+            }
+            else if (SurroundingValues[i] < tmpMin) { tmpIndex = i; tmpMin = SurroundingValues[i]; }
+            /*
+            else if (SurroundingValues[i] == tmpMin)
+            {
+                if (tmpRand == 1) tmpIndex = i; tmpMin = SurroundingValues[i];
+            }*/
+        }
+
+        //Debug.Log("Going to:" + (CurrentPosition + moveRange[tmpIndex]));
+        //Debug.Log("Trace value:" + SurroundingValues[tmpIndex]);
+        //Debug.Log("Can go there:" + CanGo[tmpIndex]);
+
+        if (CanGo[tmpIndex])
+        {
+            Position target = CurrentPosition + moveRange[tmpIndex];
+            Vector3 punkt_docelowy = new Vector3((float)target.x, (float)target.y, -0.5f);
+            punkt_docelowy.x += Random.Range(-movePrecision, movePrecision);
+            punkt_docelowy.y += Random.Range(-movePrecision, movePrecision);
+            this.DestinationPosition = punkt_docelowy;
+
+            calculateVector();
+        }
+        else
+        {
+            Position target = CurrentPosition + moveRange[tmpIndex];
+            Vector3 punkt_docelowy = new Vector3((float)target.x, (float)target.y, -0.5f);
+            punkt_docelowy.x += Random.Range(-movePrecision, movePrecision);
+            punkt_docelowy.y += Random.Range(-movePrecision, movePrecision);
+            this.DestinationPosition = punkt_docelowy;
+            //Debug.Log("Target detected");
+            calculateVector();
+
+            AttackTarget = (DefaultBuilding)GM.getStructure(target);
+            IsMoving = false;
+            IsAttacking = true;
+        }
+    }
+    public override void CheckSurroundings()
+    {
+        int X = this.CurrentPosition.x;
+        int Y = this.CurrentPosition.y;
+        Surroundings = new List<DefaultBuilding>();
+
+        for (int i = 0; i < moveRange.Length; i++)
+        {
+            if (GM.getStructure(CurrentPosition + moveRange[i]) == null)
+            {
+                SurroundingValues[i] = Mathf.Abs((CurrentPosition + moveRange[i]).x) + Mathf.Abs((CurrentPosition + moveRange[i]).y);
+                CanGo[i] = true;
+            }
+            else
+            {
+                Structure tmpStruct = GM.getStructure(CurrentPosition + moveRange[i]);
+                if (tmpStruct.IsPlayerBuilding)
+                {
+                    DefaultBuilding tmpBuilding = (DefaultBuilding)tmpStruct;
+                    Surroundings.Add(tmpBuilding);
+                    SurroundingValues[i] = Mathf.Abs((CurrentPosition + moveRange[i]).x) + Mathf.Abs((CurrentPosition + moveRange[i]).y);
+                    SurroundingValues[i] -= tmpBuilding.PositionDanger * this.PriorityDanger;
+                    SurroundingValues[i] -= tmpBuilding.PositionValue * this.PriorityValue;
+                    SurroundingValues[i] -= tmpBuilding.PositionObstacle * this.PriorityObstacle;
+                    CanGo[i] = false;
+                }
+            }
+        }
+
+    }
 }
