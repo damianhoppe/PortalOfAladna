@@ -7,6 +7,6 @@ public interface IBuilding
     BuildingRequirements getBuildingRequirements();
     void onCreate();
     void onDestroy();
-    BuildingStatusBehaviour.Status canBuild();
     void subtractRequirements();
+    void setEnabled(bool enabled);
 }

@@ -22,13 +22,19 @@ public class Utils
             Debug.Log("LoadingPrefab - Error: File Not Found: " + path);
         return loadedObject;
     }
-    public static GameObject getChildGameObject(GameObject fromGameObject, string withName)
+    public static GameObject getChildGameObject(Transform transf, string withName)
     {
-        //Author: Isaac Dart, June-13.
-        Transform[] transforms = fromGameObject.transform.GetComponentsInChildren<Transform>();
-        foreach (Transform transform in transforms)
+        foreach (Transform transform in transf)
+        {
             if (transform.gameObject.name == withName)
                 return transform.gameObject;
+            else
+            {
+                GameObject result = getChildGameObject(transform, withName);
+                if (result != null)
+                    return result;
+            }
+        }
         return null;
     }
 }

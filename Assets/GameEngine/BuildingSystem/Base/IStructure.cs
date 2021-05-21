@@ -13,4 +13,5 @@ public interface IStructure
     void onCursorOver();
     void onCursorEnter();
     void onCursorLeft();
+    BuildingStatusBehaviour.Status canBuild();
 }

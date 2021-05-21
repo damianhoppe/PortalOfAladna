@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour, IStructure
 {
-    
-    protected string Name;
+    public virtual string ObjectName { get; protected set; } = "Structure";
     protected EStructureType type;
-    protected SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     Position position;
     public bool cursorOver = true;
@@ -18,15 +17,22 @@ public class Structure : MonoBehaviour, IStructure
     public virtual int DistanceToCenter { get; protected set; } = 0;
     public virtual int DistanceToPortal { get; protected set; } = 999;
 
+    protected GridManager gridManager;
+
     public Structure(EStructureType type)
     {
         this.type = type;
     }
 
+    protected virtual void Awake()
+    {
+        this.spriteRenderer = this.GetComponent<SpriteRenderer>();
+    }
+
     protected virtual void Start()
     {
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-        if(this.cursorOver)
+        this.gridManager = FindObjectOfType<GridManager>();
+        if (this.cursorOver)
         {
             this.onCursorOver();
             this.cursorOver = false;
@@ -36,10 +42,20 @@ public class Structure : MonoBehaviour, IStructure
     protected virtual void Update()
     {
     }
+    public virtual BuildingStatusBehaviour.Status canBuild()
+    {
+        if (gridManager == null)
+            this.gridManager = FindObjectOfType<GridManager>();
+        if (!gridManager.isInGrid(getPosition()) || !gridManager.isEmpty(getPosition()))
+        {
+            return BuildingStatusBehaviour.Status.INCORRECT_PLACE;
+        }
+        return BuildingStatusBehaviour.Status.ALLOW_BUILDING;
+    }
 
     public string getName()
     {
-        return this.Name;
+        return this.ObjectName;
     }
 
     public Position getPosition()
@@ -54,7 +70,7 @@ public class Structure : MonoBehaviour, IStructure
 
     public virtual void onClick()
     {
-        Debug.Log(this.Name + " - onClick()");
+        if (BuilderBehaviour._DEBUG) Debug.Log(this.ObjectName + " - onClick()");
     }
 
     public virtual void onDestroy()
@@ -63,7 +79,6 @@ public class Structure : MonoBehaviour, IStructure
 
     public virtual void destroy(bool forceDestruction = false)
     {
-        Debug.Log("DESTROY!!!!!!!!!!!");
         this.onDestroy();
         GridManager gridManager = GameObject.Find("BuildingSystem").GetComponent<GridManager>();
         if(gridManager != null)

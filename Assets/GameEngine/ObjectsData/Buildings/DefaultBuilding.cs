@@ -42,7 +42,6 @@ public class DefaultBuilding : Building
     {
         base.Update();
     }
-    public virtual string ObjectName { get; protected set; } = "Default Building";
     public virtual string ObjectDescription { get; protected set; } = "Default Building description";
     public virtual string ObjectType { get; protected set; } = "Building";
     
@@ -153,14 +152,6 @@ public class DefaultBuilding : Building
     public override void onCreate()
     {
         base.onCreate();
-        this.CurrentHitpoints = 100;
-        this.hpBar.setMaxHealth(this.MaxHitpoints);
-        /*if (CreateAvailable())
-        {
-            this.PC.IncreasePopulation(this.LivingSpace);
-            this.EC.StorageIncrease(this.BuildingStorage);
-            this.EC.DrainEnergy(this.EnergyToBuild);
-        }*/
     }
 
     public override void subtractRequirements()
@@ -200,6 +191,8 @@ public class DefaultBuilding : Building
     public override void onUpgrade()
     {
         base.onUpgrade();
+        this.hpBar.setMaxHealth(this.MaxHitpoints);
+        this.hpBar.setHealth(this.CurrentHitpoints);
         if (this.UpgradeAvailable())
         {
             EC.DrainEnergy(this.EnergyToUpgrade);

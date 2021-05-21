@@ -12,7 +12,6 @@ public class Wall : DefaultBuilding, OnGridChangedPerFrame
 
     public Wall()
     {
-        this.Name = "Wall";
     }
 
     protected override void Start()

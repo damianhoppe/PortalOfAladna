@@ -16,7 +16,6 @@ public class UpgradeMenuBehaviour : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("load");
         this.upgradeController = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
         this.saveController = GameObject.Find("PlayerDataController").GetComponent<SaveController>();
         this.saveController.load();

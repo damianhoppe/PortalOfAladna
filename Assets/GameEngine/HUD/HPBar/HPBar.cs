@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInterpolation<Color>
 {
-    private const string prefabPath = "HUD/HPBar/HPBar";
+    private const string prefabPath = "HUD/HPBar";
     public static HPBar create(GameObject gameObject)
     {
         Object obj = Utils.loadPrefabFromFile(prefabPath);
@@ -42,7 +42,7 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
         this.alphaInterp.pause();
         this.fillColorInterp = new ColorInterp(0.2f, this);
         this.fillColorInterp.pause();
-        this.fill = Utils.getChildGameObject(this.gameObject, "Fill").GetComponent<Image>();
+        this.fill = Utils.getChildGameObject(this.gameObject.transform, "Fill").GetComponent<Image>();
         started = true;
     }
 
@@ -61,6 +61,11 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
     public void setMaxHealth(float maxHealth)
     {
         this.slider.maxValue = maxHealth;
+    }
+
+    public void setHealthPercentage(float healthPercentage)
+    {
+        this.slider.value = this.slider.maxValue * healthPercentage/100;
     }
 
     public void setShift(float x, float y)
@@ -163,7 +168,6 @@ public class HPBar : MonoBehaviour, IOnUpdateInterpolation<float>, IOnUpdateInte
 
     public void onUpdateInterpolation(Interpolator<float> interpolator, float currentValue)
     {
-        //Debug.Log("Set alpha: " + currentValue);
         this.canvasGroup.alpha = currentValue;
     }
 

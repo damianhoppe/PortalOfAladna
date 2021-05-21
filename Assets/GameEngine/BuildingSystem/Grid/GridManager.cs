@@ -6,11 +6,13 @@ using System;
 
 public class GridManager : MonoBehaviour, IOnCursorPositionChanged
 {
+    [SerializeField]
+    public bool DEBUG = false;
+    [SerializeField]
+    public int width = 11;
+    [SerializeField]
+    public int height = 11;
     Grid grid;
-    [SerializeField]
-    int width = 11;
-    [SerializeField]
-    int height = 11;
 
     private CursorBehaviour cursor;
     private List<Position> changedPositionsInFrame;
@@ -22,13 +24,17 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
         this.onGridChangedListeners = new List<OnGridChangedPerFrame>();
     }
 
-    public void Start()
+    public void Awake()
     {
         if (width % 2 == 0)
             width++;
         if (height % 2 == 0)
             height++;
         grid = new Grid(width, height);
+    }
+
+    public void Start()
+    {
         this.cursor = GameObject.Find("Cursor").GetComponent<CursorBehaviour>();
         this.cursor.addOnPositionChangedListener(this);
     }
@@ -42,7 +48,7 @@ public class GridManager : MonoBehaviour, IOnCursorPositionChanged
 
     public void LateUpdate()
     {
-        //Debug.Log(this.changedPositionsInFrame.Count);
+        if(DEBUG) Debug.Log(this.changedPositionsInFrame.Count);
         if (this.changedPositionsInFrame.Count > 0)
         {
             foreach (OnGridChangedPerFrame listener in this.onGridChangedListeners)

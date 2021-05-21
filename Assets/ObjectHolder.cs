@@ -8,7 +8,7 @@ public class ObjectHolder : MonoBehaviour
     [SerializeField]
     public Dictionary<int, GameObject> Buildings = new Dictionary<int, GameObject>();
     public List<GameObject> BuildingsList = new List<GameObject>();
-    void Start()
+    void Awake()
     {
         BuilderBehaviour BH = FindObjectOfType<BuilderBehaviour>();
 
@@ -23,7 +23,7 @@ public class ObjectHolder : MonoBehaviour
 
             
 
-           Buildings.Add(building.GetComponent<Building>().PlayerObjectID, building);
+           Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
 
         }
         

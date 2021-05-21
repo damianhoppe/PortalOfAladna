@@ -21,7 +21,6 @@ public class BuildingRequirements
 
     public void initDictionary(List<Structure> structures, int minDistance)
     {
-        Debug.Log("initDict 1");
         this.initialized = true;
         for (int i = 0; i < structures.Count; i++)
         {
@@ -73,9 +72,6 @@ public class BuildingRequirements
 
     public Structure findNearestStructure(GridManager gridManager)
     {
-        Debug.Log("Count: " + this.positionsToCheck.Count);
-        Debug.Log("Is: " + isStructureNear(gridManager));
-        Debug.Log("Pos: " + this.building.getPosition().toString());
         Position buildingPosition = this.building.getPosition();
         foreach (Position pos in positionsToCheck)
         {
@@ -109,7 +105,6 @@ public class BuildingRequirements
                 }
             }
         }
-        Debug.Log("A: " + positions.Count);
         return positions;
     }
 }

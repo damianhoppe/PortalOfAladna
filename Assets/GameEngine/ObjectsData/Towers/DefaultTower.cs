@@ -50,9 +50,9 @@ public class defaultTower : DefaultBuilding
     }
 
     // Update is called once per frame
-    protected override void Update()
+    protected override void update()
     {
-        if (this.hasTarget && this.canAttack)
+        if (this.hasTarget && this.canAttack && this.lvl > 0)
         {
             if (this.CurrentTarget == null)
             {
@@ -63,7 +63,7 @@ public class defaultTower : DefaultBuilding
                 Attack(CurrentTarget);
             }
         }
-        base.Update();
+        base.update();
     }
     public virtual bool Attack(defaultEnemy target)
     {

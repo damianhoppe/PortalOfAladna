@@ -16,8 +16,8 @@ public class BuildingStatusBehaviour : MonoBehaviour
 
     void Start()
     {
-        this.cursor = FindObjectsOfType<CursorBehaviour>()[0].gameObject;
-        this.canvas = FindObjectsOfType<Canvas>()[0].gameObject;
+        this.cursor = GameObject.Find("Cursor").GetComponent<CursorBehaviour>().gameObject;
+        this.canvas = GetComponentsInChildren<Canvas>()[0].gameObject;
         this.cameraB = FindObjectsOfType<CameraBehaviour>()[0];
         this.image = GameObject.FindWithTag("UI.Building.Status").GetComponent<Image>();
         updateImage();
