@@ -120,13 +120,23 @@ public class DefaultMine : DefaultBuilding
     {
         DataStructures.Cost yield = new DataStructures.Cost();
 
-        foreach(DefaultResource Resource in SurroundingOres)
+        if (this.DNC.IsDay())
         {
-           yield+=Resource.Mine(this.MiningPower);
+            foreach (DefaultResource Resource in SurroundingOres)
+            {
+                yield += Resource.Mine(this.MiningPower);
+            }
+            this.DailyProduction = yield;
+        }
+        else if (this.ActiveAtNight)
+        {
+            foreach (DefaultResource Resource in SurroundingOres)
+            {
+                yield += Resource.Mine(this.MiningPower);
+            }
+            this.NightProduction = yield;
         }
 
-        if (DNC.IsDay()) this.DailyProduction = yield;
-        else this.NightProduction = yield;
         
         this.AccumulatedResources += yield;
 
@@ -137,15 +147,12 @@ public class DefaultMine : DefaultBuilding
         if (this.ActiveAtNight) this.ActiveAtNight = false;
         else this.ActiveAtNight = true;
     }
-    public virtual void DeliverResources()
+    public DataStructures.Cost DeliverResources()
     {
-        /*
-        if (DataStructures.Cost.IsGreater(this.AccumulatedResources, this.DeliverySize))
-        {
-            EC.ResourcesGained(this.DeliverySize);
-            this.AccumulatedResources -= this.DeliverySize;
-        }
-        */
+        DataStructures.Cost Delivery = new DataStructures.Cost();   //utworz dostawe
+        Delivery += this.AccumulatedResources;                      //zaladuj wszystko
+        this.AccumulatedResources = new DataStructures.Cost();      //brak surowcow w kopalni
+        return Delivery;                                            //dostarcz dostawe
     }
     public override void onCreate()
     {
