@@ -20,7 +20,7 @@ public class DefaultMine : DefaultBuilding
         this.ObjectSubtypeID = -1;
 
         this.MaxHitpoints = 100.0f;
-        this.ActiveAtNight = true;
+        this.ActiveAtNight = false;
         this.Armor = 1.0f;
         this.Protection = 0.0f;
 
@@ -40,7 +40,7 @@ public class DefaultMine : DefaultBuilding
     {
         base.Update();
     }
-    DefaultMine()
+    public DefaultMine()
     {
         this.ObjectName = "Default Mine";
         this.ObjectDescription = "This is a Default Mine.";
@@ -50,7 +50,7 @@ public class DefaultMine : DefaultBuilding
         this.ObjectSubtypeID = -1;
 
         this.MaxHitpoints = 100.0f;
-        this.ActiveAtNight = true;
+        this.ActiveAtNight = false;
         this.Armor = 1.0f;
         this.Protection = 0.0f;
 
@@ -76,8 +76,10 @@ public class DefaultMine : DefaultBuilding
     public virtual float MiningPower { get; protected set; } = 1.0f; // ile surowcow na cykl
     public virtual float MiningSpeed { get; protected set; } = 1.0f; // ile trwa cykl (mniejsze==szybciej)
     public virtual float MiningDelay { get; protected set; } // ile do nast. dostawy
-    public virtual int MinedResource { get; protected set; } = 0; //PlayerObjectID dla rodzaju zloza
+    //public virtual int MinedResource { get; protected set; } = 0; //PlayerObjectID dla rodzaju zloza
     public virtual bool ReadyToMine { get; protected set; } = false;
+    public virtual bool MinesDeep { get; protected set; } = false;
+    public virtual string MinedResource { get; protected set; } = "none";
 
     public List<DefaultResource> SurroundingOres = new List<DefaultResource>();
 
@@ -97,12 +99,22 @@ public class DefaultMine : DefaultBuilding
                 if (tmpStructure == null) continue;
                 else if (tmpStructure.getType() == EStructureType.Ore)
                 {
-                    if (tmpStructure.PlayerObjectID == this.MinedResource)
+                    DefaultResource tmpResource = (DefaultResource)tmpStructure;
+                    if (tmpResource.OreType == this.MinedResource)
                     {
-                        DefaultResource tmpResource = (DefaultResource)tmpStructure;
-                        if (tmpResource.RemainingOre > 0 && tmpResource.Depleted == false)
+                        if (tmpResource.Deep && this.MinesDeep)
                         {
-                            SurroundingOres.Add(tmpResource);
+                            if (tmpResource.RemainingOre > 0 && tmpResource.Depleted == false)
+                            {
+                                SurroundingOres.Add(tmpResource);
+                            }
+                        }
+                        else
+                        {
+                            if (tmpResource.RemainingOre > 0 && tmpResource.Depleted == false)
+                            {
+                                SurroundingOres.Add(tmpResource);
+                            }
                         }
                     }
                 }

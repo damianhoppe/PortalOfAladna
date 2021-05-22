@@ -19,7 +19,9 @@ public class DefaultResource : Structure
 
     public float LimitOre { get; protected set; } = 0.0f;
     public float RemainingOre { get; protected set; } = 0.0f;
+    //public Resource OreType { get; protected set; } = "none";
     public string OreType { get; protected set; } = "none";
+    public bool Infinite { get; protected set; } = false;
     public bool Depleted { get; protected set; } = false;
     public bool Deep { get; protected set; } = false;
     public float OreRichness { get; protected set; } = 1.0f;
@@ -63,4 +65,5 @@ public class DefaultResource : Structure
 
         return yield;
     }
+
 }
