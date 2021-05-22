@@ -77,6 +77,7 @@ public class DefaultMine : DefaultBuilding
     public virtual float MiningSpeed { get; protected set; } = 1.0f; // ile trwa cykl (mniejsze==szybciej)
     public virtual float MiningDelay { get; protected set; } // ile do nast. dostawy
     public virtual int MinedResource { get; protected set; } = 0; //PlayerObjectID dla rodzaju zloza
+    public virtual bool ReadyToMine { get; protected set; } = false;
 
     public List<DefaultResource> SurroundingOres = new List<DefaultResource>();
 
@@ -168,5 +169,9 @@ public class DefaultMine : DefaultBuilding
     {
         MC.UnregisterMine(this);
         base.onDestroy();
+    }
+    public virtual void ActivateMine()
+    {
+        this.ReadyToMine = true;
     }
 }
