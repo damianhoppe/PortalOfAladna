@@ -147,5 +147,19 @@ public class DefaultMine : DefaultBuilding
         }
         */
     }
-
+    public override void onCreate()
+    {
+        base.onCreate();
+        MC.RegisterMine(this);
+    }
+    public override void onSell()
+    {
+        MC.UnregisterMine(this);
+        base.onSell();
+    }
+    public override void onDestroy()
+    {
+        MC.UnregisterMine(this);
+        base.onDestroy();
+    }
 }
