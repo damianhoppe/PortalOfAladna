@@ -133,8 +133,8 @@ public class defaultEnemy : unitObject
         float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
         float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
         float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
-        Debug.Log("Proporcja:"+proporcja);
-        Debug.Log(new Vector3(speedX, speedY, 0.0f));
+        //Debug.Log("Proporcja:"+proporcja);
+        //Debug.Log(new Vector3(speedX, speedY, 0.0f));
     }
     public virtual void onHit(float damage)
     {
