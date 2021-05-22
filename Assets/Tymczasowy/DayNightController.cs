@@ -11,6 +11,9 @@ public class DayNightController : MonoBehaviour
     [SerializeField]
     List<Spawner_TMP> spawners;
     Light light;
+
+    public MiningController MC { get; protected set; } = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,6 +116,30 @@ public class DayNightController : MonoBehaviour
         ScanPathfinding();
         SpawnMonsters();
         light.intensity = 1;
+        
+    }
+    public bool ConnectMiningController()
+    {
+        if (this.MC == null)
+        {
+            MiningController tmpMC = GameObject.Find("MiningController").GetComponent<MiningController>();
+            if (tmpMC == null)
+            {
+                Debug.Log("DNC: Cannot find Mining Controller!");
+                return false;
+            }
+            else
+            {
+                this.MC = tmpMC;
+                Debug.Log("DNC: Mining Controller connected!");
+                return true;
+            }
+        }
+        else
+        {
+            Debug.Log("DNC: Mining Controller already connected!");
+            return false;
+        }
         
     }
 }
