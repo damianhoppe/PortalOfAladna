@@ -109,6 +109,9 @@ public class DayNightController : MonoBehaviour
         
         EconomyController EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
         EC.DailyEnergyGain();
+
+        this.MC.DeliverResources();
+        this.MC.MineDay();
     }
     void NightTime()
     {
@@ -116,7 +119,10 @@ public class DayNightController : MonoBehaviour
         ScanPathfinding();
         SpawnMonsters();
         light.intensity = 1;
-        
+
+        this.MC.DeliverResources();
+        this.MC.MineNight();
+
     }
     public bool ConnectMiningController()
     {
