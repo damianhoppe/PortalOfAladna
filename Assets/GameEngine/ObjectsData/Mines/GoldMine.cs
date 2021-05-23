@@ -77,5 +77,9 @@ public class GoldMine : DefaultMine
         this.MinesDeep = false;
 
         this.CurrentHitpoints = this.MaxHitpoints;
+
+        this.RequiresInventor = false;
+        this.RequiresResearcher = false;
+        this.RequiresAcademy = false;
     }
 }
