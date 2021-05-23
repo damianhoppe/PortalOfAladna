@@ -17,6 +17,10 @@ public class DefaultResource : Structure
     }
     public DefaultResource() : base(EStructureType.Ore) { }
 
+    
+    public virtual string ObjectDescription { get; protected set; } = "Default Ore description";
+    public virtual string ObjectType { get; protected set; } = "Default Ore";
+
     public float LimitOre { get; protected set; } = 0.0f;
     public float RemainingOre { get; protected set; } = 0.0f;
     //public Resource OreType { get; protected set; } = "none";
@@ -25,6 +29,8 @@ public class DefaultResource : Structure
     public bool Depleted { get; protected set; } = false;
     public bool Deep { get; protected set; } = false;
     public float OreRichness { get; protected set; } = 1.0f;
+
+    
 
     public void SetProperties(float Limit, float Remaining, string Type, bool In, bool Depl, bool Dee, float Rich)
     {

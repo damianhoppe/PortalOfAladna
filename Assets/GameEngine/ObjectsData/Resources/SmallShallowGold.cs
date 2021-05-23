@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmallDeepGold : DefaultResource
+public class SmallShallowGold : DefaultResource
 {
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-        this.ObjectName = "Small Deep Gold";
-        this.ObjectDescription = "This is a Small Deep Gold.";
+        this.ObjectName = "Small Shallow Gold";
+        this.ObjectDescription = "This is a Small Shallow Gold.";
 
         this.OreRichness = 0.5f;
         this.OreType = "Gold";
-        this.LimitOre = 2500;
+        this.LimitOre = 500;
         this.RemainingOre = this.LimitOre;
 
         this.Infinite = false;
         this.Depleted = false;
-        this.Deep = true;
+        this.Deep = false;
 
-        this.PlayerObjectID = 56;
+        this.PlayerObjectID = 41;
     }
 
     // Update is called once per frame
@@ -29,20 +29,20 @@ public class SmallDeepGold : DefaultResource
     {
         base.Update();
     }
-    SmallDeepGold()
+    SmallShallowGold()
     {
-        this.ObjectName = "Small Deep Gold";
-        this.ObjectDescription = "This is a Small Deep Gold.";
+        this.ObjectName = "Small Shallow Gold";
+        this.ObjectDescription = "This is a Small Shallow Gold.";
 
         this.OreRichness = 0.5f;
         this.OreType = "Gold";
-        this.LimitOre = 2500;
+        this.LimitOre = 500;
         this.RemainingOre = this.LimitOre;
 
         this.Infinite = false;
         this.Depleted = false;
-        this.Deep = true;
+        this.Deep = false;
 
-        this.PlayerObjectID = 56;
+        this.PlayerObjectID = 41;
     }
 }
