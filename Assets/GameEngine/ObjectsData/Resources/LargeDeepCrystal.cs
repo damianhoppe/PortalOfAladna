@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LargeDeepGold : DefaultResource
+public class LargeDeepCrystal : DefaultResource
 {
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-        this.ObjectName = "Large Deep Gold";
-        this.ObjectDescription = "This is a Large Deep Gold.";
+        this.ObjectName = "Large Deep Crystal";
+        this.ObjectDescription = "This is a Large Deep Crystal.";
 
         this.OreRichness = 2.5f;
-        this.OreType = "Gold";
+        this.OreType = "Crystal";
         this.LimitOre = 25000;
         this.RemainingOre = this.LimitOre;
 
@@ -21,7 +21,7 @@ public class LargeDeepGold : DefaultResource
         this.Depleted = false;
         this.Deep = true;
 
-        this.PlayerObjectID = 58;
+        this.PlayerObjectID = 70;
     }
 
     // Update is called once per frame
@@ -29,13 +29,13 @@ public class LargeDeepGold : DefaultResource
     {
         base.Update();
     }
-    LargeDeepGold()
+    LargeDeepCrystal()
     {
-        this.ObjectName = "Large Deep Gold";
-        this.ObjectDescription = "This is a Large Deep Gold.";
+        this.ObjectName = "Large Deep Crystal";
+        this.ObjectDescription = "This is a Large Deep Crystal.";
 
         this.OreRichness = 2.5f;
-        this.OreType = "Gold";
+        this.OreType = "Crystal";
         this.LimitOre = 25000;
         this.RemainingOre = this.LimitOre;
 
@@ -43,6 +43,6 @@ public class LargeDeepGold : DefaultResource
         this.Depleted = false;
         this.Deep = true;
 
-        this.PlayerObjectID = 58;
+        this.PlayerObjectID = 70;
     }
 }
