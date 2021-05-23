@@ -93,13 +93,21 @@ public class DefaultResource : Structure
         if (this.Depleted) { return yield; }
 
         float efficiency = power * this.OreRichness;
-        if (efficiency > this.RemainingOre)
+        if (this.Infinite)
         {
-            efficiency = this.RemainingOre;
-            this.Depleted = true;
-            this.RemainingOre = 0.0f;
+
         }
-        else this.RemainingOre -= efficiency;
+        else
+        {
+            if (efficiency > this.RemainingOre)
+            {
+                efficiency = this.RemainingOre;
+                this.Depleted = true;
+                this.RemainingOre = 0.0f;
+            }
+            else this.RemainingOre -= efficiency;
+        }
+        
 
         switch (this.OreType)
         {
