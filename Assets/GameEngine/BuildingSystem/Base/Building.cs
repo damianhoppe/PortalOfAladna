@@ -26,7 +26,6 @@ public class Building : Structure, IBuilding
     protected Status status;
     BuildingRequirements buildingRequirements;
     BuildingStatusBehaviour buildingStatus;
-    GridManager gridManager;
     protected HPBar hpBar;
 
     public Building() : base(EStructureType.Building)
@@ -39,8 +38,7 @@ public class Building : Structure, IBuilding
     protected override void Start()
     {
         base.Start();
-        this.gridManager = FindObjectOfType<GridManager>();
-        Debug.Log("Start: " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count);
+        if(BuilderBehaviour._DEBUG) Debug.Log("Start: " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count);
         buildingRequirements.initDictionary(nearbyStructuresRequired, requiredMinimalDistance);
         initialized = true;
         if (this.updateEnabled)
@@ -67,10 +65,10 @@ public class Building : Structure, IBuilding
             this.upgradePercentage += this.currentPerformance * buildSpeed * Time.deltaTime;
             color.a = this.upgradePercentage / 200 + 0.5f;
             this.spriteRenderer.color = color;
-            this.hpBar.setHealth(this.upgradePercentage);
+            this.hpBar.setHealthPercentage(this.upgradePercentage);
             if (this.upgradePercentage >= 100)
             {
-                this.hpBar.setHealth(100);
+                this.hpBar.setHealthPercentage(100);
                 this.upgradePercentage = 0;
                 this.lvl++;
                 this.onUpgrade();
@@ -79,15 +77,11 @@ public class Building : Structure, IBuilding
         }
     }
 
-    public virtual BuildingStatusBehaviour.Status canBuild()
+    public override BuildingStatusBehaviour.Status canBuild()
     {
-        if(gridManager == null)
-            this.gridManager = FindObjectOfType<GridManager>();
-        Debug.Log(getPosition().toString());
-        if(!gridManager.isInGrid(getPosition()) || !gridManager.isEmpty(getPosition()))
-        {
-            return BuildingStatusBehaviour.Status.INCORRECT_PLACE;
-        }
+        BuildingStatusBehaviour.Status baseStatus = base.canBuild();
+        if (baseStatus != BuildingStatusBehaviour.Status.ALLOW_BUILDING)
+            return baseStatus;
         if(!this.buildingRequirements.areMet(this.gridManager))
         {
             return BuildingStatusBehaviour.Status.LACK_OF_REQUIRED_BUILDING;
@@ -115,15 +109,17 @@ public class Building : Structure, IBuilding
     public virtual void onCreate()
     {
         this.hpBar = HPBar.create(this.gameObject);
-        this.hpBar.hide();
         this.hpBar.setHealth(0);
         this.hpBar.setFillColor(Color.white);
         this.upgradePercentage = 0;
         Structure structure = this.buildingRequirements.findNearestStructure(this.gridManager);
-        if(structure != null)
-            Debug.Log("Nearest structure: " + structure.gameObject.name);
-        else
-            Debug.Log("Nearest structure: null");
+        if (BuilderBehaviour._DEBUG)
+        {
+            if (structure != null)
+                Debug.Log("Nearest structure: " + structure.gameObject.name);
+            else
+                Debug.Log("Nearest structure: null");
+        }
     }
 
     public virtual void onUpgrade()
@@ -132,6 +128,7 @@ public class Building : Structure, IBuilding
         {
             case 1:
                 this.hpBar.setTargetFillColor(Color.red);
+                this.hpBar.hideWithDelay(1);
                 break;
             case 2:
                 break;
@@ -140,7 +137,7 @@ public class Building : Structure, IBuilding
 
     public override void onClick()
     {
-        Debug.Log("S: " + this.status.ToString() + " - " + (int)this.upgradePercentage + "%" + ", LVL:" + this.lvl + ", PERF: " + this.currentPerformance + ", NOE: " + this.numberOfEmployees + "/:" + this.maxNumberOfEmployees);
+        if (BuilderBehaviour._DEBUG) Debug.Log("S: " + this.status.ToString() + " - " + (int)this.upgradePercentage + "%" + ", LVL:" + this.lvl + ", PERF: " + this.currentPerformance + ", NOE: " + this.numberOfEmployees + "/:" + this.maxNumberOfEmployees);
     }
 
     public enum Status
@@ -148,7 +145,7 @@ public class Building : Structure, IBuilding
         IS_BEING_BUILT, WORKS
     }
 
-    public void setEnabled(bool enabled)
+    public virtual void setEnabled(bool enabled)
     {
         this.updateEnabled = enabled;
     }
@@ -171,4 +168,23 @@ public class Building : Structure, IBuilding
     }
 
     public virtual void subtractRequirements() { }
+
+    protected virtual bool isInDistance(Position position, int distance)
+    {
+        int xDiff = Mathf.Abs(position.x - getPosition().x);
+        int yDiff = Mathf.Abs(position.y - getPosition().y);
+        if (xDiff <= distance && yDiff <= distance)
+            return true;
+        return false;
+    }
+    protected virtual bool isAroundInDistance(Position position, int distance)
+    {
+        int xDiff = Mathf.Abs(position.x - getPosition().x);
+        int yDiff = Mathf.Abs(position.y - getPosition().y);
+        if (xDiff == 0 && yDiff == 0)
+            return false;
+        if (xDiff <= distance && yDiff <= distance)
+            return true;
+        return false;
+    }
 }

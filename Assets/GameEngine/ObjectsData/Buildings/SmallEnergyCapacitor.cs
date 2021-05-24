@@ -8,6 +8,32 @@ public class SmallEnergyCapacitor : DefaultBuilding
     protected override void Start()
     {
         base.Start();
+        this.ObjectName = "Small Energy Capacitor";
+        this.ObjectDescription = "This is a small energy capacitor that can store 50 energy.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Small Energy Capacitor";
+        this.ObjectSubtypeID = 1;
+
+        this.MaxHitpoints = 300.0f;
+        this.ActiveAtNight = true;
+        this.Armor = 5.0f;
+        this.Protection = 10.0f;
+
+        this.PositionValue = 3.0f;
+        this.PositionObstacle = 3.0f;
+        this.PositionDanger = 3.0f;
+
+        this.BaseCost = new DataStructures.Cost(150.0f, 0.0f, 0.0f, 50.0f, 25.0f, 0.0f);
+        this.RequiredHumans = 5;
+        this.EnergyToBuild = 25.0f;
+        this.EnergyStorage = 50.0f;
+
+        this.PlayerObjectID = 25;
+
+        this.RequiresInventor = true;
+        this.RequiresResearcher = true;
+        this.CurrentHitpoints = this.MaxHitpoints;
     }
 
     // Update is called once per frame

@@ -72,9 +72,6 @@ public class BuildingRequirements
 
     public Structure findNearestStructure(GridManager gridManager)
     {
-        Debug.Log("Count: " + this.positionsToCheck.Count);
-        Debug.Log("Is: " + isStructureNear(gridManager));
-        Debug.Log("Pos: " + this.building.getPosition().toString());
         Position buildingPosition = this.building.getPosition();
         foreach (Position pos in positionsToCheck)
         {
@@ -89,5 +86,25 @@ public class BuildingRequirements
             }
         }
         return null;
+    }
+
+    public List<Position> getAllStructurePositions(GridManager gridManager)
+    {
+        Position buildingPosition = this.building.getPosition();
+        List<Position> positions = new List<Position>();
+        foreach (Position pos in positionsToCheck)
+        {
+            if (pos.x == 0 && pos.y == 0)
+                continue;
+            Structure structure = gridManager.getStructure(buildingPosition.getX() + pos.getX(), buildingPosition.getY() + pos.getY());
+            if (structure != null)
+            {
+                if (this.nearbyStructures.Contains(structure.getName()))
+                {
+                    positions.Add(new Position(pos.x + buildingPosition.x, pos.y + buildingPosition.y));
+                }
+            }
+        }
+        return positions;
     }
 }

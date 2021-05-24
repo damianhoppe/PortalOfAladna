@@ -9,6 +9,13 @@ TagManager:
   - Portal
   - UI.Building.Status
   - Spawner
+  - Building
+  - Tower
+  - Storage
+  - Mine
+  - Special
+  - Gate
+  - Barricade
   layers:
   - Default
   - TransparentFX

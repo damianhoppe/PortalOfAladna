@@ -8,6 +8,33 @@ public class Academy : DefaultBuilding
     protected override void Start()
     {
         base.Start();
+        this.RequiresInventor = true;
+        this.RequiresResearcher = true;
+
+        this.ObjectName = "Academy";
+        this.ObjectDescription = "This is an Academy. It unlocks magic buildings.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Academy";
+        this.ObjectSubtypeID = 1;
+
+        this.MaxHitpoints = 3000.0f;
+        this.Armor = 10.0f;
+        this.Protection = 15.0f;
+        this.ActiveAtNight = true;
+
+        this.PositionValue = 15.0f;
+        this.PositionObstacle = 10.0f;
+        this.PositionDanger = 10.0f;
+
+        this.BaseCost = new DataStructures.Cost(6000.0f, 600.0f, 500.0f, 250.0f, 100.0f, 0.0f);
+        this.EnergyToBuild = 100.0f;
+        this.PlayerObjectID = 30;
+        this.RequiredHumans = 80;
+
+        this.IsCivilian = false;
+        this.IsMilitary = true;
+        this.CurrentHitpoints = this.MaxHitpoints;
     }
 
     // Update is called once per frame

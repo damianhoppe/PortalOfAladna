@@ -8,6 +8,28 @@ public class SmallHouse : DefaultBuilding
     protected override void Start()
     {
         base.Start();
+        this.ObjectName = "Small House";
+        this.ObjectDescription = "This is a small house for 10 people.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Small House";
+        this.ObjectSubtypeID = 1;
+
+        this.MaxHitpoints = 50.0f;
+        this.CurrentHitpoints = this.MaxHitpoints;
+        this.ActiveAtNight = true;
+        this.Armor = 1.0f;
+        this.Protection = 0.0f;
+
+        this.PositionValue = 3.0f;
+        this.PositionObstacle = 1.0f;
+
+        this.BaseCost = new DataStructures.Cost(50.0f, 20.0f, 5.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 10.0f;
+
+        this.PlayerObjectID = 1;
+
+        this.LivingSpace = 10;
     }
 
     // Update is called once per frame
@@ -25,10 +47,11 @@ public class SmallHouse : DefaultBuilding
         this.ObjectSubtypeID = 1;
 
         this.MaxHitpoints = 50.0f;
+        this.CurrentHitpoints = this.MaxHitpoints;
         this.ActiveAtNight = true;
         this.Armor = 1.0f;
         this.Protection = 0.0f;
-
+        this.CurrentHitpoints = this.MaxHitpoints;
         this.PositionValue = 3.0f;
         this.PositionObstacle = 1.0f;
 

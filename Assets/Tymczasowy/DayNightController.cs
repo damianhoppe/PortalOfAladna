@@ -7,12 +7,17 @@ using UnityEngine;
 public class DayNightController : MonoBehaviour
 {
     bool day = true;
+    int DayNum;
     [SerializeField]
     List<Spawner_TMP> spawners;
     Light light;
+
+    public MiningController MC { get; protected set; } = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        DayNum = 0;
         light = GameObject.Find("Light").GetComponent<Light>();
     }
 
@@ -27,7 +32,25 @@ public class DayNightController : MonoBehaviour
     private void LateUpdate()
     {
     }
-    
+
+    public Dictionary<string, float> SaveMe()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+        save.Add("DayNum", DayNum);
+
+
+
+        return save;
+    }
+    public void LoadMe(Dictionary<string, float> save)
+    {
+        float data;
+        save.TryGetValue("DayNym", out data);
+        DayNum = (int)data;
+
+
+    }
+
     public void UpdatePathfinding()
     {
         ScanPathfinding();
@@ -75,6 +98,7 @@ public class DayNightController : MonoBehaviour
     }
     void DayTime()
     {
+        DayNum++;
         light.intensity = 5;
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(var enemy in enemys)
@@ -85,6 +109,9 @@ public class DayNightController : MonoBehaviour
         
         EconomyController EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
         EC.DailyEnergyGain();
+
+        this.MC.DeliverResources();
+        this.MC.MineDay();
     }
     void NightTime()
     {
@@ -92,6 +119,33 @@ public class DayNightController : MonoBehaviour
         ScanPathfinding();
         SpawnMonsters();
         light.intensity = 1;
+
+        this.MC.DeliverResources();
+        this.MC.MineNight();
+
+    }
+    public bool ConnectMiningController()
+    {
+        if (this.MC == null)
+        {
+            MiningController tmpMC = GameObject.Find("MiningController").GetComponent<MiningController>();
+            if (tmpMC == null)
+            {
+                Debug.Log("DNC: Cannot find Mining Controller!");
+                return false;
+            }
+            else
+            {
+                this.MC = tmpMC;
+                Debug.Log("DNC: Mining Controller connected!");
+                return true;
+            }
+        }
+        else
+        {
+            Debug.Log("DNC: Mining Controller already connected!");
+            return false;
+        }
         
     }
 }

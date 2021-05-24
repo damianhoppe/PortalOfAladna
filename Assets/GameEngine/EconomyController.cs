@@ -20,7 +20,57 @@ public class EconomyController : MonoBehaviour
     {
         
     }
+    public Dictionary<string, float> SaveMe()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+        save.Add("EnergyLimit",EnergyLimit);
+        save.Add("EnergyRegeneration", EnergyRegeneration);
+        save.Add("StartEnergy", StartEnergy);
+        save.Add("CurrentEnergy", CurrentEnergy);
+        save.Add("Crystals", PlayerResources.Crystals);
+        save.Add("Gold", PlayerResources.Gold);
+        save.Add("Humans", PlayerResources.Humans);
+        save.Add("Metal", PlayerResources.Metal);
+        save.Add("Stone", PlayerResources.Stone);
+        save.Add("Wood", PlayerResources.Wood);
 
+        return save;
+    }
+    public void LoadMe(Dictionary<string, float> save)
+    {
+        float data;
+        save.TryGetValue("EnergyLimit", out data);
+        EnergyLimit = data;
+        save.TryGetValue("EnergyRegeneration", out data);
+        EnergyRegeneration = data;
+        save.TryGetValue("StartEnergy", out data);
+        StartEnergy = data;
+        save.TryGetValue("Crystals", out data);
+        float Crystals = data;
+        save.TryGetValue("Gold", out data);
+        float Gold = data;
+        save.TryGetValue("Humans", out data);
+        float Humans = data;
+        save.TryGetValue("Metal", out data);
+        float Metal = data;
+        save.TryGetValue("Stone", out data);
+        float Stone = data;
+        save.TryGetValue("Wood", out data);
+        float value;
+        if(save.TryGetValue("Wood", out value))
+        {
+            Debug.Log("EEE "+ value);
+        }
+        else
+        {
+            Debug.Log("NOPE");
+        }
+        float Wood = data;
+        Debug.Log(Wood);
+        this.PlayerResources = new DataStructures.Cost((int)Gold,(int)Wood,(int)Stone,(int)Metal,(int)Crystals,(int)Humans);
+
+
+    }
     public DataStructures.Cost PlayerResources { get; protected set; }// = new DataStructures.Cost();
     //portal może mieć pewną wartość magazynu - wtedy TotalStorage powinno być (0,0,0,0,0,0,)
     public DataStructures.Cost TotalStorage { get; protected set; } = new DataStructures.Cost(500.0f, 50.0f, 50.0f, 50.0f, 50.0f, 0.0f);

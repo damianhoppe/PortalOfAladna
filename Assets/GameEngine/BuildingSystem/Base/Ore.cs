@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Ore : Structure
 {
-    public Ore() : base(EStructureType.Building) { }
+    public Ore() : base(EStructureType.Building) {
+        this.PlayerObjectID = 200;
+    }
 
     protected override void Start()
     {

@@ -6,23 +6,27 @@ public class ObjectHolder : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    public Dictionary<string, GameObject> Buildings = new Dictionary<string, GameObject>();
-    [SerializeField]
-    List<GameObject> BuildingsList = new List<GameObject>();
-    void Start()
+    public Dictionary<int, GameObject> Buildings = new Dictionary<int, GameObject>();
+    public List<GameObject> BuildingsList = new List<GameObject>();
+    void Awake()
     {
         BuilderBehaviour BH = FindObjectOfType<BuilderBehaviour>();
-        
-        foreach(var building in BuildingsList)
+
+        var prefabs = Resources.LoadAll("Prefabs");
+        foreach (Object item in prefabs)
         {
-            Debug.Log(building);
-            Buildings.Add(building.GetComponent<Building>().name, building);
+            GameObject obj = item as GameObject;
+            BuildingsList.Add(obj);
+        }
+        foreach (var building in BuildingsList)
+        {
+
+            
+
+           Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
 
         }
-        foreach (string key in Buildings.Keys)
-        {
-            Debug.Log(key);
-        }
+        
     }
 
     // Update is called once per frame

@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DefaultBuilding : Building
 {
     // Start is called before the first frame update
+
+    
 
     public virtual UpgradeController UC { get; protected set; }
     public virtual EconomyController EC { get; protected set; }
@@ -14,6 +17,7 @@ public class DefaultBuilding : Building
 
     protected override void Start()
     {
+        this.IsPlayerBuilding = true;
         //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
 
         UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
@@ -21,7 +25,7 @@ public class DefaultBuilding : Building
         PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
         GM = GameObject.FindObjectOfType<GridManager>();
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
-
+        
         this.CurrentHitpoints = this.MaxHitpoints;
 
         //czy zmiana TotalCost zmieni BaseCost?
@@ -38,9 +42,9 @@ public class DefaultBuilding : Building
     {
         base.Update();
     }
-    public virtual string ObjectName { get; protected set; } = "Default Building";
     public virtual string ObjectDescription { get; protected set; } = "Default Building description";
     public virtual string ObjectType { get; protected set; } = "Building";
+    
     public virtual int ObjectTypeID { get; protected set; } = 1;
     public virtual string ObjectSubtype { get; protected set; } = "Default";
     public virtual int ObjectSubtypeID { get; protected set; } = 0;
@@ -73,6 +77,24 @@ public class DefaultBuilding : Building
     
     public virtual DataStructures.Cost BaseCost { get; protected set; } = new DataStructures.Cost(100.0f, 10.0f, 5.0f, 0.0f, 0.0f, 5.0f);
     public virtual DataStructures.Cost TotalCost { get; protected set; }
+
+    public Dictionary<string,float> save()
+    {
+        Dictionary<string, float> save = new Dictionary<string, float>();
+
+        save.Add("CurrentHitpoints", CurrentHitpoints);
+        save.Add("MaxHitpoints", MaxHitpoints);
+        return save;
+    }
+    public void load(Dictionary<string,float> save)
+    {
+        float data;
+        save.TryGetValue("CurrentHitpoints",out data);
+        CurrentHitpoints = data;
+        save.TryGetValue("MaxHitpoints", out data);
+        MaxHitpoints = data;
+    }
+
     public virtual DataStructures.Cost UpgradeCost { get; protected set; }
     public virtual DataStructures.Cost RepairCost { get; protected set; }
 
@@ -105,26 +127,31 @@ public class DefaultBuilding : Building
     public virtual bool RequiresAccess { get; protected set; } = true;
     public virtual bool CanBuildAtNight { get; protected set; } = false;
 
+
+    float t = 0;
     protected override void update()
     {
         base.update();
-        if (this.works())
+        /*if (this.works())
         {
-            this.hpBar.setHealth(this.CurrentHitpoints);
-        }
+            t += Time.deltaTime;
+            if(t >= 2)
+            {
+                this.CurrentHitpoints -= 40;
+                this.hpBar.setHealth(this.CurrentHitpoints);
+                this.hpBar.showForSeconds(1f);
+                if (this.CurrentHitpoints <= 0)
+                {
+                    this.destroy();
+                }
+                t -= 2;
+            }
+        }*/
     }
 
     public override void onCreate()
     {
         base.onCreate();
-        this.CurrentHitpoints = 100;
-        this.hpBar.setMaxHealth(this.MaxHitpoints);
-        /*if (CreateAvailable())
-        {
-            this.PC.IncreasePopulation(this.LivingSpace);
-            this.EC.StorageIncrease(this.BuildingStorage);
-            this.EC.DrainEnergy(this.EnergyToBuild);
-        }*/
     }
 
     public override void subtractRequirements()
@@ -164,6 +191,8 @@ public class DefaultBuilding : Building
     public override void onUpgrade()
     {
         base.onUpgrade();
+        this.hpBar.setMaxHealth(this.MaxHitpoints);
+        this.hpBar.setHealth(this.CurrentHitpoints);
         if (this.UpgradeAvailable())
         {
             EC.DrainEnergy(this.EnergyToUpgrade);
@@ -173,6 +202,7 @@ public class DefaultBuilding : Building
             this.BuildingLevel++;
         }
     }
+
     public virtual bool UpgradeAvailable()
     {
         if (this.CanUpgrade)
@@ -245,12 +275,15 @@ public class DefaultBuilding : Building
     
     public virtual bool OnHit(float Damage)
     {
-        if (this.IsMilitary)
+        Debug.Log("Got attacked for " + Damage + " damage");
+        if (this.IsCivilian)
         {
             float DMG = (Damage - this.Armor) * (1.0f - this.Protection / 100.0f);
             if (DMG <= 0.0f) DMG=0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) onDestroy();
+            Debug.Log("Received damage: " + DMG);
+            Debug.Log(this.CurrentHitpoints.ToString() +"/"+ this.MaxHitpoints.ToString());
+            if (this.CurrentHitpoints <= 0.0f) destroy();
             else
             {
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints));
@@ -262,7 +295,7 @@ public class DefaultBuilding : Building
             float DMG = Damage * (1.0f - this.Protection / 100.0f) - this.Armor;
             if (DMG <= 0.0f) DMG = 0.0f;
             this.CurrentHitpoints -= DMG;
-            if (this.CurrentHitpoints <= 0.0f) onDestroy();
+            if (this.CurrentHitpoints <= 0.0f) destroy();
             else 
             { 
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints)); 
@@ -271,21 +304,29 @@ public class DefaultBuilding : Building
         }
         return false;
     }
+    public override void destroy(bool forceDestruction = false)
+    {
+        if (this.DestroyAvailable())
+        {
+            base.destroy(forceDestruction);
+        }
+        
+
+    }
     public override void onDestroy()
     {
         base.onDestroy();
-        if (this.DestroyAvailable())
+
+        this.IsAlive = false;
+        this.IsDead = true;
+        if (this.ActiveAtNight)
         {
-            this.IsAlive = false;
-            this.IsDead = true;
-            if (this.ActiveAtNight)
-            {
-                PC.KillHumans(this.RequiredHumans);
-            }
-            this.EC.StorageDecrease(this.BuildingStorage);
-            this.PC.DecreasePopulation(this.LivingSpace);
-            //base.OnDeath();
+            PC.KillHumans(this.RequiredHumans);
         }
+        this.EC.StorageDecrease(this.BuildingStorage);
+        this.PC.DecreasePopulation(this.LivingSpace);
+        //destroy();
+        //base.OnDeath();
     }
     public virtual bool DestroyAvailable()
     {
@@ -312,5 +353,10 @@ public class DefaultBuilding : Building
             return true;
         }
         else return false;
+    }
+    public virtual float[] Modifiers()
+    {
+        float[] values = new float[]{ this.PositionObstacle, this.PositionValue, this.PositionDanger };
+        return values;
     }
 }

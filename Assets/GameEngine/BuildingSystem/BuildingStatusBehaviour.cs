@@ -16,8 +16,8 @@ public class BuildingStatusBehaviour : MonoBehaviour
 
     void Start()
     {
-        this.cursor = FindObjectsOfType<CursorBehaviour>()[0].gameObject;
-        this.canvas = FindObjectsOfType<Canvas>()[0].gameObject;
+        this.cursor = GameObject.Find("Cursor").GetComponent<CursorBehaviour>().gameObject;
+        this.canvas = GetComponentsInChildren<Canvas>()[0].gameObject;
         this.cameraB = FindObjectsOfType<CameraBehaviour>()[0];
         this.image = GameObject.FindWithTag("UI.Building.Status").GetComponent<Image>();
         updateImage();
@@ -54,16 +54,16 @@ public class BuildingStatusBehaviour : MonoBehaviour
         switch(this.status)
         {
             case Status.LACK_OF_REQUIRED_BUILDING:
-                this.image.sprite = Resources.Load<Sprite>("BuildingStatus/1");
+                this.image.sprite = Resources.Load<Sprite>("Textures/BuildingStatus/1");
                 break;
             case Status.LACK_OF_MATERIALS:
-                this.image.sprite = Resources.Load<Sprite>("BuildingStatus/4");
+                this.image.sprite = Resources.Load<Sprite>("Textures/BuildingStatus/4");
                 break;
             case Status.DESTRUCTION:
-                this.image.sprite = Resources.Load<Sprite>("BuildingStatus/2");
+                this.image.sprite = Resources.Load<Sprite>("Textures/BuildingStatus/2");
                 break;
             case Status.ALLOW_BUILDING:
-                this.image.sprite = Resources.Load<Sprite>("BuildingStatus/3");
+                this.image.sprite = Resources.Load<Sprite>("Textures/BuildingStatus/3");
                 break;
         }
     }

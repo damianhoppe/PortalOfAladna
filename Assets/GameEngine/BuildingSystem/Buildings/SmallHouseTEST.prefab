@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6993465776685507535}
   - component: {fileID: 696907181219176349}
-  - component: {fileID: 7306175896199841585}
+  - component: {fileID: 5573503752129296303}
   m_Layer: 0
   m_Name: SmallHouseTEST
   m_TagString: Untagged
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7306175896199841585
+--- !u!114 &5573503752129296303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,8 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: 
-  nearbyStructuresRequired: []
-  requiredMinimalDistance: 0
-  buildSpeed: 10
+  cursorOver: 1
+  nearbyStructuresRequired:
+  - {fileID: 5622522296184841837, guid: 0b46b7a781f6d81428ee87025457e606, type: 3}
+  requiredMinimalDistance: 2
+  buildSpeed: 20
   maxLvl: 0
   Danger: 0

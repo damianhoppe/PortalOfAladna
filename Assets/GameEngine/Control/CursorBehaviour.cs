@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
 {
@@ -10,6 +11,7 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
     bool canEnterOnTakenPlace = true;
 
     BuilderBehaviour builderBehaviour;
+    ObjectHolder objectHolder;
     GridManager gridManager;
 
     SpriteRenderer spriteRenderer;
@@ -18,9 +20,13 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
     Position position;
     V3Interp positionInterpolator;
 
+    public bool cursorActionsLocked = false;
+    int uiLayer;
+
     void Start()
     {
         this.builderBehaviour = FindObjectOfType<BuilderBehaviour>();
+        this.objectHolder = GameObject.Find("SaveController").GetComponent<ObjectHolder>();
         this.gridManager = FindObjectOfType<GridManager>();
         this.spriteRenderer = GetComponent<SpriteRenderer>();
         this.mainColor = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, this.defaultAlpha);
@@ -29,10 +35,12 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
         this.onPositionChangedListeners = new List<IOnCursorPositionChanged>();
         this.position = new Position();
         this.positionInterpolator = new V3Interp(0.02f, this);
+        this.uiLayer = LayerMask.NameToLayer("UI");
     }
 
     void Update()
     {
+        updateCursorLocked();
         if (!Input.GetMouseButton(1))
         {
             Position oldPosition = this.position;
@@ -49,11 +57,11 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
         }
         this.positionInterpolator.update();
 
-        for(int i = 0; i < 10 && i < this.builderBehaviour.getBuildings().Count; i++)
+        for(int i = 0; i < 10 && i < this.objectHolder.BuildingsList.Count; i++)
         {
             if(Input.GetKeyDown(i.ToString()))
             {
-                this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.builderBehaviour.getBuildings()[i].gameObject);
+                this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.BUILDING, this.objectHolder.BuildingsList[i].gameObject);
             }
         }
 
@@ -67,7 +75,7 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
             this.builderBehaviour.setBuildingMode(BuilderBehaviour.Mode.DESTRUCTION);
             this.canEnterOnTakenPlace = true;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (this.GetMouseButtonDown(0))
         {
             if (this.builderBehaviour.getBuildingMode() == BuilderBehaviour.Mode.NONE)
             {
@@ -76,6 +84,42 @@ public class CursorBehaviour : MonoBehaviour, IOnUpdateInterpolation<Vector3>
                     structure.onClick();
             }
         }
+    }
+
+    public bool GetMouseButtonDown(int button)
+    {
+        return Input.GetMouseButtonDown(button) && !this.cursorActionsLocked;
+    }
+
+    private void updateCursorLocked()
+    {
+        this.cursorActionsLocked = IsPointerOverUIElement();
+    }
+
+    public bool IsPointerOverUIElement()
+    {
+        return IsPointerOverUIElement(GetEventSystemRaycastResults());
+    }
+
+
+    private bool IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
+    {
+        for (int index = 0; index < eventSystemRaysastResults.Count; index++)
+        {
+            RaycastResult curRaysastResult = eventSystemRaysastResults[index];
+            if (curRaysastResult.gameObject.layer == uiLayer)
+                return true;
+        }
+        return false;
+    }
+
+    static List<RaycastResult> GetEventSystemRaycastResults()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+        List<RaycastResult> raysastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raysastResults);
+        return raysastResults;
     }
 
     Position getCursorPosition()

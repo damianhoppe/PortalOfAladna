@@ -64,4 +64,24 @@ public class Position
         float distanceY = Mathf.Abs((float)(pos1.y - pos2.y));
         return Mathf.Sqrt(distanceX * distanceX + distanceY * distanceY);
     }
+    public static Position operator +(Position A, int[] B)
+    {
+        return new Position(A.x + B[0], A.y + B[1]);
+    }
+    public static Position operator -(Position A, int[] B)
+    {
+        return new Position(A.x - B[0], A.y - B[1]);
+    }
+    public static Position operator +(Position A, Vector2Int B)
+    {
+        return new Position(A.x + B.x, A.y + B.y);
+    }    
+    public static Position operator -(Position A, Vector2Int B)
+    {
+        return new Position(A.x - B.x, A.y - B.y);
+    }
+    public Position ShiftPosition(int X, int Y)
+    {
+        return new Position(this.x+X, this.y+Y);
+    }
 }
