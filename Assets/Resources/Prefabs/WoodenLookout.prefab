@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 521416475014766437}
   m_Layer: 0
   m_Name: WoodenLookout
-  m_TagString: Wall
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a932f262b00ded4396ed3f3584a7f87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  PlayerBuildable: 1
+  DebugBuildable: 1
+  spriteRenderer: {fileID: 0}
   cursorOver: 1
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0
