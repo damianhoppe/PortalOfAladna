@@ -31,6 +31,7 @@ public class defaultTower : DefaultBuilding
     public float TowerBulletDamage { get; protected set; } = 0.0f;
     public float TowerBulletSpeed { get; protected set; } = 0.01f;
     public int TowerBulletLifetime { get; protected set; } = 1000;
+    public float TowerBulletLifespan { get; protected set; } = 1.0f;
     public float TowerBulletSize { get; protected set; } = 1.0f;
 
     public GameObject BulletType { get; protected set; }
@@ -76,9 +77,10 @@ public class defaultTower : DefaultBuilding
             GameObject tmpBulletObject = Instantiate(BulletType);
             RedBullet tmpBullet = tmpBulletObject.GetComponent<RedBullet>();
 
-            tmpBullet.setBulletParameters(this.TowerBulletDamage, this.TowerBulletSpeed, this.TowerBulletSize, this.TowerBulletLifetime);
+            tmpBullet.setBulletParameters(this.TowerBulletDamage, this.TowerBulletSpeed, this.TowerBulletSize, this.TowerBulletLifespan);
             tmpBullet.setSource(this);
             tmpBullet.setTarget(this.CurrentTarget);
+
 
             this.myBulletObjects.Add(tmpBulletObject);
             this.myBullets.Add(tmpBullet);
@@ -142,7 +144,7 @@ public class defaultTower : DefaultBuilding
             {
                 FindTarget();   
             }
-            Debug.Log("Bai bai.");
+            //Debug.Log("Bai bai.");
         }
     }
     public virtual void FindTarget()

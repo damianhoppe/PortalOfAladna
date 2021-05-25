@@ -15,13 +15,50 @@ public class RedBullet : MonoBehaviour
     public int BulletLifetime { get; protected set; }
     public int BulletTime { get; protected set; } = 0;
     public bool NoTarget { get; protected set; } = false;
-    
+
+    public float launchTime { get; protected set; } = -1;
+
+    public float bulletLifespan { get; protected set; } = -1;
+
     // Start is called before the first frame update
-    public void setBulletParameters(float damage, float speed, float size,int lifetime)
+    void Start()
+    {
+        BulletCollider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
+        BulletCollider.radius = 0.1f;
+        BulletCollider.isTrigger = true;
+        launchTime = Time.timeSinceLevelLoad;
+        //Debug.Log("Bullet launchTime:" + launchTime);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float timeAlive = Time.timeSinceLevelLoad - launchTime;
+        if (this.BulletArmed)
+        {
+            if (this.BulletTime >= this.BulletLifetime)
+            {
+                //this.bulletExpired();
+            }
+            if (timeAlive > bulletLifespan) this.bulletExpired();
+
+            Debug.Log("Bullet expires in:" + (bulletLifespan - timeAlive));
+
+            if (BulletTime % 10 == 9)
+            {
+                recalculateVector();
+            }
+
+            moveToTarget();
+
+            this.BulletTime++;
+        }
+    }
+    public void setBulletParameters(float damage, float speed, float size,float lifetime)
     {
         this.BulletDamage = damage;
         this.BulletSpeed = speed;
-        this.BulletLifetime = lifetime;
+        this.bulletLifespan = lifetime;
         this.transform.localScale = new Vector3(size, size, size);
     }
     public void launchBullet()
@@ -78,37 +115,11 @@ public class RedBullet : MonoBehaviour
 
     public void bulletExpired()
     {
-        Debug.Log("Hey, I expired!");
+        //Debug.Log("Hey, I expired!");
         this.BulletArmed = false;
         this.BulletSource.bulletExpired(this);
     }
-    void Start()
-    {
-        BulletCollider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
-        BulletCollider.radius = 0.1f;
-        BulletCollider.isTrigger = true;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (this.BulletArmed)
-        {
-            if (this.BulletTime >= this.BulletLifetime)
-            {
-                this.bulletExpired();
-            }
-
-            if (BulletTime % 10 == 9)
-            {
-                recalculateVector();
-            }
-
-            moveToTarget();
-            
-            this.BulletTime++;
-        }
-    }
+    
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")

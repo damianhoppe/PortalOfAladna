@@ -275,14 +275,14 @@ public class DefaultBuilding : Building
     
     public virtual bool OnHit(float Damage)
     {
-        Debug.Log("Got attacked for " + Damage + " damage");
+        //Debug.Log("Got attacked for " + Damage + " damage");
         if (this.IsCivilian)
         {
             float DMG = (Damage - this.Armor) * (1.0f - this.Protection / 100.0f);
             if (DMG <= 0.0f) DMG=0.0f;
             this.CurrentHitpoints -= DMG;
-            Debug.Log("Received damage: " + DMG);
-            Debug.Log(this.CurrentHitpoints.ToString() +"/"+ this.MaxHitpoints.ToString());
+            //Debug.Log("Received damage: " + DMG);
+            //Debug.Log(this.CurrentHitpoints.ToString() +"/"+ this.MaxHitpoints.ToString());
             if (this.CurrentHitpoints <= 0.0f) destroy();
             else
             {
