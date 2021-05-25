@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6614244970085032641}
   - component: {fileID: 6553171316289721634}
   - component: {fileID: 349350131706383720}
+  - component: {fileID: -1274388925258295712}
   m_Layer: 0
   m_Name: MetalLookout
   m_TagString: Tower
@@ -103,3 +104,23 @@ MonoBehaviour:
   buildSpeed: 50
   maxLvl: 0
   Danger: 0
+  AttackRange: {fileID: 0}
+  DetectedEnemies: []
+  myBulletObjects: []
+  myBullets: []
+--- !u!58 &-1274388925258295712
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735272913761433141}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

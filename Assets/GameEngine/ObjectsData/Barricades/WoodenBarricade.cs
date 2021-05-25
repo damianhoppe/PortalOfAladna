@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WoodenBarricade : DefaultBuilding
+public class WoodenBarricade : defaultBarricade
 {
     // Start is called before the first frame update
     protected override void Start()
@@ -80,15 +80,5 @@ public class WoodenBarricade : DefaultBuilding
         this.BlocksPlayerUnits = false;
         this.CanBuildAtNight = true;
 }
-    public override void onSell()
-    {
-        this.RefundRate = this.CurrentHitpoints / this.MaxHitpoints;
-        base.onSell();
-    }
-    public override bool OnHit(float Damage)
-    {
-        bool tmp = base.OnHit(Damage);
-        this.RefundRate = this.CurrentHitpoints / this.MaxHitpoints;
-        return tmp;
-    }
+
 }

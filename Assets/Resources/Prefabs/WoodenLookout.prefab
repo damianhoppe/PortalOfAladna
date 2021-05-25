@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1756531091543149285}
   - component: {fileID: 6041721622364830741}
   - component: {fileID: 521416475014766437}
+  - component: {fileID: -9147286329230976081}
   m_Layer: 0
   m_Name: WoodenLookout
   m_TagString: Tower
@@ -103,3 +104,23 @@ MonoBehaviour:
   buildSpeed: 50
   maxLvl: 0
   Danger: 0
+  AttackRange: {fileID: 0}
+  DetectedEnemies: []
+  myBulletObjects: []
+  myBullets: []
+--- !u!58 &-9147286329230976081
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183588031032670922}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
