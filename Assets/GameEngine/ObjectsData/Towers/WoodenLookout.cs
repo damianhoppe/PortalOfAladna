@@ -48,6 +48,36 @@ public class WoodenLookout : defaultTower
     public WoodenLookout()
     {
         this.PlayerObjectID = 71;
+
+        this.ObjectName = "Wooden Lookout";
+        this.ObjectDescription = "This is a wooden lookout, with higher view range.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Wooden Lookout";
+        this.ObjectSubtypeID = 2;
+
+        this.IsMilitary = true;
+        this.IsCivilian = false;
+
+        this.MaxHitpoints = 100.0f;
+        this.Armor = 1.0f;
+        this.Protection = 5.0f;
+
+        this.SightRange = 3.0f;
+        this.ActiveAtNight = true;
+
+        this.PositionValue = 1.0f;
+        this.PositionObstacle = 1.0f;
+        this.PositionDanger = 2.5f;
+
+        this.BaseCost = new DataStructures.Cost(50.0f, 25.0f, 5.0f, 0.0f, 0.0f, 0.0f);
+        this.EnergyToBuild = 5.0f;
+        this.RequiredHumans = 5;
+        this.PlayerObjectID = 71;
+
+        this.RequiresAccess = false;
+
+        this.CurrentHitpoints = this.MaxHitpoints;
     }
     /*
     public override string ObjectName { get; protected set; } = "Lookout";
