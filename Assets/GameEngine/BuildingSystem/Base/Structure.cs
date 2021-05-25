@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour, IStructure
 {
+
+    public bool PlayerBuildable = true;
+    public bool DebugBuildable = true;
+    
     public virtual string ObjectName { get; protected set; } = "Structure";
     protected EStructureType type;
     public SpriteRenderer spriteRenderer;

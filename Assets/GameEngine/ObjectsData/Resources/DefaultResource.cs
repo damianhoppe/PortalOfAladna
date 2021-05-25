@@ -7,6 +7,7 @@ public class DefaultResource : Structure
     // Start is called before the first frame update
     protected override void Start()
     {
+        this.PlayerBuildable = false;
         base.Start();
     }
 
