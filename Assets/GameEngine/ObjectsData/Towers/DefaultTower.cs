@@ -27,7 +27,7 @@ public class defaultTower : DefaultBuilding
     public int attackReady { get; protected set; } = 0;
     public int attackPercent { get; protected set; }
 
-    public bool canAttack { get; protected set; } = true;
+    public bool canAttack { get; protected set; } = false;
     public float TowerBulletDamage { get; protected set; } = 0.0f;
     public float TowerBulletSpeed { get; protected set; } = 0.01f;
     public int TowerBulletLifetime { get; protected set; } = 1000;
