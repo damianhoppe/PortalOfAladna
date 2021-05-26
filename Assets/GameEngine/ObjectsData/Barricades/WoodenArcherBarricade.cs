@@ -67,11 +67,11 @@ public class WoodenArcherBarricade : WoodenBarricade
         this.PositionObstacle = base.PositionObstacle + 0.75f;
         this.PositionDanger = base.PositionDanger + 1.5f;
 
-        this.AttackRange.radius = 2.5f;
+        //this.AttackRange.radius = 2.5f;
         this.TowerBulletDamage = 10.0f;
         this.TowerBulletSpeed = 0.04f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
         this.TowerBulletSize = 0.4f;
 

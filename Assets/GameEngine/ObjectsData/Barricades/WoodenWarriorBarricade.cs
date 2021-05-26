@@ -67,11 +67,11 @@ public class WoodenWarriorBarricade : WoodenBarricade
         this.PositionObstacle = base.PositionObstacle + 0.5f;
         this.PositionDanger = base.PositionDanger + 1.5f;
 
-        this.AttackRange.radius = 1.0f;
+        //this.AttackRange.radius = 1.0f;
         this.TowerBulletDamage = 15.0f;
         this.TowerBulletSpeed = 0.1f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
         this.TowerBulletSize = 0.4f;
 

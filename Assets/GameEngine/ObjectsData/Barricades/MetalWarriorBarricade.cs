@@ -69,11 +69,11 @@ public class MetalWarriorBarricade : MetalBarricade
         this.PositionObstacle = base.PositionObstacle + 0.75f;
         this.PositionDanger = base.PositionDanger + 1.75f;
 
-        this.AttackRange.radius = 1.5f;
+        //this.AttackRange.radius = 1.5f;
         this.TowerBulletDamage = 35.0f;
         this.TowerBulletSpeed = 0.1f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
         this.TowerBulletSize = 0.4f;
 

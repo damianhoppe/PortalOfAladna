@@ -74,11 +74,11 @@ public class StoneTankBarricade : StoneBarricade
         this.PositionObstacle = base.PositionObstacle + 1.0f;
         this.PositionDanger = base.PositionDanger + 1.0f;
 
-        this.AttackRange.radius = 1.0f;
+        //this.AttackRange.radius = 1.0f;
         this.TowerBulletDamage = 12.5f;
         this.TowerBulletSpeed = 0.1f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
         this.TowerBulletSize = 0.4f;
 

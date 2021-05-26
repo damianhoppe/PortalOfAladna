@@ -24,11 +24,13 @@ public class ObjectHolder : MonoBehaviour
 
             try
             {
+                //Debug.Log(building.GetComponent<Structure>().PlayerObjectID + " " + building.GetComponent<Structure>().ObjectName);
                 Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
             }
             catch(System.ArgumentException e)
             {
-                Debug.Log(building.GetComponent<Structure>().PlayerObjectID+" "+ building.GetComponent<Structure>().ObjectName);
+                Debug.Log("ERROR:"+building.GetComponent<Structure>().PlayerObjectID+" "+ building.GetComponent<Structure>().ObjectName+":RORRE");
+
             }
            //Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
 
