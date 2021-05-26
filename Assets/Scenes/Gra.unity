@@ -171,6 +171,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2449917037247637008, guid: 59d53ab89ef44874b90343dbe5ba81a7,
+        type: 3}
+      propertyPath: hudVisibility
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2449917037247637009, guid: 59d53ab89ef44874b90343dbe5ba81a7,
         type: 3}
       propertyPath: m_Pivot.x
