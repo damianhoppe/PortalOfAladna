@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using System;
 
 public class ObjectHolder : MonoBehaviour
 {
@@ -21,9 +22,15 @@ public class ObjectHolder : MonoBehaviour
         foreach (var building in BuildingsList)
         {
 
-            
-
-           Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
+            try
+            {
+                Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
+            }
+            catch(System.ArgumentException e)
+            {
+                Debug.Log(building.GetComponent<Structure>().PlayerObjectID+" "+ building.GetComponent<Structure>().ObjectName);
+            }
+           //Buildings.Add(building.GetComponent<Structure>().PlayerObjectID, building);
 
         }
         
