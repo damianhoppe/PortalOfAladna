@@ -20,6 +20,7 @@ public class Structure : MonoBehaviour, IStructure
     public virtual int PlayerObjectID { get; protected set; } = 0;
     public virtual int DistanceToCenter { get; protected set; } = 0;
     public virtual int DistanceToPortal { get; protected set; } = 999;
+    public virtual bool BlocksPlayerUnits { get; protected set; } = true;
 
     protected GridManager gridManager;
 
