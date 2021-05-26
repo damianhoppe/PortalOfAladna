@@ -11,8 +11,9 @@ public class defaultBarricade : defaultTower
 
         this.CanBuildAtNight = true;
         this.BlocksPlayerUnits = false;
-        this.RequiresAccess = true;
+        this.RequiresAccess = false;
         this.canAttack = false;
+        this.ActiveAtNight = true;
     }
 
     // Update is called once per frame
