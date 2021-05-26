@@ -94,6 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3418f35e981a4484ca4238a750b77e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerBuildable: 1
+  DebugBuildable: 1
   spriteRenderer: {fileID: 0}
   cursorOver: 1
   nearbyStructuresRequired:
@@ -103,7 +105,7 @@ MonoBehaviour:
   - {fileID: 8628520899788026683, guid: 5b2909b10fcfaa14c965abd5c458dd53, type: 3}
   - {fileID: 8278605477969932088, guid: 2349f881dfcc5874b949b12c56f38a5f, type: 3}
   - {fileID: 1455559435194659142, guid: a2c450cbfcff5f445acd81cfbc82b22b, type: 3}
-  requiredMinimalDistance: 0
+  requiredMinimalDistance: 1
   buildSpeed: 50
   maxLvl: 0
   Danger: 0
