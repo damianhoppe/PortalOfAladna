@@ -6,6 +6,7 @@ public class defaultTower : DefaultBuilding
 
 {
     public CircleCollider2D AttackRange;
+    //public CircleCollider2D AttackRange = new CircleCollider2D();
     public List<defaultEnemy> DetectedEnemies = new List<defaultEnemy>();
     public List<GameObject> myBulletObjects = new List<GameObject>();
     public List<RedBullet> myBullets = new List<RedBullet>();
