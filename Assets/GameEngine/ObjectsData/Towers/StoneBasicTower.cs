@@ -87,11 +87,11 @@ public class StoneBasicTower : WoodenBasicTower
         this.PositionObstacle = 1.5f;
         this.PositionDanger = 2.5f;
 
-        this.AttackRange.radius = 3.5f;
+        //this.AttackRange.radius = 3.5f;
         this.TowerBulletDamage = 15.0f;
         this.TowerBulletSpeed = 0.025f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
 
         this.TowerBulletSize = 1.0f;

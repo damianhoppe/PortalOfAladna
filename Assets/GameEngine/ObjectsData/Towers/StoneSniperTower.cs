@@ -88,11 +88,11 @@ public class StoneSniperTower : WoodenSniperTower
         this.PositionObstacle = 2.0f;
         this.PositionDanger = 4.0f;
 
-        this.AttackRange.radius = 5.0f;
+        //this.AttackRange.radius = 5.0f;
         this.TowerBulletDamage = 20.0f;
         this.TowerBulletSpeed = 0.0375f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
 
         this.TowerBulletSize = 0.75f;

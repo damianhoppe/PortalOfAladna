@@ -89,11 +89,11 @@ public class MetalRapidTower : StoneRapidTower
         this.PositionObstacle = 2.5f;
         this.PositionDanger = 4.5f;
 
-        this.AttackRange.radius = 4.0f;
+        //this.AttackRange.radius = 4.0f;
         this.TowerBulletDamage = 25.0f;
         this.TowerBulletSpeed = 0.05f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
 
         this.TowerBulletSize = 0.5f;

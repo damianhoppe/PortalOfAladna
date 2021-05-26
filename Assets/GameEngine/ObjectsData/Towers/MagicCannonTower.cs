@@ -90,11 +90,11 @@ public class MagicCannonTower : MetalCannonTower
         this.PositionObstacle = 5.0f;
         this.PositionDanger = 7.5f;
 
-        this.AttackRange.radius = 5.0f;
+        //this.AttackRange.radius = 5.0f;
         this.TowerBulletDamage = 150.0f;
         this.TowerBulletSpeed = 0.015f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
 
         this.TowerBulletSize = 1.5f;

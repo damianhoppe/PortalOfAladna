@@ -88,11 +88,11 @@ public class StoneCannonTower : WoodenCannonTower
         this.PositionObstacle = 2.0f;
         this.PositionDanger = 4.0f;
 
-        this.AttackRange.radius = 3.5f;
+        //this.AttackRange.radius = 3.5f;
         this.TowerBulletDamage = 50.0f;
         this.TowerBulletSpeed = 0.015f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
-        this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
+        //this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
 
 
         this.TowerBulletSize = 1.5f;
