@@ -18,42 +18,7 @@ public class Portal : DefaultBuilding
         
         this.PlayerObjectID = 0;
 
-        this.ObjectName = "Porta;";
-        this.ObjectDescription = "This is a portal. Protect it at any cost.";
-        this.ObjectType = "Building";
-        this.ObjectTypeID = 1;
-        this.ObjectSubtype = "Default Portal";
-        this.ObjectSubtypeID = 1;
-
-        this.MaxHitpoints = 1000.0f;
-        this.Armor = 10.0f;
-        this.Protection = 50.0f;
-
-        this.PositionValue = 100.0f;
-        this.PositionDanger = 100.0f;
-        this.PositionObstacle = 100.0f;
-
-        this.BaseCost = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-        this.RepairRate = 2.0f;
-        this.CanRepair = true;
-
-        this.BuildingStorage = new DataStructures.Cost(1000.0f, 400.0f, 400.0f, 400.0f, 400.0f, 0.0f);
-        this.LivingSpace = 50;
-
-        this.BlocksPlayerUnits = true;
-        this.RequiresAccess = true;
-
-        this.CanBuild = true;
-        this.CanSell = false;
-        this.IsMilitary = true;
-
-        this.CurrentHitpoints = this.MaxHitpoints;
-}
-    public Portal()
-    {
-        this.PlayerObjectID = 0;
-
-        this.ObjectName = "Porta;";
+        this.ObjectName = "Portal";
         this.ObjectDescription = "This is a portal. Protect it at any cost.";
         this.ObjectType = "Building";
         this.ObjectTypeID = 1;
@@ -78,7 +43,42 @@ public class Portal : DefaultBuilding
         this.BlocksPlayerUnits = false;
         this.RequiresAccess = true;
 
-        this.CanBuild = false;
+        this.CanBuild = true;
+        this.CanSell = false;
+        this.IsMilitary = true;
+
+        this.CurrentHitpoints = this.MaxHitpoints;
+}
+    public Portal()
+    {
+        this.PlayerObjectID = 0;
+
+        this.ObjectName = "Portal";
+        this.ObjectDescription = "This is a portal. Protect it at any cost.";
+        this.ObjectType = "Building";
+        this.ObjectTypeID = 1;
+        this.ObjectSubtype = "Default Portal";
+        this.ObjectSubtypeID = 1;
+
+        this.MaxHitpoints = 1000.0f;
+        this.Armor = 10.0f;
+        this.Protection = 50.0f;
+
+        this.PositionValue = 100.0f;
+        this.PositionDanger = 100.0f;
+        this.PositionObstacle = 100.0f;
+
+        this.BaseCost = new DataStructures.Cost(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+        this.RepairRate = 2.0f;
+        this.CanRepair = true;
+
+        this.BuildingStorage = new DataStructures.Cost(1000.0f, 400.0f, 400.0f, 400.0f, 400.0f, 0.0f);
+        this.LivingSpace = 50;
+
+        this.BlocksPlayerUnits = false;
+        this.RequiresAccess = true;
+
+        this.CanBuild = true;
         this.CanSell = false;
         this.IsMilitary = true;
 
@@ -175,13 +175,14 @@ public class Portal : DefaultBuilding
                     westChanged = true;
                 }
             }
-            else if (west.BlocksPlayerUnits) DistanceArray[x - 1, y] = -1;
+            //else if (west.BlocksPlayerUnits) DistanceArray[x - 1, y] = -1;
             else
             {
                 if (DistanceArray[x - 1, y] > distance)
                 {
                     DistanceArray[x - 1, y] = distance;
                     westChanged = true;
+                    if (west.BlocksPlayerUnits) westChanged = false;
                 }
             }
         }
@@ -197,13 +198,14 @@ public class Portal : DefaultBuilding
                     eastChanged = true;
                 }
             }
-            else if (east.BlocksPlayerUnits) DistanceArray[x + 1, y] = -1;
+            //else if (east.BlocksPlayerUnits) DistanceArray[x + 1, y] = -1;
             else
             {
                 if (DistanceArray[x + 1, y] > distance)
                 {
                     DistanceArray[x + 1, y] = distance;
                     eastChanged = true;
+                    if (east.BlocksPlayerUnits) eastChanged = false;
                 }
             }
         }
@@ -220,13 +222,14 @@ public class Portal : DefaultBuilding
                     southChanged = true;
                 }
             }
-            else if (south.BlocksPlayerUnits) DistanceArray[x, y - 1] = -1;
+            //else if (south.BlocksPlayerUnits) DistanceArray[x, y - 1] = -1;
             else
             {
                 if (DistanceArray[x, y - 1] > distance)
                 {
                     DistanceArray[x, y - 1] = distance;
                     southChanged = true;
+                    if (south.BlocksPlayerUnits) southChanged = false;
                 }
             }
         }
@@ -242,13 +245,14 @@ public class Portal : DefaultBuilding
                     northChanged = true;
                 }
             }
-            else if (north.BlocksPlayerUnits) DistanceArray[x, y + 1] = -1;
+            //else if (north.BlocksPlayerUnits) DistanceArray[x, y + 1] = -1;
             else
             {
                 if (DistanceArray[x, y + 1] > distance)
                 {
                     DistanceArray[x, y + 1] = distance;
                     northChanged = true;
+                    if (north.BlocksPlayerUnits) northChanged = false;
                 }
             }
         }
@@ -258,5 +262,12 @@ public class Portal : DefaultBuilding
         if (eastChanged) { this.setNeighbours(x + 1, y, distance + 1); }
         if (westChanged) { this.setNeighbours(x - 1, y, distance + 1); }
 
+    }
+    public int getPositionDistance(int x, int y)
+    {
+        int X = x + (this.GridX - 1) / 2;
+        int Y = (this.GridY - 1) / 2 - y;
+
+        return DistanceArray[X, Y];
     }
 }

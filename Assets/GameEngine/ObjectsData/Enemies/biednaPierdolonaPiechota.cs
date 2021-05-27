@@ -23,7 +23,7 @@ public class biednaPierdolonaPiechota : defaultEnemy
         this.attackValue = 10.0f;
 
         this.PriorityDanger = 0.0f;
-        this.PriorityObstacle = 20.0f;
+        this.PriorityObstacle = -5.0f;
         this.PriorityValue = 0.0f;
 
        
