@@ -316,6 +316,13 @@ public class defaultEnemy : unitObject
                 }
                 else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
             }
+            if (tmpMin >= this.CurrentPositionValue)
+            {
+                this.IsMoving = false;
+                this.IsAttacking = false;
+                this.IsStuck = false;
+                Debug.Log("Help me, StepTower, I'm stuck ;w;");
+            }
         }
         this.CurrentPositionValue = this.PositionsValues[tmpIndex];
 
