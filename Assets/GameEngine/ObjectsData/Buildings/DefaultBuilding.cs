@@ -249,6 +249,7 @@ public class DefaultBuilding : Building
             PC.FireHumans(this.RequiredHumans);
             this.EC.StorageDecrease(this.BuildingStorage);
             this.PC.DecreasePopulation(this.LivingSpace);
+            this.DNC.tryMapRefresh();
         }
     }
 
@@ -325,6 +326,7 @@ public class DefaultBuilding : Building
         }
         this.EC.StorageDecrease(this.BuildingStorage);
         this.PC.DecreasePopulation(this.LivingSpace);
+        this.DNC.tryMapRefresh();
         //destroy();
         //base.OnDeath();
     }

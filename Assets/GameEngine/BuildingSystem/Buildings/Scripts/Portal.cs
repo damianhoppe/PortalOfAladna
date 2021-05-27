@@ -425,6 +425,6 @@ public class Portal : DefaultBuilding
     }
     public void registerPortal()
     {
-
+        this.DNC.ConnectPortal();
     }
 }

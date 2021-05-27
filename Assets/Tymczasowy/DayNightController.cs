@@ -14,6 +14,7 @@ public class DayNightController : MonoBehaviour
     WinLoseController WLC;
     EconomyController EC;
     public MiningController MC { get; protected set; } = null;
+    public Portal PORTAL { get; protected set; } = null;
 
     // Start is called before the first frame update
     void Start()
@@ -128,7 +129,7 @@ public class DayNightController : MonoBehaviour
 
     void NightTime()
     {
-        
+        this.tryMapRefresh();
         light.intensity = 1;
         
         this.MC.DeliverResources();
@@ -158,5 +159,48 @@ public class DayNightController : MonoBehaviour
             return false;
         }
         
+    }
+    public bool ConnectPortal()
+    {
+        if (this.PORTAL == null)
+        {
+            Portal tmpPortal = GameObject.Find("Portal").GetComponent<Portal>();
+            if (tmpPortal == null)
+            {
+                Debug.Log("DNC: Cannot find Portal!");
+                return false;
+            }
+            else
+            {
+                this.PORTAL = tmpPortal;
+                Debug.Log("DNC: Portal connected!");
+                return true;
+            }
+        }
+        else
+        {
+            Debug.Log("DNC: Portal already connected!");
+            return false;
+        }
+
+    }
+    public void tryMapRefresh()
+    {
+        if (this.PORTAL == null)
+        {
+            this.ConnectPortal();
+            if (this.PORTAL == null)
+            {
+                Debug.Log("Portal not found. Refreshing impossible");
+            }
+            else
+            {
+                this.tryMapRefresh();
+            }
+        }
+        else
+        {
+            PORTAL.refreshMap();
+        }
     }
 }
