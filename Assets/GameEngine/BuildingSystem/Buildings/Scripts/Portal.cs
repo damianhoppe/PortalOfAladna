@@ -106,6 +106,8 @@ public class Portal : DefaultBuilding
         this.setAbsoluteNeighbours(this.ArrayPosition.x, this.ArrayPosition.y, 1);
         this.setNeighbours(this.ArrayPosition.x, this.ArrayPosition.y, 1);
 
+        this.registerPortal();
+
         //this.printArray();
         //this.printAbsoluteArray();
     }
@@ -411,5 +413,18 @@ public class Portal : DefaultBuilding
             //Debug.Log(absoluteReachablePosition);
             return DistanceArray[X, Y];
         }
+    }
+    public void refreshMap()
+    {
+        this.setMapSize();
+        this.createDistanceArray();
+        this.setPortalPosition();
+
+        this.setAbsoluteNeighbours(this.ArrayPosition.x, this.ArrayPosition.y, 1);
+        this.setNeighbours(this.ArrayPosition.x, this.ArrayPosition.y, 1);
+    }
+    public void registerPortal()
+    {
+
     }
 }
