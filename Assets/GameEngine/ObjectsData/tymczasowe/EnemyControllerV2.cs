@@ -9,6 +9,7 @@ public class EnemyControllerV2 : MonoBehaviour
 
     public List<GameObject> Enemies = new List<GameObject>();
     public List<defaultEnemy> EnemyScripts = new List<defaultEnemy>();
+    public bool isBossDead=false;
 
     // Start is called before the first frame update
     void Start()

@@ -11,7 +11,8 @@ public class DayNightController : MonoBehaviour
     [SerializeField]
     List<Spawner_TMP> spawners;
     Light light;
-
+    WinLoseController WLC;
+    EconomyController EC;
     public MiningController MC { get; protected set; } = null;
 
     // Start is called before the first frame update
@@ -19,6 +20,8 @@ public class DayNightController : MonoBehaviour
     {
         DayNum = 0;
         light = GameObject.Find("Light").GetComponent<Light>();
+        WLC = GameObject.Find("PlayerDataController").GetComponent<WinLoseController>();
+        EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
     }
 
     // Update is called once per frame
@@ -50,17 +53,17 @@ public class DayNightController : MonoBehaviour
 
 
     }
+    /* OLD PATHFINDING
+   public void UpdatePathfinding()
+   {
+       ScanPathfinding();
+   }
 
-    public void UpdatePathfinding()
-    {
-        ScanPathfinding();
-    }
-
-    public static void ScanPathfinding()
-    {
-        AstarPath.active.Scan();
-    }
-
+   public static void ScanPathfinding()
+   {
+       AstarPath.active.Scan();
+   }
+   */
     public bool IsDay()
     {
         return day;
@@ -77,6 +80,7 @@ public class DayNightController : MonoBehaviour
             DayTime();
         }
     }
+    /* OLD SPAWNER CATCHER
     void GetSpawners()
     {
         GameObject[] array = GameObject.FindGameObjectsWithTag("Spawner");
@@ -92,34 +96,41 @@ public class DayNightController : MonoBehaviour
             spawner.Spawn();
         }
     }
+    */
     public void BuildingDestroyed()
     {
-        UpdatePathfinding();
+
     }
+
     void DayTime()
     {
         DayNum++;
         light.intensity = 5;
+        /* Old enemy Destroyer
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(var enemy in enemys)
         {
             Destroy(enemy);
         }
         spawners.Clear();
+        */
         
-        EconomyController EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
         EC.DailyEnergyGain();
-
+        WLC.CheckWin();
         this.MC.DeliverResources();
         this.MC.MineDay();
     }
+
+    public int GetDayNum()
+    {
+        return DayNum;
+    }
+
     void NightTime()
     {
-        GetSpawners();
-        ScanPathfinding();
-        SpawnMonsters();
+        
         light.intensity = 1;
-
+        
         this.MC.DeliverResources();
         this.MC.MineNight();
 
