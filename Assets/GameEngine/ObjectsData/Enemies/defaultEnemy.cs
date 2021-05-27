@@ -27,10 +27,11 @@ public class defaultEnemy : unitObject
     public float[] PositionsValues { get; protected set; }
     public float[] IsStructureBuilding { get; protected set; }
     public float CurrentPositionValue { get; protected set; } = 999.9f;
+    public float PreviousPositionValue { get; protected set; } = 999.9f;
 
     public DefaultBuilding AttackTarget { get; protected set; }
 
-    public bool IsMoving { get; protected set; } = true;
+    public bool IsMoving { get; protected set; } = false;
     public bool IsAttacking { get; protected set; } = false;
     public bool IsStuck { get; protected set; } = false;
 
@@ -86,7 +87,7 @@ public class defaultEnemy : unitObject
         this.SurroundingValues = new float[moveRange.Length];
         this.CanGo = new bool[moveRange.Length];
 
-        this.moveSpeed = 0.0025f;
+        //this.moveSpeed = 0.0025f;
         this.movePrecision = 0.2f;
 
 
@@ -109,8 +110,11 @@ public class defaultEnemy : unitObject
         setPosition();
         //CheckSurroundings();
         //setDestination();
-        CheckSurroundingsV2();
+        CheckSurroundingsV2(false,false);
         setDestinationV2();
+        this.IsMoving = true;
+        Debug.Log(this.moveSpeed);
+        Debug.Log(this.moveVector);
     }
 
     // Update is called once per frame
@@ -151,8 +155,11 @@ public class defaultEnemy : unitObject
         if (Vector3.Distance(this.transform.position, this.DestinationPosition) < movePrecision)
         {
             setPosition();
-            CheckSurroundingsV2();
+            CheckSurroundingsV2(false,false);
             setDestinationV2();
+
+            Debug.Log(this.moveSpeed);
+            Debug.Log(this.moveVector);
             return true;
         }
         else return false;
@@ -164,6 +171,7 @@ public class defaultEnemy : unitObject
         float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
         float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
         float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
+        this.moveVector = new Vector3(speedX, speedY, 0.0f);
         //Debug.Log("Proporcja:"+proporcja);
         //Debug.Log(new Vector3(speedX, speedY, 0.0f));
     }
@@ -280,12 +288,7 @@ public class defaultEnemy : unitObject
         for (int j = 0; j < PositionsValues.Length; j++)
         {
             int i = tmpRand + j;
-            if (i >= PositionsValues.Length) i = 0;
-
-            //if (tmpIndex == 0) Debug.Log("Północ: " + PositionsValues[tmpIndex].ToString());
-            //if (tmpIndex == 1) Debug.Log("Południe: " + PositionsValues[tmpIndex].ToString());
-            //if (tmpIndex == 2) Debug.Log("Wschód: " + PositionsValues[tmpIndex].ToString());
-            //if (tmpIndex == 3) Debug.Log("Zachód: " +PositionsValues[tmpIndex].ToString());
+            if (i >= PositionsValues.Length) i -= PositionsValues.Length;
 
             if (j == 0)
             {
@@ -293,38 +296,70 @@ public class defaultEnemy : unitObject
             }
             else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
         }
-        //if (tmpIndex == 0) Debug.Log("Idę: Północ");
-        //if (tmpIndex == 1) Debug.Log("Idę: Południe");
-        //if (tmpIndex == 2) Debug.Log("Idę: Wschód");
-        //if (tmpIndex == 3) Debug.Log("Idę: Zachód");
-        Debug.Log(tmpMin + " " + this.CurrentPositionValue);
-        if (tmpMin >= this.CurrentPositionValue)
+        this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+
+        //Debug.Log(tmpMin + " " + this.CurrentPositionValue);
+        if (tmpMin >= this.PreviousPositionValue)
         {
-            Debug.Log("Ale jestem podkurwiony.");
+            
+            //Debug.Log("Ale jestem podkurwiony.");
             //jeżeli najlepsze miejsce docelowe, spowoduje oddalenie sie
             //przeciwnik wpada w szal i ignoruje swoje priorytety
 
-            this.CheckSurroundingsV2(true);
+            this.CheckSurroundingsV2(true,false);
+            tmpMin = 0.0f;
+            tmpIndex = -1;
+            //tmpRand = -1;
+
             for (int j = 0; j < PositionsValues.Length; j++)
             {
                 int i = tmpRand + j;
-                if (i >= PositionsValues.Length) i = 0;
+                if (i >= PositionsValues.Length) i -= PositionsValues.Length;
 
                 if (j == 0)
                 {
                     tmpMin = PositionsValues[i]; tmpIndex = i;
                 }
                 else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
-            }
-            if (tmpMin >= this.CurrentPositionValue)
-            {
-                this.IsMoving = false;
-                this.IsAttacking = false;
-                this.IsStuck = false;
-                Debug.Log("Help me, StepTower, I'm stuck ;w;");
-            }
+                //Debug.Log(PositionsValues[i]);
+            }   
         }
         this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+
+        if (tmpMin >= this.PreviousPositionValue)
+        {
+            Debug.Log("Am I stuck?");
+            this.CheckSurroundingsV2(true, true);
+            tmpMin = 0.0f;
+            tmpIndex = -1;
+            //tmpRand = -1;
+
+            for (int j = 0; j < PositionsValues.Length; j++)
+            {
+                int i = tmpRand + j;
+                if (i >= PositionsValues.Length) i-=PositionsValues.Length;
+                
+                if (j == 0)
+                {
+                    tmpMin = PositionsValues[i]; tmpIndex = i;
+                }
+                
+                else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
+                Debug.Log("tmp: "+tmpRand+" i: " + i + " ; j: " + j);
+                //Debug.Log(PositionsValues[i]);
+            }
+        }
+        //else this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+        this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+        if (tmpMin >= this.PreviousPositionValue)
+        {
+            this.IsMoving = false;
+            this.IsAttacking = false;
+            this.IsStuck = false;
+            Debug.Log("Help me, StepTower, I'm stuck ;w;");
+            Debug.Log(PreviousPositionValue+" "+tmpMin);
+        }
+        
 
         if (CanGoDirections[tmpIndex])
         {
@@ -360,6 +395,7 @@ public class defaultEnemy : unitObject
                 Debug.Log("Help me, StepTower, I'm stuck :(");
             }
         }
+        //this.PreviousPositionValue = this.CurrentPositionValue;
     }
     public override void CheckSurroundings()
     {
@@ -392,7 +428,7 @@ public class defaultEnemy : unitObject
         }
 
     }
-    public virtual void CheckSurroundingsV2(bool rage = false)
+    public virtual void CheckSurroundingsV2(bool rage, bool stuck)
     {
         int X = this.CurrentPosition.x;
         int Y = this.CurrentPosition.y;
@@ -402,6 +438,7 @@ public class defaultEnemy : unitObject
         this.PositionsValues = new float[moveRange.Length];
         this.CanAttackDirections = new bool[moveRange.Length];
 
+        this.PreviousPositionValue = PORTAL.getPositionDistance(X, Y,false);
 
         for (int i = 0; i < moveRange.Length; i++)
         {
@@ -412,7 +449,7 @@ public class defaultEnemy : unitObject
                 this.CanGoDirections[i] = true;
                 this.CanAttackDirections[i] = false;
 
-                this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y);
+                this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y, stuck);
             }
             else
             {
@@ -422,7 +459,7 @@ public class defaultEnemy : unitObject
                 if (tmpStructure.IsPlayerBuilding)
                 {
                     this.CanAttackDirections[i] = true;
-                    this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y);
+                    this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y, stuck);
 
                     DefaultBuilding tmpBuilding = (DefaultBuilding)tmpStructure;
                     if (rage == false)
@@ -430,6 +467,11 @@ public class defaultEnemy : unitObject
                         this.PositionsValues[i] -= tmpBuilding.PositionDanger * this.PriorityDanger;
                         this.PositionsValues[i] -= tmpBuilding.PositionValue * this.PriorityValue;
                         this.PositionsValues[i] -= tmpBuilding.PositionObstacle * this.PriorityObstacle;
+                    }
+                    if (stuck == true)
+                    {
+                        this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y,stuck);
+                        //Debug.Log(PositionsValues[i]);
                     }
                 }
                 else

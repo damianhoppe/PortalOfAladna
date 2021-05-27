@@ -16,8 +16,8 @@ public class unitObject : MonoBehaviour
         this.GM = GameObject.FindObjectOfType<GridManager>();
         this.DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         this.EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
-        this.moveSpeed = 0.0025f;
-        this.movePrecision = 0.2f;
+        //this.moveSpeed = 0.0025f;
+        //this.movePrecision = 0.2f;
     }
 
     // Update is called once per frame
@@ -39,9 +39,9 @@ public class unitObject : MonoBehaviour
     //public Position[] trasa = { new Position(2, 0), new Position(2, 2), new Position(0, 2), new Position(0, 0) };
     public Vector2Int[] moveRange = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
 
-    public float movePrecision { get; protected set; }
+    public float movePrecision { get; protected set; } = 0.2f;
 
-    public float moveSpeed { get; protected set; }
+    public float moveSpeed { get; protected set; } = 0.0025f;
 
 
     public virtual int UnitObjectID { get; protected set; } = 0;
