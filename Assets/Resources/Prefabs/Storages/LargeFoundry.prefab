@@ -94,7 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935fa7f8d124f5d40b13884ae76bc741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  category: 6
+  PlayerBuildable: 1
+  DebugBuildable: 1
+  spriteRenderer: {fileID: 0}
   cursorOver: 1
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0

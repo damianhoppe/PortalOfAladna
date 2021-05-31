@@ -6,6 +6,7 @@ public class Ore : Structure
 {
     public Ore() : base(EStructureType.Building) {
         this.PlayerObjectID = 200;
+        this.category = EStructureCategory.Ores;
     }
 
     protected override void Start()

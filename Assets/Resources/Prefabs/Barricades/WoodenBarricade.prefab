@@ -94,10 +94,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623711fe924f9684f96e921acd06214a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: 
+  category: 1
+  PlayerBuildable: 1
+  DebugBuildable: 1
+  spriteRenderer: {fileID: 0}
   cursorOver: 1
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0
   buildSpeed: 50
   maxLvl: 0
   Danger: 0
+  AttackRange: {fileID: 0}
+  DetectedEnemies: []
+  myBulletObjects: []
+  myBullets: []

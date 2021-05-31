@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Structure : MonoBehaviour, IStructure
 {
-
+    public EStructureCategory category;
     public bool PlayerBuildable = true;
     public bool DebugBuildable = true;
     

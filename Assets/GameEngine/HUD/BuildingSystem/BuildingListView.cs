@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BuildingListView : MonoBehaviour
 {
-    private const string prefabPath = "HUD/BuildingListView";
+    private const string prefabPath = "HUD/List/BuildingListView";
     public static BuildingListView create(GameObject parent, string title, BuilderBehaviour buildingSystem)
     {
         Object obj = Utils.loadPrefabFromFile(prefabPath);

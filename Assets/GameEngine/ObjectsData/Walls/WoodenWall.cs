@@ -44,6 +44,7 @@ public class WoodenWall : DefaultBuilding
     }
     public WoodenWall()
     {
+        this.category = EStructureCategory.Walls;
         this.ObjectName = "Wooden Wall";
         this.ObjectDescription = "This is a wooden wall.";
         this.ObjectType = "Building";

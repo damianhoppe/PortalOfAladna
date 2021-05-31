@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8670a6035c4e010479ad1bee1add094b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  category: 1
   PlayerBuildable: 1
   DebugBuildable: 1
   spriteRenderer: {fileID: 0}

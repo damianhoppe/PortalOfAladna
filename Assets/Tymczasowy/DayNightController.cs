@@ -69,7 +69,8 @@ public class DayNightController : MonoBehaviour
     {
         return day;
     }
-    void ChangeTime()
+
+    public void ChangeTime()
     {
         this.day = !this.day;
         if (day == false)

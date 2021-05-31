@@ -16,7 +16,9 @@ public class DefaultResource : Structure
     {
         base.Update();
     }
-    public DefaultResource() : base(EStructureType.Ore) { }
+    public DefaultResource() : base(EStructureType.Ore) {
+        this.category = EStructureCategory.Ores;
+    }
 
     
     public virtual string ObjectDescription { get; protected set; } = "Default Ore description";

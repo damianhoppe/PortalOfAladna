@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
 {
-    public const bool _DEBUG = false;
+    public static bool _DEBUG = false;
 
     [SerializeField]
     public bool DEBUG = false;
@@ -39,18 +39,14 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
 
     void Update()
     {
-
         if (this.buildingInitialized > 0)
         {
             if (this.buildingInitialized == 2)
             {
-                if (!this.buildingStructure)
-                {
-                    this.buildingReqSprite.size = new Vector2((float)this.building.requiredMinimalDistance * 2 + 1, (float)this.building.requiredMinimalDistance * 2 + 1);
-                    this.buildingReqSprite.enabled = true;
-                    onPositionChanged(cursor.getPosition(), cursor.getPosition());
-                    this.buildingInitialized = 0;
-                }
+                this.buildingReqSprite.size = new Vector2((float)this.building.requiredMinimalDistance * 2 + 1, (float)this.building.requiredMinimalDistance * 2 + 1);
+                this.buildingReqSprite.enabled = true;
+                onPositionChanged(cursor.getPosition(), cursor.getPosition());
+                this.buildingInitialized = 0;
             }
             else
             {
@@ -61,7 +57,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         if(this.mode != Mode.NONE)
         {
             status = this.structure.canBuild();
-            if(this.mode == Mode.BUILDING)
+            if (this.mode == Mode.BUILDING)
             {
                 this.buildingPreview.transform.position = new Vector3(cursor.transform.position.x, cursor.transform.position.y, this.defaultZPreview);
                 this.buildingReqSprite.transform.position = this.buildingPreview.transform.position;
@@ -144,6 +140,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
     public void setBuildingMode(Mode newMode, GameObject building = null)
     {
         this.buildingStructure = false;
+        this.buildingInitialized = 0;
         this.cursor.resetColor();
         switch (this.mode)
         {
@@ -178,10 +175,12 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                 this.building = this.buildingPreview.GetComponent<Building>();
                 this.buildingStatus.setStatus(BuildingStatusBehaviour.Status.NONE);
                 setBuildingPreviewPosition(cursor.getPosition());
-                this.buildingInitialized = 1;
                 if (this.building == null)
                 {
                     this.buildingStructure = true;
+                }else
+                {
+                    this.buildingInitialized = 1;
                 }
                 break;
             case Mode.NONE:
