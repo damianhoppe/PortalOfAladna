@@ -5,11 +5,6 @@ using UnityEngine;
 public class defaultBarricade : defaultTower
 {
     // Start is called before the first frame update
-
-    public defaultBarricade()
-    {
-        this.category = EStructureCategory.Barricades;
-    }
     protected override void Start()
     {
         base.Start();

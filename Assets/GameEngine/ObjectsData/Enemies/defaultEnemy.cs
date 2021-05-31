@@ -9,89 +9,31 @@ public class defaultEnemy : unitObject
     private Rigidbody2D rigidbody;
     public EnemyControllerV2 EnC { get; protected set; }
     public TowerController TC { get; protected set; }
-
-    public void HelloWorld()
-    {
-        Debug.Log("Hello world!");
-    }
-    protected override void Start()
-    {
-        base.Start();
-        
-        this.EnC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
-        this.TC = GameObject.Find("TowerController").GetComponent<TowerController>();
-
-        collider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
-        collider.radius = 0.1f;
-        collider.isTrigger = true;
-
-        rigidbody = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;
-        rigidbody.bodyType = RigidbodyType2D.Kinematic;
-
-        this.SurroundingValues = new float[moveRange.Length];
-        this.CanGo = new bool[moveRange.Length];
-
-        this.moveSpeed = 0.0025f;
-        this.movePrecision = 0.2f;
-
-
-        this.Armor = 1.0f;
-        this.Protection = 0.0f;
-        this.MaxHitpoints = 100.0f;
-        this.CurrentHitpoints = this.MaxHitpoints;
-        this.IsTank = false;
-        this.attackValue = 0.0f;
-
-        this.hpBar = HPBar.create(this.gameObject);
-        this.hpBar.setMaxHealth(this.MaxHitpoints);
-        this.hpBar.setHealth(this.CurrentHitpoints);
-        this.hpBar.setVisibility(true);
-
-        this.PriorityDanger = 0.0f;
-        this.PriorityObstacle = -1.0f;
-        this.PriorityValue = 1.0f;
-
-        setPosition();
-        CheckSurroundings();
-        setDestination();
-    }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-
-        if (IsMoving)
-        {
-            this.Move();
-        }
-        if (IsAttacking)
-        {
-            this.Attack();
-        }
-        /*
-        Debug.Log("Position:" + this.transform.position);
-        Debug.Log("Destination:" + this.DestinationPosition);
-        Debug.Log("Move speed:" + this.moveSpeed);
-        Debug.Log(Vector3.Distance(this.transform.position, this.DestinationPosition));
-        //Debug.Log("Vector:" + this.moveVector);
-        float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
-        float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
-        float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
-        //Debug.Log("Proporcja:" + proporcja);
-        //ebug.Log(new Vector3(speedX, speedY, 0.0f));*/
-    }
+    public Portal PORTAL { get; protected set; }
 
     public Vector2Int[] attackRange = { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
 
+    //CheckSurroundings
+
     public List<DefaultBuilding> Surroundings = new List<DefaultBuilding>();
+    public float[] SurroundingValues { get; protected set; }
+    public bool[] CanGo { get; protected set; }
+
+    //CheckSurroundings2
+
+    public Structure[] SurroundingStructures { get; protected set; }
+    public bool[] CanGoDirections { get; protected set; }
+    public bool[] CanAttackDirections { get; protected set; }
+    public float[] PositionsValues { get; protected set; }
+    public float[] IsStructureBuilding { get; protected set; }
+    public float CurrentPositionValue { get; protected set; } = 999.9f;
+    public float PreviousPositionValue { get; protected set; } = 999.9f;
 
     public DefaultBuilding AttackTarget { get; protected set; }
 
-    public float[] SurroundingValues { get; protected set; }
-    public bool[] CanGo { get; protected set; }
-    public bool IsMoving { get; protected set; } = true;
+    public bool IsMoving { get; protected set; } = false;
     public bool IsAttacking { get; protected set; } = false;
+    public bool IsStuck { get; protected set; } = false;
 
     public int attackSpeed { get; protected set; } = 200;
     public int attackReady { get; protected set; } = 0;
@@ -123,16 +65,113 @@ public class defaultEnemy : unitObject
 
     public virtual DataStructures.Cost KillReward { get; protected set; } = new DataStructures.Cost(100.0f, 10.0f, 5.0f, 0.0f, 0.0f, 5.0f);
 
+    public void HelloWorld()
+    {
+        Debug.Log("Hello world!");
+    }
+    protected override void Start()
+    {
+        base.Start();
+        
+        this.EnC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
+        this.TC = GameObject.Find("TowerController").GetComponent<TowerController>();
+        this.PORTAL = GameObject.Find("Portal").GetComponent<Portal>();
+
+        collider = gameObject.AddComponent<CircleCollider2D>() as CircleCollider2D;
+        collider.radius = 0.1f;
+        collider.isTrigger = true;
+
+        rigidbody = gameObject.AddComponent<Rigidbody2D>() as Rigidbody2D;
+        rigidbody.bodyType = RigidbodyType2D.Kinematic;
+
+        this.SurroundingValues = new float[moveRange.Length];
+        this.CanGo = new bool[moveRange.Length];
+
+        //this.moveSpeed = 0.0025f;
+        this.movePrecision = 0.2f;
+
+
+        this.Armor = 1.0f;
+        this.Protection = 0.0f;
+        this.MaxHitpoints = 100.0f;
+        this.CurrentHitpoints = this.MaxHitpoints;
+        this.IsTank = false;
+        this.attackValue = 0.0f;
+
+        this.hpBar = HPBar.create(this.gameObject);
+        this.hpBar.setMaxHealth(this.MaxHitpoints);
+        this.hpBar.setHealth(this.CurrentHitpoints);
+        this.hpBar.setVisibility(true);
+
+        this.PriorityDanger = 0.0f;
+        this.PriorityObstacle = -1.0f;
+        this.PriorityValue = 1.0f;
+
+        setPosition();
+        //CheckSurroundings();
+        //setDestination();
+        CheckSurroundingsV2(false,false);
+        setDestinationV2();
+        this.IsMoving = true;
+        Debug.Log(this.moveSpeed);
+        Debug.Log(this.moveVector);
+    }
+
+    // Update is called once per frame
+    protected override void Update()
+    {
+        base.Update();
+
+        if (IsStuck)
+        {
+            //jak sie zawiesisz, to nie rob nic
+            this.IsMoving = false;
+            this.IsAttacking = false;
+
+        }
+        if (IsMoving)
+        {
+            //this.Move();
+            this.MoveV2();
+        }
+        if (IsAttacking)
+        {
+            this.Attack();
+        }
+
+    }
+
+    
+
     public defaultEnemy(EStructureType Type=EStructureType.Enemy)
     {
         //this.type = type;
     }
+
+    public virtual bool MoveV2()
+    {
+        this.transform.position += moveVector * Time.deltaTime * 100;
+        //Debug.Log(Time.deltaTime*1000000);
+        if (Vector3.Distance(this.transform.position, this.DestinationPosition) < movePrecision)
+        {
+            setPosition();
+            CheckSurroundingsV2(false,false);
+            setDestinationV2();
+
+            Debug.Log(this.moveSpeed);
+            Debug.Log(this.moveVector);
+            return true;
+        }
+        else return false;
+    }
+
     public override void calculateVector()
     {
         base.calculateVector();
         float proporcja = this.moveSpeed / Vector3.Distance(this.transform.position, this.DestinationPosition);
         float speedX = proporcja * (this.DestinationPosition.x - this.transform.position.x);
         float speedY = proporcja * (this.DestinationPosition.y - this.transform.position.y);
+        this.moveVector = new Vector3(speedX, speedY, 0.0f);
         //Debug.Log("Proporcja:"+proporcja);
         //Debug.Log(new Vector3(speedX, speedY, 0.0f));
     }
@@ -189,10 +228,8 @@ public class defaultEnemy : unitObject
         }
         else
         {
-
             this.transform.localScale += new Vector3(0.0015f, 0.0015f, 0.00f);
         }
-
         return false;
     }
     public override void setDestination()
@@ -241,6 +278,125 @@ public class defaultEnemy : unitObject
             IsAttacking = true;
         }
     }
+    public virtual void setDestinationV2()
+    {
+        float tmpMin = 0.0f;
+        int tmpIndex = -1;
+        int tmpRand = -1;
+        tmpRand = Random.Range(0, moveRange.Length);
+
+        for (int j = 0; j < PositionsValues.Length; j++)
+        {
+            int i = tmpRand + j;
+            if (i >= PositionsValues.Length) i -= PositionsValues.Length;
+
+            if (j == 0)
+            {
+                tmpMin = PositionsValues[i]; tmpIndex = i;
+            }
+            else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
+        }
+        this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+
+        //Debug.Log(tmpMin + " " + this.CurrentPositionValue);
+        if (tmpMin >= this.PreviousPositionValue)
+        {
+            
+            //Debug.Log("Ale jestem podkurwiony.");
+            //jeżeli najlepsze miejsce docelowe, spowoduje oddalenie sie
+            //przeciwnik wpada w szal i ignoruje swoje priorytety
+
+            this.CheckSurroundingsV2(true,false);
+            tmpMin = 0.0f;
+            tmpIndex = -1;
+            //tmpRand = -1;
+
+            for (int j = 0; j < PositionsValues.Length; j++)
+            {
+                int i = tmpRand + j;
+                if (i >= PositionsValues.Length) i -= PositionsValues.Length;
+
+                if (j == 0)
+                {
+                    tmpMin = PositionsValues[i]; tmpIndex = i;
+                }
+                else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
+                //Debug.Log(PositionsValues[i]);
+            }   
+        }
+        this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+
+        if (tmpMin >= this.PreviousPositionValue)
+        {
+            Debug.Log("Am I stuck?");
+            this.CheckSurroundingsV2(true, true);
+            tmpMin = 0.0f;
+            tmpIndex = -1;
+            //tmpRand = -1;
+
+            for (int j = 0; j < PositionsValues.Length; j++)
+            {
+                int i = tmpRand + j;
+                if (i >= PositionsValues.Length) i-=PositionsValues.Length;
+                
+                if (j == 0)
+                {
+                    tmpMin = PositionsValues[i]; tmpIndex = i;
+                }
+                
+                else if (PositionsValues[i] < tmpMin) { tmpIndex = i; tmpMin = PositionsValues[i]; }
+                Debug.Log("tmp: "+tmpRand+" i: " + i + " ; j: " + j);
+                //Debug.Log(PositionsValues[i]);
+            }
+        }
+        //else this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+        this.CurrentPositionValue = this.PositionsValues[tmpIndex];
+        if (tmpMin >= this.PreviousPositionValue)
+        {
+            this.IsMoving = false;
+            this.IsAttacking = false;
+            this.IsStuck = false;
+            Debug.Log("Help me, StepTower, I'm stuck ;w;");
+            Debug.Log(PreviousPositionValue+" "+tmpMin);
+        }
+        
+
+        if (CanGoDirections[tmpIndex])
+        {
+            Position target = CurrentPosition + moveRange[tmpIndex];
+            Vector3 punkt_docelowy = new Vector3((float)target.x, (float)target.y, -0.5f);
+            punkt_docelowy.x += Random.Range(-movePrecision, movePrecision);
+            punkt_docelowy.y += Random.Range(-movePrecision, movePrecision);
+            this.DestinationPosition = punkt_docelowy;
+
+            calculateVector();
+        }
+        else
+        {
+            if (CanAttackDirections[tmpIndex])
+            {
+                Position target = CurrentPosition + moveRange[tmpIndex];
+                Vector3 punkt_docelowy = new Vector3((float)target.x, (float)target.y, -0.5f);
+                punkt_docelowy.x += Random.Range(-movePrecision, movePrecision);
+                punkt_docelowy.y += Random.Range(-movePrecision, movePrecision);
+                this.DestinationPosition = punkt_docelowy;
+                //Debug.Log("Target detected");
+                calculateVector();
+
+                AttackTarget = (DefaultBuilding)GM.getStructure(target);
+                IsMoving = false;
+                IsAttacking = true;
+            }
+            else
+            {
+                this.IsMoving = false;
+                this.IsAttacking = false;
+                this.IsStuck = false;
+                Debug.Log("Help me, StepTower, I'm stuck :(");
+            }
+        }
+        //this.PreviousPositionValue = this.CurrentPositionValue;
+    }
     public override void CheckSurroundings()
     {
         int X = this.CurrentPosition.x;
@@ -267,8 +423,63 @@ public class defaultEnemy : unitObject
                     SurroundingValues[i] -= tmpBuilding.PositionObstacle * this.PriorityObstacle;
                     CanGo[i] = false;
                 }
+                 
             }
         }
 
+    }
+    public virtual void CheckSurroundingsV2(bool rage, bool stuck)
+    {
+        int X = this.CurrentPosition.x;
+        int Y = this.CurrentPosition.y;
+
+        this.SurroundingStructures = new Structure[moveRange.Length];
+        this.CanGoDirections = new bool[moveRange.Length];
+        this.PositionsValues = new float[moveRange.Length];
+        this.CanAttackDirections = new bool[moveRange.Length];
+
+        this.PreviousPositionValue = PORTAL.getPositionDistance(X, Y,false);
+
+        for (int i = 0; i < moveRange.Length; i++)
+        {
+            Structure tmpStructure = GM.getStructure(CurrentPosition + moveRange[i]);
+            if (tmpStructure == null)
+            {
+                this.SurroundingStructures[i] = null;
+                this.CanGoDirections[i] = true;
+                this.CanAttackDirections[i] = false;
+
+                this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y, stuck);
+            }
+            else
+            {
+                this.SurroundingStructures[i] = tmpStructure;
+                this.CanGoDirections[i] = false;
+                //if (tmpStructure.BlocksPlayerUnits) this.CanGoDirections[i] = false;
+                if (tmpStructure.IsPlayerBuilding)
+                {
+                    this.CanAttackDirections[i] = true;
+                    this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y, stuck);
+
+                    DefaultBuilding tmpBuilding = (DefaultBuilding)tmpStructure;
+                    if (rage == false)
+                    {
+                        this.PositionsValues[i] -= tmpBuilding.PositionDanger * this.PriorityDanger;
+                        this.PositionsValues[i] -= tmpBuilding.PositionValue * this.PriorityValue;
+                        this.PositionsValues[i] -= tmpBuilding.PositionObstacle * this.PriorityObstacle;
+                    }
+                    if (stuck == true)
+                    {
+                        this.PositionsValues[i] = PORTAL.getPositionDistance(X + moveRange[i].x, Y + moveRange[i].y,stuck);
+                        //Debug.Log(PositionsValues[i]);
+                    }
+                }
+                else
+                {
+                    this.PositionsValues[i] = 9999;
+                    this.CanAttackDirections[i] = false;
+                }
+            }
+        }
     }
 }
