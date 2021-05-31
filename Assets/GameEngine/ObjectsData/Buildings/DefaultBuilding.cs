@@ -282,13 +282,14 @@ public class DefaultBuilding : Building
             float DMG = (Damage - this.Armor) * (1.0f - this.Protection / 100.0f);
             if (DMG <= 0.0f) DMG=0.0f;
             this.CurrentHitpoints -= DMG;
-            //Debug.Log("Received damage: " + DMG);
-            //Debug.Log(this.CurrentHitpoints.ToString() +"/"+ this.MaxHitpoints.ToString());
+            this.hpBar.setHealth(this.CurrentHitpoints);
+            this.hpBar.showForSeconds(0.5f);
             if (this.CurrentHitpoints <= 0.0f) destroy();
             else
             {
                 this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints));
             }
+            this.hpBar.setHealth(this.CurrentHitpoints);
             return true;
         }
         else if (this.IsMilitary)
@@ -296,10 +297,12 @@ public class DefaultBuilding : Building
             float DMG = Damage * (1.0f - this.Protection / 100.0f) - this.Armor;
             if (DMG <= 0.0f) DMG = 0.0f;
             this.CurrentHitpoints -= DMG;
+            this.hpBar.setHealth(this.CurrentHitpoints);
+            this.hpBar.showForSeconds(0.5f);
             if (this.CurrentHitpoints <= 0.0f) destroy();
             else 
             { 
-                this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints)); 
+                this.RepairCost = this.TotalCost * (1.0f - (this.CurrentHitpoints / this.MaxHitpoints));
             }
             return true;
         }

@@ -129,8 +129,9 @@ public class BuildingHUDBehaviour : MonoBehaviour
     {
         RectTransform transform = Utils.getChildGameObject(this.transform, "Background").GetComponent<RectTransform>();
         float height = transform.sizeDelta.y;
+        Debug.Log("0: " + height);
         RectTransform categoriesTransform = Utils.getChildGameObject(this.transform, "Categories").GetComponent<RectTransform>();
-        height -= (this.categories.Count * 30 + 50);
+        height -= ((this.categories.Count * 30) + 80);
         foreach (KeyValuePair<EStructureCategory, Category> pair in this.categories)
         {
             pair.Value.buildingList.setHeight(height);

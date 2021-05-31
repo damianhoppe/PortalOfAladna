@@ -23,6 +23,7 @@ public class BuildingsGridView : MonoBehaviour
     private List<BuildingView> views;
     public CanvasGroupManager canvasGroupManager;
     private GameObject content;
+    private GameObject scrollView;
 
     public BuildingsGridView()
     {
@@ -33,12 +34,16 @@ public class BuildingsGridView : MonoBehaviour
     {
         this.canvasGroupManager = this.GetComponent<CanvasGroupManager>();
         this.content = Utils.getChildGameObject(this.transform, "BuildingsGridViewContent");
+        this.scrollView = Utils.getChildGameObject(this.transform, "Scroll View");
     }
 
     public void setHeight(float height)
     {
         RectTransform transform = this.gameObject.GetComponent<RectTransform>();
-        transform.sizeDelta = new Vector2(transform.sizeDelta.x, height-30);
+        transform.sizeDelta = new Vector2(transform.sizeDelta.x, height);
+
+        RectTransform transformScrollView = this.scrollView.GetComponent<RectTransform>();
+        transformScrollView.sizeDelta = new Vector2(transformScrollView.sizeDelta.x, height);
     }
 
     public void addBuilding(GameObject buildingObject, int buildingId)

@@ -20,13 +20,13 @@ public class biednaPierdolonaPiechota : defaultEnemy
         this.MaxHitpoints = 100.0f;
         this.CurrentHitpoints = this.MaxHitpoints;
         this.IsTank = false;
-        this.attackValue = 10.0f;
 
         this.PriorityDanger = 0.0f;
         this.PriorityObstacle = -5.0f;
         this.PriorityValue = 0.0f;
 
         base.Start();
+        this.attackValue = 20.0f;
 
     }
     // Update is called once per frame
