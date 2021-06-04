@@ -2,33 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner_Bonus : Building
+public class Spawner_Bonus : DefaultBuilding
 {
+    
     public float timeBetweenWaves = 10f;
-    private float countdown = 2f;
+    public float countdown = 5f;
+    public float fala = 1;
 
-    [SerializeField]
-    GameObject[] enemyArray;
+    public List<GameObject> Prefabs = new List<GameObject>();
+    public int spawnedUnits = 0;
+
+    public List<GameObject> Enemies = new List<GameObject>();
+    public List<defaultEnemy> EnemyScripts = new List<defaultEnemy>();
+    public bool isBossDead = false;
+
+
+    DayNightController DNC;
     protected override void Start()
     {
+        Prefabs.Add(Resources.Load<GameObject>("EnemyEasy"));
+
+        DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         base.Start();
     }
+    public void enemySpawn1()
+    {
+        GameObject tmpEnemy = Instantiate(Prefabs[0]);
+        defaultEnemy tmpEnemyScript = tmpEnemy.GetComponent<defaultEnemy>();
+
+        Enemies.Add(tmpEnemy);
+        EnemyScripts.Add(tmpEnemyScript);
+
+        Enemies[spawnedUnits].transform.position = this.transform.position;
+        spawnedUnits++;
+    }
+
     public void Spawn()
     {
-        foreach (var enemy in enemyArray)
+        if (DNC.IsDay() == false)
         {
-            Instantiate(enemy).transform.position = this.transform.position;
+            if (countdown <= 0)
+            {             
+                for (int i = 0; i <= 25; i++)
+                {
+                    if (fala <= 40 && fala == i && countdown <= 0)
+                    {
+                        enemySpawn1();
+                        fala++;
+                        countdown = 10;
+                    }
+                    countdown -= Time.deltaTime;
+                }
+
+            }
+            if (fala < 40)
+            {
+                countdown -= Time.deltaTime;
+            }
+            
+
+        }   
+
+    }
+    public virtual void ReportDeath(defaultEnemy enemy)
+    {
+        if (this.EnemyScripts.Contains(enemy))
+        {
+            int tmp = EnemyScripts.IndexOf(enemy);
+
+            Destroy(Enemies[tmp], 0.2f);
+
+            this.Enemies.RemoveAt(tmp);
+            this.EnemyScripts.RemoveAt(tmp);
         }
     }
     protected override void Update()
     {
         base.Update();
-        if (countdown <= 0f)
-        {
-            Spawn();
-            countdown = timeBetweenWaves;
-        }
-        countdown -= Time.deltaTime;
-
+        Spawn();
     }
 }

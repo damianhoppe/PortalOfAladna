@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6060954136686214630
+--- !u!1 &8508334409161800393
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,57 +8,67 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3786333682456755181}
-  - component: {fileID: 7921114905061562079}
-  - component: {fileID: 2868007595850859441}
+  - component: {fileID: 911015030292096348}
+  - component: {fileID: 723513090036324584}
+  - component: {fileID: 6477235825768905999}
   m_Layer: 0
-  m_Name: Spawner_TMP
+  m_Name: Spawner_Bonus
   m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3786333682456755181
+--- !u!4 &911015030292096348
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6060954136686214630}
+  m_GameObject: {fileID: 8508334409161800393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 1, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7921114905061562079
+--- !u!114 &723513090036324584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6060954136686214630}
+  m_GameObject: {fileID: 8508334409161800393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8862d24167bf1f498009ee12e8fc555, type: 3}
+  m_Script: {fileID: 11500000, guid: 432b2981a9c591f48b12236ae011d9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Spawner
+  category: 2
+  PlayerBuildable: 1
+  DebugBuildable: 1
+  spriteRenderer: {fileID: 0}
+  cursorOver: 1
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0
   buildSpeed: 100
   maxLvl: 0
   Danger: 0
-  enemyArray:
-  - {fileID: 704369805304247218, guid: 6248052354e27a44ea0126975d3e1f71, type: 3}
---- !u!212 &2868007595850859441
+  timeBetweenWaves: 10
+  countdown: 5
+  fala: 1
+  Prefabs: []
+  spawnedUnits: 0
+  Enemies: []
+  EnemyScripts: []
+  isBossDead: 0
+--- !u!212 &6477235825768905999
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6060954136686214630}
+  m_GameObject: {fileID: 8508334409161800393}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -92,11 +102,11 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0e35f6b808bb7447826cc6c69ffe448, type: 3}
-  m_Color: {r: 1, g: 0.06774927, b: 0, a: 1}
+  m_Color: {r: 0.38581347, g: 0.48930374, b: 0.9622642, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
