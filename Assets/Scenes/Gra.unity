@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DEBUG: 0
   defaultZBuilding: 0
-  defaultZPreview: 0
+  defaultZPreview: -0.5
 --- !u!4 &1626289833
 Transform:
   m_ObjectHideFlags: 0
