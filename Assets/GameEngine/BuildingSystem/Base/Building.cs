@@ -35,6 +35,7 @@ public class Building : Structure, IBuilding
         this.lvl = 0;
         this.status = Status.IS_BEING_BUILT;
         this.buildingRequirements = new BuildingRequirements(this);
+        setPosition(new Position(10000,10000));
     }
     protected override void Awake()
     {

@@ -19,13 +19,13 @@ public class DefaultBuilding : Building
 
     protected override void Awake()
     {
-        base.Awake();
         UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
         EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
         PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
         GM = GameObject.FindObjectOfType<GridManager>();
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         this.buildingInfoHUD = GameObject.Find("BuildingInfoHUD").GetComponent<BuildingInfoView>();
+        base.Awake();
     }
 
     protected override void Start()
