@@ -57,6 +57,14 @@ public class SaveController : MonoBehaviour
         
     }
 
+    void Start()
+    {
+        if (!MainMenu.newGame)
+        {
+            LoadAll();
+        }
+    }
+
     bool CreateSaveFiles()
     {
         FileStream file;
@@ -428,5 +436,10 @@ public class SaveController : MonoBehaviour
             }
 
         }
+    }
+
+    public static bool saveExists()
+    {
+        return System.IO.File.Exists(Application.dataPath + "/Save/Map.dat");
     }
 }

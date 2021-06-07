@@ -5,7 +5,7 @@ using UnityEngine;
 public class Building : Structure, IBuilding
 {
     [SerializeField]
-    bool builded = false;
+    public bool builded = false;
     [SerializeField]
     List<Structure> nearbyStructuresRequired;
     [SerializeField]

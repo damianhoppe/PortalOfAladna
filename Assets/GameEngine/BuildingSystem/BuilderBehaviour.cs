@@ -26,9 +26,13 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
     private bool buildingStructure = false;
     private Structure structure;
 
-    void Start()
+    void Awake()
     {
         this.gridManager = FindObjectOfType<GridManager>();
+    }
+
+    void Start()
+    {
         this.buildingStatus = FindObjectOfType<BuildingStatusBehaviour>();
         cursor = FindObjectsOfType<CursorBehaviour>()[0];
         cursor.addOnPositionChangedListener(this);
@@ -212,6 +216,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         if(buildingTemp != null)
         {
             buildingTemp.setEnabled(true);
+            buildingTemp.builded = true;
         }
         gridManager.addStructure(structureTemp, x, y);
     }

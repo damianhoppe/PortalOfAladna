@@ -23,4 +23,9 @@ public class ResourcesTest : MonoBehaviour
         economyController.ResourcesGained(new DataStructures.Cost(value, value, value, value, value, value));
         economyController.AddEnergy(value);
     }
+
+    public void save()
+    {
+        GameObject.Find("SaveController").GetComponent<SaveController>().SaveAll();
+    }
 }

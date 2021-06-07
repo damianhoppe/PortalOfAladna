@@ -9,7 +9,7 @@ public class LevelGenerator : MonoBehaviour
     int WhatToSpawn;
     void Start()
     {
-
+        this.Spawn = !MainMenu.newGame;
     }
 
 
