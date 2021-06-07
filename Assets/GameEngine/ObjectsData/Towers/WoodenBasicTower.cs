@@ -34,8 +34,8 @@ public class WoodenBasicTower : defaultTower
         this.PositionObstacle = 1.0f;
         this.PositionDanger = 2.0f;
 
-        this.AttackRange.radius = 3.0f;
-        this.TowerBulletDamage = 10.0f;
+        this.AttackRange.radius = 3.6f;
+        this.TowerBulletDamage = 50.0f;
         this.TowerBulletSpeed = 0.025f;
         //this.TowerBulletLifetime = Mathf.RoundToInt(((AttackRange.radius/TowerBulletSpeed)*1.2f));
         this.TowerBulletLifespan = AttackRange.radius / TowerBulletSpeed * 0.02f;
@@ -45,7 +45,7 @@ public class WoodenBasicTower : defaultTower
 
         this.canAttack = true;
 
-        this.attackSpeed = 200;
+        this.attackSpeed = 50;
         this.attackReady = 0;
 
         this.BaseCost = new DataStructures.Cost(50.0f, 25.0f, 5.0f, 0.0f, 0.0f, 0.0f);

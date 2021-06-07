@@ -11,10 +11,15 @@ public class EnemyControllerV2 : MonoBehaviour
     public List<defaultEnemy> EnemyScripts = new List<defaultEnemy>();
     public bool isBossDead=false;
 
+    public DayNightController DNC = null;
+
     // Start is called before the first frame update
     void Start()
     {
         Prefabs.Add(Resources.Load<GameObject>("Przeciwnik"));
+
+        Invoke("RegisterMe",2.0f);
+
     }
 
     // Update is called once per frame
@@ -67,5 +72,19 @@ public class EnemyControllerV2 : MonoBehaviour
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+    }
+    public virtual void NukeThemFromOrbit()
+    {
+        while (Enemies.Count > 0)
+        {
+            Destroy(Enemies[0], 0.2f);
+            this.Enemies.RemoveAt(0);
+            this.EnemyScripts.RemoveAt(0);
+        }
+    }
+    public virtual void RegisterMe()
+    {
+        this.DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
+        DNC.RegisterECV2(this);
     }
 }

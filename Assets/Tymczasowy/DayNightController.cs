@@ -15,6 +15,7 @@ public class DayNightController : MonoBehaviour
     WinLoseController WLC;
     EconomyController EC;
     public MiningController MC { get; protected set; } = null;
+    public EnemyControllerV2 ECV2 { get; protected set; } = null;
     public Portal PORTAL { get; protected set; } = null;
 
     public float RemainingTime = 0.0f;
@@ -146,7 +147,7 @@ public class DayNightController : MonoBehaviour
         }
         spawners.Clear();
         */
-        
+        ECV2.NukeThemFromOrbit();
         EC.DailyEnergyGain();
         WLC.CheckWin();
         this.MC.DeliverResources();
@@ -258,5 +259,10 @@ public class DayNightController : MonoBehaviour
 
         timeText.text = string.Format("{0:00}:{1:00}", RemainingMinutes, RemainingSeconds);
         if (RemainingTime < 10.0f) timeText.color = Color.red;
+    }
+    public void RegisterECV2(EnemyControllerV2 kontroler)
+    {
+        this.ECV2 = kontroler;
+        Debug.Log("ECV2 connected to DNC");
     }
 }
