@@ -68,6 +68,13 @@ public class PopulationController : MonoBehaviour
         this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
         EfficiencyCalculation();
     }
+    public void EmployHumans(int Workers)
+    {
+        this.BusyPopulation += Workers;
+        this.FreePopulation = this.CurrentPopulation - this.BusyPopulation;
+        Debug.Log("Zatrudniam 10 workerow");
+        EfficiencyCalculation();
+    }
     public void IncreasePopulation(int Population)
     {
         this.CurrentPopulation += Population;

@@ -176,6 +176,8 @@ public class DefaultBuilding : Building
         this.EC.ResourcesSpent(this.UpgradeCost);
         this.EC.StorageIncrease(this.BuildingStorage);
         this.EC.DrainEnergy(this.EnergyToBuild);
+        this.PC.EmployHumans(this.RequiredHumans);
+        //Debug.Log("TEST");
     }
 
     
