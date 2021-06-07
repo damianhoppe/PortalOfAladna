@@ -21,6 +21,6 @@ public class ResourcesTest : MonoBehaviour
     {
         float value = 1000.0f;
         economyController.ResourcesGained(new DataStructures.Cost(value, value, value, value, value, value));
-        economyController.AddEnergy(5.0f);
+        economyController.AddEnergy(value);
     }
 }

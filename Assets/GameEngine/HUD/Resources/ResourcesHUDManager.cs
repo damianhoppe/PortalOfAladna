@@ -6,6 +6,7 @@ public class ResourcesHUDManager : MonoBehaviour
 {
 
     private EconomyController economyController;
+    private PopulationController populationController;
 
 
     ///DANE
@@ -21,17 +22,24 @@ public class ResourcesHUDManager : MonoBehaviour
     private ResourceView metalView;
     private ResourceView crystalsView;
     private ResourceView humansView;
+    private ResourceView humansView2;
+    private ResourceView humansView3;
+    private ResourceView efficiencyView;
     private ResourceView energyView;
 
     void Start()
     {
         this.economyController = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
+        this.populationController = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
         this.goldView = addResource("Złoto: ");
         this.woodView = addResource("Drewno: ");
         this.stoneView = addResource("Kamień: ");
         this.metalView = addResource("Metal: ");
         this.crystalsView = addResource("Kryształy: ");
         this.humansView = addResource("Populacja: ");
+        this.humansView2 = addResource("Pracujący: ");
+        this.humansView3 = addResource("Wolni: ");
+        this.efficiencyView = addResource("Wydajność: ");
         this.energyView = addResource("Energia: ");
     }
 
@@ -43,7 +51,10 @@ public class ResourcesHUDManager : MonoBehaviour
         this.stoneView.setValue(this.currentResources.Stone.ToString() + "/" + this.totalResources.Stone.ToString());
         this.metalView.setValue(this.currentResources.Metal.ToString() + "/" + this.totalResources.Metal.ToString());
         this.crystalsView.setValue(this.currentResources.Crystals.ToString() + "/" + this.totalResources.Crystals.ToString());
-        this.humansView.setValue(this.currentResources.Humans.ToString() + "/" + this.totalResources.Humans.ToString());
+        this.humansView.setValue(this.populationController.CurrentPopulation.ToString() + "/" + this.populationController.MaxPopulation.ToString());
+        this.humansView2.setValue(this.populationController.BusyPopulation.ToString());
+        this.humansView3.setValue(this.populationController.FreePopulation.ToString());
+        this.efficiencyView.setValue(this.populationController.Efficiency.ToString());
         this.energyView.setValue(this.currentEnergy.ToString() + "/" + this.totalEnergy.ToString());
     }
 
