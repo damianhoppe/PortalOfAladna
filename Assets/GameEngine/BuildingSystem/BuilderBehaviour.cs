@@ -42,9 +42,9 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         BuildingStatusBehaviour.Status status;
         if (this.mode != Mode.NONE)
         {
-            status = this.structure.canBuild();
             if (this.mode == Mode.BUILDING)
             {
+                status = this.structure.canBuild();
                 this.buildingPreview.transform.position = new Vector3(cursor.transform.position.x, cursor.transform.position.y, this.defaultZPreview);
                 this.buildingReqSprite.transform.position = this.buildingPreview.transform.position;
                 if (status == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
@@ -65,6 +65,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
                 switch (this.mode)
                 {
                     case Mode.BUILDING:
+                        status = this.structure.canBuild();
                         if (status == BuildingStatusBehaviour.Status.ALLOW_BUILDING)
                         {
                             if (this.buildingStructure)

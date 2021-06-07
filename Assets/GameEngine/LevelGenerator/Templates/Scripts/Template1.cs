@@ -30,6 +30,8 @@ public class Template1 : MonoBehaviour
             GameObject gameObject = child.gameObject;
             Structure structure = gameObject.GetComponent<Structure>();
             Position structPos = new Position(structure.transform.position);
+            structure.setPosition(structPos);
+            gameObject.name = structure.getName();
             gridManager.addStructure(structure, (int)structPos.x, (int)structPos.y);
         }
     }
