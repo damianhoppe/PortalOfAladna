@@ -11,7 +11,7 @@ public class DefaultMine : DefaultBuilding
         base.Start();
 
         this.MC = GameObject.Find("MiningController").GetComponent<MiningController>();
-
+        MC.RegisterMine(this);
         this.ObjectName = "Default Mine";
         this.ObjectDescription = "This is a Default Mine.";
         this.ObjectType = "Mine";
@@ -33,6 +33,8 @@ public class DefaultMine : DefaultBuilding
         this.CurrentHitpoints = this.MaxHitpoints;
 
         this.PlayerObjectID = -1;
+
+        this.CheckSurroundings();
     }
     
     // Update is called once per frame
@@ -96,9 +98,13 @@ public class DefaultMine : DefaultBuilding
             {
                 Position tmpPosition = new Position(Mathf.RoundToInt(this.transform.position.x) + i, Mathf.RoundToInt(this.transform.position.y) + j);
                 Structure tmpStructure = GM.getStructure(tmpPosition);
+                //Debug.Log("X: " + i + " Y: " + j + " Structure:");
+                //Debug.Log(tmpPosition);
+                //Debug.Log(tmpStructure);
                 if (tmpStructure == null) continue;
                 else if (tmpStructure.getType() == EStructureType.Ore)
                 {
+                    //Debug.Log("Resource found");
                     DefaultResource tmpResource = (DefaultResource)tmpStructure;
                     if (tmpResource.OreType == this.MinedResource)
                     {
@@ -138,6 +144,8 @@ public class DefaultMine : DefaultBuilding
             foreach (DefaultResource Resource in SurroundingOres)
             {
                 yield += Resource.Mine(this.MiningPower);
+                Debug.Log("I mined " + yield);
+                Debug.Log(Resource.RemainingOre);
             }
             this.DailyProduction = yield;
         }
@@ -170,7 +178,7 @@ public class DefaultMine : DefaultBuilding
     public override void onCreate()
     {
         base.onCreate();
-        MC.RegisterMine(this);
+        //MC.RegisterMine(this);
     }
     public override void onSell()
     {
