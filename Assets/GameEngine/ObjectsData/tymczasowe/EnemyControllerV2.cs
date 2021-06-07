@@ -60,4 +60,12 @@ public class EnemyControllerV2 : MonoBehaviour
         Vector3 pozycja = Input.mousePosition;
         return pozycja; 
     }
+    public virtual void RegisterEnemy(GameObject enemy)
+    {
+        GameObject tmpEnemy = enemy;
+        defaultEnemy tmpEnemyScript = tmpEnemy.GetComponent<defaultEnemy>();
+
+        Enemies.Add(tmpEnemy);
+        EnemyScripts.Add(tmpEnemyScript);
+    }
 }
