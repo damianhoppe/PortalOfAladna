@@ -25,11 +25,13 @@ public class CameraBehaviour : MonoBehaviour
 
     Camera cameraObj;
     GridManager gridManager;
+    CursorBehaviour cursor;
 
     void Start()
     {
         cameraObj = GetComponent<Camera>();
         gridManager = FindObjectOfType<GridManager>();
+        cursor = FindObjectOfType<CursorBehaviour>();
         maxZoom += Mathf.Max(gridManager.getWidth(), gridManager.getHeight()) * 0.2f;
         if (maxZoom < minZoom)
             minZoom = maxZoom + 1;
@@ -38,17 +40,21 @@ public class CameraBehaviour : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        zoom -= Input.mouseScrollDelta.y * zoomSpeed;
-        if(zoom < minZoom)
+        if (!cursor.IsPointerOverUIElement())
         {
-            zoom = minZoom;
-        }else if(zoom > maxZoom)
-        {
-            zoom = maxZoom;
-        }
-        cameraObj.orthographicSize = zoom;
+            zoom -= Input.mouseScrollDelta.y * zoomSpeed;
+            if (zoom < minZoom)
+            {
+                zoom = minZoom;
+            }
+            else if (zoom > maxZoom)
+            {
+                zoom = maxZoom;
+            }
+            cameraObj.orthographicSize = zoom;
 
-        moveCamera(getMoveVector());
+            moveCamera(getMoveVector());
+        }
     }
 
     Vector3 getMoveVector()

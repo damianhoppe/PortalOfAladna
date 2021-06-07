@@ -11,7 +11,7 @@ public class Building : Structure, IBuilding
     [SerializeField]
     public int requiredMinimalDistance;
     [SerializeField]
-    int buildSpeed;
+    int buildSpeed = 50;
     [SerializeField]
     int maxLvl;
 
@@ -47,6 +47,7 @@ public class Building : Structure, IBuilding
     protected override void Start()
     {
         base.Start();
+        this.buildSpeed = 50;
         if (this.builded)
         {
             this.upgradePercentage = 100;

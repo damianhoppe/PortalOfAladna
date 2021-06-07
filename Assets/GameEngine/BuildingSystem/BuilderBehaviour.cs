@@ -15,7 +15,7 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
     [SerializeField]
     private float defaultZPreview;
     public static float defaultZSpawner = 2f;
-    public static float defaultZEnemy = -1f;
+    public static float defaultZEnemy = -0.5f;
 
     private GridManager gridManager;
     private GameObject buildingPreview;
