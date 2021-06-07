@@ -5,6 +5,8 @@ using UnityEngine;
 public class Building : Structure, IBuilding
 {
     [SerializeField]
+    bool builded = false;
+    [SerializeField]
     List<Structure> nearbyStructuresRequired;
     [SerializeField]
     public int requiredMinimalDistance;
@@ -14,7 +16,7 @@ public class Building : Structure, IBuilding
     int maxLvl;
 
     protected int lvl;
-    bool updateEnabled;
+    bool updateEnabled = false;
     bool initialized = false;
     float upgradePercentage;
 
@@ -34,30 +36,40 @@ public class Building : Structure, IBuilding
         this.status = Status.IS_BEING_BUILT;
         this.buildingRequirements = new BuildingRequirements(this);
     }
+    protected override void Awake()
+    {
+        base.Awake();
+        if (BuilderBehaviour._DEBUG) Debug.Log("Awake: " + toString());
+        buildingRequirements.initDictionary(nearbyStructuresRequired, requiredMinimalDistance);
+    }
 
     protected override void Start()
     {
         base.Start();
-        if(BuilderBehaviour._DEBUG) Debug.Log("Start: " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count);
-        buildingRequirements.initDictionary(nearbyStructuresRequired, requiredMinimalDistance);
-        initialized = true;
+        if (this.builded)
+        {
+            this.upgradePercentage = 100;
+            this.updateEnabled = true;
+        }
+        if(BuilderBehaviour._DEBUG) Debug.Log("Start: " + toString() + " : " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count + " / " + this.updateEnabled);
         if (this.updateEnabled)
+        {
             onCreate();
+        }
     }
 
     protected override void Update()
     {
-        if(this.initialized)
+        if (this.updateEnabled)
         {
-            if (this.updateEnabled)
-            {
-                this.update();
-            }
+            this.update();
         }
     }
 
     protected virtual void update()
     {
+        if (this.hpBar == null)
+            this.destroy(true);
         this.currentPerformance = 1;
         if (this.status == Status.IS_BEING_BUILT)
         {
@@ -108,10 +120,14 @@ public class Building : Structure, IBuilding
 
     public virtual void onCreate()
     {
+        if (BuilderBehaviour._DEBUG) Debug.Log("onCreate: " + toString());
         this.hpBar = HPBar.create(this.gameObject);
-        this.hpBar.setHealth(0);
-        this.hpBar.setFillColor(Color.white);
-        this.upgradePercentage = 0;
+        if (!this.builded)
+        {
+            this.hpBar.setFillColor(Color.white);
+            this.upgradePercentage = 0;
+            this.hpBar.setHealth(0);
+        }
         Structure structure = this.buildingRequirements.findNearestStructure(this.gridManager);
         if (BuilderBehaviour._DEBUG)
         {
@@ -147,6 +163,7 @@ public class Building : Structure, IBuilding
 
     public virtual void setEnabled(bool enabled)
     {
+        if (BuilderBehaviour._DEBUG) Debug.Log("setEnabled(" + enabled + "): " + toString());
         this.updateEnabled = enabled;
     }
 

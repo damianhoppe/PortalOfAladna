@@ -46,7 +46,8 @@ public class defaultTower : DefaultBuilding
         //TC.ConnectionTest();
         this.BulletType = Resources.Load<GameObject>("RedBullet");
         this.AttackRange = this.GetComponent<CircleCollider2D>();
-        AttackRange.radius = 3.0f;
+        if(this.category == EStructureCategory.Towers)
+            AttackRange.radius = 3.0f;
 
         base.Start();
     }

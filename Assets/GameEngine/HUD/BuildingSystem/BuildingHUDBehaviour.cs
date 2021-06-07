@@ -79,7 +79,7 @@ public class BuildingHUDBehaviour : MonoBehaviour
             }
             if(!DEBUG)
             {
-                if(structure.PlayerBuildable)
+                if(structure.PlayerBuildable && structure.getName() != "Portal")
                     category.buildingList.addBuilding(pair.Value, pair.Key);
             }else
             {

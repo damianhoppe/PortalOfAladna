@@ -7,9 +7,15 @@ public class HUDManager : MonoBehaviour
 {
     [SerializeField]
     bool hudVisibility = true;
+    BuildingInfoView buildingInfoHUD;
 
     private CanvasGroupManager economyView;
     private CanvasGroupManager buildingSystemView;
+
+    void Awake()
+    {
+        buildingInfoHUD = Utils.getChildGameObject(this.gameObject.transform, "BuildingInfoHUD").GetComponent<BuildingInfoView>();
+    }
 
     void Start()
     {

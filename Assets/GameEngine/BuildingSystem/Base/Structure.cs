@@ -58,6 +58,11 @@ public class Structure : MonoBehaviour, IStructure
         return BuildingStatusBehaviour.Status.ALLOW_BUILDING;
     }
 
+    public void setName(string name)
+    {
+        this.ObjectName = name;
+    }
+
     public string getName()
     {
         return this.ObjectName;
@@ -112,5 +117,10 @@ public class Structure : MonoBehaviour, IStructure
     public virtual void setDistanceToCenter()
     {
         this.DistanceToCenter = (Mathf.Abs(this.position.x) + Mathf.Abs(this.position.y));
+    }
+
+    public string toString()
+    {
+        return this.name + " / " + this.ObjectName;
     }
 }

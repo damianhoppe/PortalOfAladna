@@ -15,16 +15,23 @@ public class DefaultBuilding : Building
     public virtual DayNightController DNC { get; protected set; }
     public virtual GridManager GM { get; protected set; }
 
-    protected override void Start()
-    {
-        this.IsPlayerBuilding = true;
-        //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
+    private BuildingInfoView buildingInfoHUD;
 
+    protected override void Awake()
+    {
+        base.Awake();
         UC = GameObject.Find("PlayerDataController").GetComponent<UpgradeController>();
         EC = GameObject.Find("PlayerDataController").GetComponent<EconomyController>();
         PC = GameObject.Find("PlayerDataController").GetComponent<PopulationController>();
         GM = GameObject.FindObjectOfType<GridManager>();
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
+        this.buildingInfoHUD = GameObject.Find("BuildingInfoHUD").GetComponent<BuildingInfoView>();
+    }
+
+    protected override void Start()
+    {
+        this.IsPlayerBuilding = true;
+        //UC = GameObject.Find("UpgradeController").GetComponent<UpgradeController>();
         
         this.CurrentHitpoints = this.MaxHitpoints;
 
@@ -42,6 +49,15 @@ public class DefaultBuilding : Building
     {
         base.Update();
     }
+
+
+    public override void onClick()
+    {
+        base.onClick();
+        this.buildingInfoHUD.loadBuilding(this);
+        this.buildingInfoHUD.show();
+    }
+
     public virtual string ObjectDescription { get; protected set; } = "Default Building description";
     public virtual string ObjectType { get; protected set; } = "Building";
     
@@ -157,6 +173,7 @@ public class DefaultBuilding : Building
     public override void subtractRequirements()
     {
         this.PC.IncreasePopulation(this.LivingSpace);
+        this.EC.ResourcesSpent(this.UpgradeCost);
         this.EC.StorageIncrease(this.BuildingStorage);
         this.EC.DrainEnergy(this.EnergyToBuild);
     }
@@ -176,7 +193,7 @@ public class DefaultBuilding : Building
     {
         if (this.CanBuild)
         {
-            if (EC.CanAffordTEST(this.BaseCost,this.EnergyToBuild))
+            if (EC.CanAfford(this.BaseCost,this.EnergyToBuild))
             {
                 if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
                 {
@@ -207,7 +224,7 @@ public class DefaultBuilding : Building
     {
         if (this.CanUpgrade)
         {
-            if (EC.CanAffordTEST(this.UpgradeCost,this.EnergyToUpgrade))
+            if (EC.CanAfford(this.UpgradeCost,this.EnergyToUpgrade))
             {
                 if (UC.CanBuild(this.RequiresInventor, this.RequiresResearcher, this.RequiresAcademy))
                 {

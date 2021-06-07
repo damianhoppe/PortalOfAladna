@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5055669837722287042}
   - component: {fileID: 3692852119552727633}
   m_Layer: 0
-  m_Name: Template1 1
+  m_Name: Template1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -592,6 +592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622522296184841837, guid: 0b46b7a781f6d81428ee87025457e606,
+        type: 3}
+      propertyPath: builded
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7049006272243802083, guid: 0b46b7a781f6d81428ee87025457e606,
         type: 3}

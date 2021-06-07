@@ -16,7 +16,8 @@ public class Portal : DefaultBuilding
     protected override void Start()
     {
         base.Start();
-        
+
+        this.PlayerBuildable = false;
         this.PlayerObjectID = 0;
 
         this.ObjectName = "Portal";
@@ -53,7 +54,7 @@ public class Portal : DefaultBuilding
     public Portal()
     {
         this.PlayerObjectID = 0;
-
+        
         this.ObjectName = "Portal";
         this.ObjectDescription = "This is a portal. Protect it at any cost.";
         this.ObjectType = "Building";

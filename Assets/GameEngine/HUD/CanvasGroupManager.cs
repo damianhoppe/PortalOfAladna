@@ -31,4 +31,9 @@ public class CanvasGroupManager : MonoBehaviour
     {
         return this.canvasGroup;
     }
+
+    public void setCanvasGroup(CanvasGroup canvasGroup)
+    {
+        this.canvasGroup = canvasGroup;
+    }
 }

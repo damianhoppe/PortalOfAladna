@@ -106,7 +106,7 @@ public class EconomyController : MonoBehaviour
     }
     public void ResourcesGained (DataStructures.Cost zysk)
     {
-        this.PlayerResources -= zysk;
+        this.PlayerResources += zysk;
     }
     public void StorageIncrease(DataStructures.Cost storage)
     {

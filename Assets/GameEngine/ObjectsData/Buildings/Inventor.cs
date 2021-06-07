@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Inventor : DefaultBuilding
 {
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -63,18 +64,18 @@ public class Inventor : DefaultBuilding
     }
     public override void onCreate()
     {
+        base.onCreate();
         if (this.CreateAvailable())
         {
             this.UC.InventorBuilt();
-            base.onCreate();
         }
     }
     public override void onDestroy()
     {
+        base.onDestroy();
         if (this.DestroyAvailable())
         {
             this.UC.InventorDestroyed();
-            base.onDestroy();
         }
     }
     public override void onSell()

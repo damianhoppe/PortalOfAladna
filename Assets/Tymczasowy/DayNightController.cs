@@ -165,7 +165,13 @@ public class DayNightController : MonoBehaviour
     {
         if (this.PORTAL == null)
         {
-            Portal tmpPortal = GameObject.Find("Portal").GetComponent<Portal>();
+            GameObject portalObject = GameObject.Find("Portal");
+            if (portalObject == null)
+            {
+                Debug.Log("DNC: Cannot find Portal!");
+                return false;
+            }
+            Portal tmpPortal = portalObject.GetComponent<Portal>();
             if (tmpPortal == null)
             {
                 Debug.Log("DNC: Cannot find Portal!");
