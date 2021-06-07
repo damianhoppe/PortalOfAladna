@@ -55,6 +55,7 @@ public class Building : Structure, IBuilding
         if(BuilderBehaviour._DEBUG) Debug.Log("Start: " + toString() + " : " + requiredMinimalDistance + " / " + nearbyStructuresRequired.Count + " / " + this.updateEnabled);
         if (this.updateEnabled)
         {
+            localOnCreate();
             onCreate();
         }
     }
@@ -120,6 +121,11 @@ public class Building : Structure, IBuilding
     }
 
     public virtual void onCreate()
+    {
+    }
+
+
+    private void localOnCreate()
     {
         if (BuilderBehaviour._DEBUG) Debug.Log("onCreate: " + toString());
         this.hpBar = HPBar.create(this.gameObject);
