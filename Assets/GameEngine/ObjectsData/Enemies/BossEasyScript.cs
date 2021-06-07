@@ -23,7 +23,7 @@ public class BossEasyScript : defaultEnemy
         this.PriorityValue = 0.0f;
 
         base.Start();
-        this.attackValue = 50.0f;
+        this.attackValue = 20.0f;
 
     }
     // Update is called once per frame

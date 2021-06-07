@@ -8,7 +8,7 @@ public class EnemyHardScript : defaultEnemy
     {
 
 
-        this.moveSpeed = 0.020f;
+        this.moveSpeed = 0.012f;
         this.movePrecision = 0.2f;
 
 
@@ -23,7 +23,7 @@ public class EnemyHardScript : defaultEnemy
         this.PriorityValue = 0.0f;
 
         base.Start();
-        this.attackValue = 40.0f;
+        this.attackValue = 25.0f;
 
     }
     // Update is called once per frame

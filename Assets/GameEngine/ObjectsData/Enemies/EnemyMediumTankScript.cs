@@ -8,7 +8,7 @@ public class EnemyMediumTankScript : defaultEnemy
     {
 
 
-        this.moveSpeed = 0.012f;
+        this.moveSpeed = 0.008f;
         this.movePrecision = 0.2f;
 
 
@@ -23,7 +23,7 @@ public class EnemyMediumTankScript : defaultEnemy
         this.PriorityValue = 0.0f;
 
         base.Start();
-        this.attackValue = 20.0f;
+        this.attackValue = 10.0f;
 
     }
     // Update is called once per frame

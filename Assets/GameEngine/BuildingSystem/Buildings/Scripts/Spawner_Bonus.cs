@@ -7,7 +7,9 @@ public class Spawner_Bonus : DefaultBuilding
     
     public float timeBetweenWaves = 10f;
     public float countdown = 5f;
-    public float fala = 1;
+    public float fala = 0;
+    public float liczfale = 0;
+    public float dni = 0;
 
     public List<GameObject> Prefabs = new List<GameObject>();
     public int spawnedUnits = 0;
@@ -43,27 +45,33 @@ public class Spawner_Bonus : DefaultBuilding
     {
         if (DNC.IsDay() == false)
         {
-            if (countdown <= 0)
-            {             
-                for (int i = 0; i <= 25; i++)
+            dni = DNC.GetDayNum();
+            if (dni == liczfale)
+            {
+                if (countdown <= 0)
                 {
-                    if (fala <= 40 && fala == i && countdown <= 0)
+                    for (int i = 0; i <= 40; i++)
                     {
-                        enemySpawn1();
-                        fala++;
-                        countdown = 10;
+                        if (fala <= 40 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn1();
+                            countdown = 5;
+
+                            if (fala == 5)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
                     }
-                    countdown -= Time.deltaTime;
                 }
 
+                if (fala < 40)
+                {
+                    countdown -= Time.deltaTime;
+                }
             }
-            if (fala < 40)
-            {
-                countdown -= Time.deltaTime;
-            }
-            
-
-        }   
+        }
 
     }
     public virtual void ReportDeath(defaultEnemy enemy)

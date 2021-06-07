@@ -23,7 +23,7 @@ public class BossMediumScript : defaultEnemy
         this.PriorityValue = 0.0f;
 
         base.Start();
-        this.attackValue = 60.0f;
+        this.attackValue = 30.0f;
 
     }
     // Update is called once per frame

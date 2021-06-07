@@ -7,7 +7,9 @@ public class Spawner_Med : DefaultBuilding
 
     public float timeBetweenWaves = 10f;
     public float countdown = 5f;
-    public float fala = 1;
+    public float fala = 0;
+    public float liczfale = 0;
+    public float dni = 0;
 
     public List<GameObject> Prefabs = new List<GameObject>();
     public int spawnedUnits = 0;
@@ -95,51 +97,76 @@ public class Spawner_Med : DefaultBuilding
     {
         if (DNC.IsDay() == false)
         {
-            if (countdown <= 0)
+            dni = DNC.GetDayNum();
+            if (dni == liczfale)
             {
-                for (int i = 0; i <= 25; i++)
+                if (countdown <= 0)
                 {
-                    if (fala <= 5 && fala == i && countdown <= 0)
+                    for (int i = 0; i <= 25; i++)
                     {
-                        enemySpawn1();
-                        fala++;
-                        countdown = 15;
+                        if (fala <= 5 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn1();
+                            countdown = 5;
+
+                            if (fala == 5)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
+                        else if (fala <= 8 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn4();
+
+                            countdown = 1;
+                            if (fala == 8)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
+                        else if (fala <= 12 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn3();
+                            countdown = 5;
+                            if (fala == 12)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
+                        else if (fala <= 23 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn4();
+                            countdown = 5;
+                            if (fala == 23)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
+                        else if (fala <= 25 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn5();
+                            countdown = 1;
+                            if (fala == 25)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
+                        countdown -= Time.deltaTime;
                     }
-                    else if (fala <= 8 && fala == i && countdown <= 0)
-                    {
-                        enemySpawn4();
-                        fala++;
-                        countdown = 1;
-                    }
-                    else if (fala <= 12 && fala == i && countdown <= 0)
-                    {
-                        enemySpawn3();
-                        fala++;
-                        countdown = 10;
-                    }
-                    else if (fala <= 23 && fala == i && countdown <= 0)
-                    {
-                        enemySpawn4();
-                        fala++;
-                        countdown = 8;
-                    }
-                    else if (fala <= 25 && fala == i && countdown <= 0)
-                    {
-                        enemySpawn5();
-                        fala++;
-                        countdown = 1;
-                    }
-                    countdown -= Time.deltaTime;
+
+
                 }
 
-
+                if (fala < 25)
+                {
+                    countdown -= Time.deltaTime;
+                }
             }
-            if (fala < 25)
-            {
-                countdown -= Time.deltaTime;
-            }
-
-
         }
 
     }
