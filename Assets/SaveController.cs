@@ -91,19 +91,17 @@ public class SaveController : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            
-            SaveMap();
-            Save();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            load();
-            Debug.Log(EC.PlayerResources.ToString());
-            LoadMap();
-                        
-        }
+    }
+    public void SaveAll()
+    {
+        SaveMap();
+        Save();
+    }
+    public void LoadAll()
+    {
+        load();
+        Debug.Log(EC.PlayerResources.ToString());
+        LoadMap();
     }
     List<SaveObject> GetDataFromGrid()
     {
@@ -119,8 +117,23 @@ public class SaveController : MonoBehaviour
                 Structure objectOnGrid = GM.getStructure(x, y);
                 if (objectOnGrid != null)
                 {
-                    DefaultBuilding DB = (DefaultBuilding)objectOnGrid;
-                    mapStructures.Add(new SaveObject(x, y, DB.PlayerObjectID, DB.save()));
+                    try
+                    {
+                        if (objectOnGrid.getType() == EStructureType.Building)
+                        {
+                            DefaultBuilding DB = (DefaultBuilding)objectOnGrid;
+                            mapStructures.Add(new SaveObject(x, y, DB.PlayerObjectID, DB.save()));
+                        }
+                        else
+                        {
+                            DefaultResource DB = (DefaultResource)objectOnGrid;
+                            mapStructures.Add(new SaveObject(x, y, DB.PlayerObjectID, DB.save()));
+                        }
+                    }
+                    catch
+                    {
+                        Debug.Log("errrororor: "+x + " " + y);
+                    }
                 }
             }
 
@@ -186,7 +199,15 @@ public class SaveController : MonoBehaviour
                 GameObject myObj = null;
                 OH.Buildings.TryGetValue(id, out myObj);
                 BB.LoadBuilding(posX, posY, myObj);
-                GM.getStructure(posX, posY).gameObject.GetComponent<DefaultBuilding>().load(save);
+
+                try
+                {
+                    GM.getStructure(posX, posY).gameObject.GetComponent<DefaultBuilding>().load(save);
+                }
+                catch
+                {
+                    GM.getStructure(posX, posY).gameObject.GetComponent<DefaultResource>().load(save);
+                }
             }
             sr.Close();
         }
@@ -377,9 +398,33 @@ public class SaveController : MonoBehaviour
                 Structure objectOnGrid = GM.getStructure(x, y);
                 if (objectOnGrid != null)
                 {
-                    DefaultBuilding DB = (DefaultBuilding)objectOnGrid;
-                    DB.destroy();
+                    if (objectOnGrid.getType() == EStructureType.Building)
+                    {
+                        DefaultBuilding DB = (DefaultBuilding)objectOnGrid;
+                        try
+                        {
+                            DB.destroy();
+                        }
+                        catch
+                        {
+                            Debug.Log("ERROR ON: "+x + " " + y);
+                        }
+                    }
+                    else
+                    {
+                        DefaultResource DB = (DefaultResource)objectOnGrid;
+                        try
+                        {
+                            DB.destroy();
+                        }
+                        catch(Exception e)
+                        {
+                            Debug.Log("ERROR ON: " + x + " " + y+" "+e);
+                        }
+                    }
                 }
+
+                
             }
 
         }
