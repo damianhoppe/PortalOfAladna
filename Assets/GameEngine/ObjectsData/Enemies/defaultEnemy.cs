@@ -216,7 +216,16 @@ public class defaultEnemy : unitObject
         {
             this.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             this.attackReady -= this.attackSpeed;
-            AttackTarget.OnHit(this.attackValue);
+            if (AttackTarget.IsDead)
+            {
+                //Destroy(AttackTarget);
+                IsMoving = true;
+                IsAttacking = false;
+            }
+            else
+            {
+                AttackTarget.OnHit(this.attackValue);
+            }
             //Debug.Log("Job z paticku w " + AttackTarget);
             if (AttackTarget.IsDead)
             {
