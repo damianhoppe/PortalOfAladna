@@ -137,6 +137,17 @@ public class Spawner_Med_Hard : DefaultBuilding
                             }
                             fala++;
                         }
+                        else if (fala <= 19 && fala == i && countdown <= 0)
+                        {
+                            enemySpawn1();
+                            enemySpawn3();
+                            countdown = 5;
+                            if (fala == 19)
+                            {
+                                liczfale++;
+                            }
+                            fala++;
+                        }
                         else if (fala <= 23 && fala == i && countdown <= 0)
                         {
                             enemySpawn4();
