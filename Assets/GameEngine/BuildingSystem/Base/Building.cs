@@ -10,8 +10,7 @@ public class Building : Structure, IBuilding
     List<Structure> nearbyStructuresRequired;
     [SerializeField]
     public int requiredMinimalDistance;
-    [SerializeField]
-    int buildSpeed = 50;
+    public int buildSpeed = 50;
     [SerializeField]
     int maxLvl;
 

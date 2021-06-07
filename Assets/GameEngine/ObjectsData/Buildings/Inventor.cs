@@ -64,11 +64,9 @@ public class Inventor : DefaultBuilding
     }
     public override void onCreate()
     {
+        
+        this.UC.InventorBuilt();
         base.onCreate();
-        if (this.CreateAvailable())
-        {
-            this.UC.InventorBuilt();
-        }
     }
     public override void onDestroy()
     {

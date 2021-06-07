@@ -42,6 +42,7 @@ public class DefaultBuilding : Building
         //EC = GameObject.Find("EconomyController").GetComponent<EconomyController>();
         //this.OnBuild();
         base.Start();
+        this.buildSpeed = 50;
     }
 
     // Update is called once per frame

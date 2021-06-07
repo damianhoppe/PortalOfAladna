@@ -99,7 +99,7 @@ public class DayNightController : MonoBehaviour
         if (day == false)
         {
             
-            float nightLength = 30.0f;
+            float nightLength = 120.0f;
             UntilDawn(nightLength);
             NightTime();
 

@@ -65,11 +65,9 @@ public class Researcher : DefaultBuilding
     }
     public override void onCreate()
     {
-        if (this.CreateAvailable())
-        {
-            this.UC.ResearcherBuilt();
-            base.onCreate();
-        }
+
+        this.UC.ResearcherBuilt();
+        base.onCreate();
     }
     public override void onDestroy()
     {

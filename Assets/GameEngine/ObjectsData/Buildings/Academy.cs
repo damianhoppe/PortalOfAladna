@@ -70,11 +70,10 @@ public class Academy : DefaultBuilding
     }
     public override void onCreate()
     {
-        if (this.CreateAvailable())
-        {
+
             this.UC.AcademyBuilt();
             base.onCreate();
-        }
+
     }
     public override void onDestroy()
     {
