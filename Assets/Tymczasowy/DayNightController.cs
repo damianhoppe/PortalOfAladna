@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DayNightController : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class DayNightController : MonoBehaviour
     public MiningController MC { get; protected set; } = null;
     public Portal PORTAL { get; protected set; } = null;
 
+    public float RemainingTime = 0.0f;
+    public int RemainingSeconds = 0;
+    public int RemainingMinutes = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +33,27 @@ public class DayNightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Home))
         {
             ChangeTime();
+        }*/
+        if (IsDay())
+        {
+            if (Input.GetKeyDown(KeyCode.Home))
+            {
+                ChangeTime();
+            }
+        }
+        else
+        {
+            RemainingTime -= Time.deltaTime;
+            DisplayTime(RemainingTime);
+            
+            if (RemainingTime <= 0.0f)
+            {
+                ChangeTime();
+            }
         }
     }
     private void LateUpdate()
@@ -75,10 +98,17 @@ public class DayNightController : MonoBehaviour
         this.day = !this.day;
         if (day == false)
         {
+            
+            float nightLength = 30.0f;
+            UntilDawn(nightLength);
             NightTime();
+
         }
         if (day == true)
         {
+            //GameObject.Find("TimerImage").transform.position += new Vector3(0.0f, 0.0f, 1.0f);
+            GameObject.Find("TimerImage").transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
+            //GameObject.Find("TimerImage").SetActive(false);
             DayTime();
         }
     }
@@ -209,5 +239,24 @@ public class DayNightController : MonoBehaviour
         {
             PORTAL.refreshMap();
         }
+    }
+
+    public Text timeText;
+    public void UntilDawn(float time)
+    {
+        timeText = GameObject.Find("TimerText").GetComponent<Text>();
+        timeText.color = Color.white;
+        //GameObject.Find("TimerImage").transform.position += new Vector3(0.0f, 0.0f, -1.0f);
+        GameObject.Find("TimerImage").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        //GameObject.Find("TimerImage").SetActive(true);
+        RemainingTime = time;
+    }
+    public void DisplayTime(float time)
+    {
+        RemainingMinutes = Mathf.FloorToInt(RemainingTime / 60);
+        RemainingSeconds = Mathf.FloorToInt(RemainingTime % 60);
+
+        timeText.text = string.Format("{0:00}:{1:00}", RemainingMinutes, RemainingSeconds);
+        if (RemainingTime < 10.0f) timeText.color = Color.red;
     }
 }
