@@ -6246,7 +6246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab1: {fileID: 5763451837515607387, guid: 02c318a44b4777b45b59b4deb34ec0af, type: 3}
-  prefab2: {fileID: 8033361624297789861, guid: 731cf88b9aa3d5b44a6eba72a4f18c34, type: 3}
+  prefab2: {fileID: 6370503172495319313, guid: f45adb1c24bc96a408dba3fa37281329, type: 3}
   prefab3: {fileID: 1015864792348070313, guid: 791fc176a57a4dd408155b3c66417a45, type: 3}
 --- !u!4 &1682841702
 Transform:
@@ -6492,6 +6492,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1636253232373152546, guid: d5aa27655eb555c4f9763dbfdf690544,
+        type: 3}
+      propertyPath: DEBUG
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1758886801970971587, guid: d5aa27655eb555c4f9763dbfdf690544,
         type: 3}

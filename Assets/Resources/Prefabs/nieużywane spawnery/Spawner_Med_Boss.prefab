@@ -99,6 +99,7 @@ MonoBehaviour:
   DebugBuildable: 1
   spriteRenderer: {fileID: 0}
   cursorOver: 1
+  builded: 0
   nearbyStructuresRequired: []
   requiredMinimalDistance: 0
   buildSpeed: 100

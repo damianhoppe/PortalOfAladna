@@ -24,7 +24,8 @@ public class Spawner_Easy_Boss : Building
     {
         foreach (var enemy in enemyArray)
         {
-            Instantiate(enemy).transform.position = this.transform.position;
+            Debug.Log("SPAWN");
+            Instantiate(enemy).transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, BuilderBehaviour.defaultZEnemy);
         }
     }
     protected override void Update()

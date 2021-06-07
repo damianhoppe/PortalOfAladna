@@ -9,7 +9,11 @@ public class LevelGenerator : MonoBehaviour
     int WhatToSpawn;
     void Start()
     {
-        this.Spawn = !MainMenu.newGame;
+        if (MainMenu.newGame)
+        {
+            Instantiate(prefab1, transform.position, Quaternion.identity);
+        }
+        Instantiate(prefab2, transform.position, Quaternion.identity);
     }
 
 
@@ -17,10 +21,14 @@ public class LevelGenerator : MonoBehaviour
     {
         if (Spawn == false)
         {
+            
+            Spawn = true;
+            /*
+            Instantiate(prefab1, transform.position, Quaternion.identity);
             WhatToSpawn = Random.Range(1, 3);
             Debug.Log(WhatToSpawn);
 
-            switch (WhatToSpawn)
+            switch (1)
             {
                 case 1:
                     Instantiate(prefab1, transform.position, Quaternion.identity);
@@ -30,7 +38,7 @@ public class LevelGenerator : MonoBehaviour
                     Instantiate(prefab2, transform.position, Quaternion.identity);
                     Spawn = true;
                     break;
-            }
+            }*/
         }
     }
 }

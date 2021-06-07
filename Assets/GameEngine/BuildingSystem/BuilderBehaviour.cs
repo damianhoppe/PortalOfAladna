@@ -14,6 +14,8 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
     private float defaultZBuilding;
     [SerializeField]
     private float defaultZPreview;
+    public static float defaultZSpawner = 2f;
+    public static float defaultZEnemy = -1f;
 
     private GridManager gridManager;
     private GameObject buildingPreview;
@@ -210,14 +212,21 @@ public class BuilderBehaviour : MonoBehaviour, IOnCursorPositionChanged
         Structure structureTemp = buildingObject.GetComponent<Structure>();
         structureTemp.setPosition(new Position(x, y));
         structureTemp.name = structureTemp.getName();
-        structureTemp.transform.position = new Vector3(x, y, this.defaultZBuilding);
+        //structureTemp.transform.position = new Vector3(x, y, this.defaultZBuilding);
 
         Building buildingTemp = buildingObject.GetComponent<Building>();
         if(buildingTemp != null)
         {
             buildingTemp.setEnabled(true);
             buildingTemp.builded = true;
+            if (buildingTemp.PlayerObjectID >= 1000)
+            {
+                buildingObject.transform.position = new Vector3(x, y, defaultZSpawner);
+                gridManager.addStructure(structureTemp, x, y);
+                return;
+            }
         }
+        buildingObject.transform.position = new Vector3(x, y, this.defaultZBuilding);
         gridManager.addStructure(structureTemp, x, y);
     }
 }

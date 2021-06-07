@@ -32,7 +32,14 @@ public class Template1 : MonoBehaviour
             Position structPos = new Position(structure.transform.position);
             structure.setPosition(structPos);
             gameObject.name = structure.getName();
-            gridManager.addStructure(structure, (int)structPos.x, (int)structPos.y);
+            if (structure.PlayerObjectID >= 1000)
+            {
+                gameObject.transform.position = new Vector3((int)structPos.x, (int)structPos.y, BuilderBehaviour.defaultZSpawner);
+            }
+            else
+            {
+                gridManager.addStructure(structure, (int)structPos.x, (int)structPos.y);
+            }
         }
     }
     /*

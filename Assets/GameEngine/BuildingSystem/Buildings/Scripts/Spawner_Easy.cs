@@ -46,7 +46,7 @@ public class Spawner_Easy : DefaultBuilding
         EnemyScripts.Add(tmpEnemyScript);
         EC.RegisterEnemy(tmpEnemy);
 
-        Enemies[spawnedUnits].transform.position = this.transform.position;
+        Enemies[spawnedUnits].transform.position = new Vector3(this.transform.position.x, this.transform.position.y, BuilderBehaviour.defaultZEnemy);
         spawnedUnits++;
     }
 
@@ -59,7 +59,7 @@ public class Spawner_Easy : DefaultBuilding
         EnemyScripts.Add(tmpEnemyScript);
         EC.RegisterEnemy(tmpEnemy);
 
-        Enemies[spawnedUnits].transform.position = this.transform.position;
+        tmpEnemy.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, BuilderBehaviour.defaultZEnemy);
         spawnedUnits++;
     }
     public void enemySpawn3()
@@ -71,7 +71,7 @@ public class Spawner_Easy : DefaultBuilding
         EnemyScripts.Add(tmpEnemyScript);
         EC.RegisterEnemy(tmpEnemy);
 
-        Enemies[spawnedUnits].transform.position = this.transform.position;
+        Enemies[spawnedUnits].transform.position = new Vector3(this.transform.position.x, this.transform.position.y, BuilderBehaviour.defaultZEnemy);
         spawnedUnits++;
     }
     public void Spawn()

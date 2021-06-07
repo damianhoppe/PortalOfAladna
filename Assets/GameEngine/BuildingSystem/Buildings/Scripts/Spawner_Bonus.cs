@@ -45,7 +45,7 @@ public class Spawner_Bonus : DefaultBuilding
         EnemyScripts.Add(tmpEnemyScript);
         EC.RegisterEnemy(tmpEnemy);
 
-        Enemies[spawnedUnits].transform.position = this.transform.position;
+        tmpEnemy.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, BuilderBehaviour.defaultZEnemy);
         spawnedUnits++;
     }
 

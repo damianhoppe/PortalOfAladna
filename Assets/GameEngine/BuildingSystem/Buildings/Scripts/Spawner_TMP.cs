@@ -27,7 +27,8 @@ public class Spawner_TMP : Building
     {
         foreach (var enemy in enemyArray)
         {
-            Instantiate(enemy).transform.position = this.transform.position;
+            GameObject enemyObj = Instantiate(enemy);
+            enemyObj.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, BuilderBehaviour.defaultZEnemy);
         }
     }
     protected override void Update()
