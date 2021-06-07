@@ -136,4 +136,23 @@ public class DefaultResource : Structure
         return yield;
     }
 
+    public Dictionary<string,float> save()
+    {
+        Dictionary<string, float> Save = new Dictionary<string, float>();
+        Save.Add("LimitOre", LimitOre);
+        Save.Add("RemainingOre", RemainingOre);
+        Save.Add("OreRichness", OreRichness);
+
+        return Save;
+    }
+    public void load(Dictionary<string, float> save)
+    {
+        float data;
+        save.TryGetValue("LimitOre", out data);
+        LimitOre = data;
+        save.TryGetValue("RemainingOre", out data);
+        RemainingOre = data;
+        save.TryGetValue("OreRichness", out data);
+        OreRichness = data;
+    }
 }
