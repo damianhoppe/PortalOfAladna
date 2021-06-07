@@ -16,13 +16,14 @@ public class Spawner_Bonus : DefaultBuilding
     public List<defaultEnemy> EnemyScripts = new List<defaultEnemy>();
     public bool isBossDead = false;
 
-
+    EnemyControllerV2 EC;
     DayNightController DNC;
     protected override void Start()
     {
         Prefabs.Add(Resources.Load<GameObject>("EnemyEasy"));
 
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
+        EC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
         base.Start();
     }
     public void enemySpawn1()
@@ -32,6 +33,7 @@ public class Spawner_Bonus : DefaultBuilding
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+        EC.RegisterEnemy(tmpEnemy);
 
         Enemies[spawnedUnits].transform.position = this.transform.position;
         spawnedUnits++;

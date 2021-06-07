@@ -50,7 +50,9 @@ public class Portal : DefaultBuilding
         this.IsMilitary = true;
 
         this.CurrentHitpoints = this.MaxHitpoints;
-}
+
+        
+    }
     public Portal()
     {
         this.PlayerObjectID = 0;
@@ -98,8 +100,12 @@ public class Portal : DefaultBuilding
         this.RepairRate = 2.0f;
         this.CanBuild = false;
 
+        this.PC.IncreasePopulation(this.LivingSpace);
+        //this.EC.ResourcesSpent(this.UpgradeCost);
+        this.EC.StorageIncrease(this.BuildingStorage);
+        //this.EC.DrainEnergy(this.EnergyToBuild);
+        this.PC.EmployHumans(this.RequiredHumans);
 
-        
         this.setMapSize();
         this.createDistanceArray();
         this.setPortalPosition();

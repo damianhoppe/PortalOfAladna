@@ -13,6 +13,7 @@ public class EconomyController : MonoBehaviour
         this.StartEnergy = this.DefaultStartEnergy; // + X*StartEnergy_UpgradeLevel
         this.CurrentEnergy = this.StartEnergy;
         this.PlayerResources = new DataStructures.Cost(0,0,0,0,0,0);
+        this.PlayerResources = new DataStructures.Cost(300, 100, 100, 25, 0, 0);
     }
 
     // Update is called once per frame

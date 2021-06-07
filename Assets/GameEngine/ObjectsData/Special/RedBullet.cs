@@ -42,7 +42,7 @@ public class RedBullet : MonoBehaviour
             }
             if (timeAlive > bulletLifespan) this.bulletExpired();
 
-            Debug.Log("Bullet expires in:" + (bulletLifespan - timeAlive));
+            //Debug.Log("Bullet expires in:" + (bulletLifespan - timeAlive));
 
             if (BulletTime % 10 == 9)
             {

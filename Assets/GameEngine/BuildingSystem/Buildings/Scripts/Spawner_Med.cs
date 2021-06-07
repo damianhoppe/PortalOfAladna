@@ -16,7 +16,7 @@ public class Spawner_Med : DefaultBuilding
     public List<defaultEnemy> EnemyScripts = new List<defaultEnemy>();
     public bool isBossDead = false;
 
-
+    EnemyControllerV2 EC;
     DayNightController DNC;
     protected override void Start()
     {
@@ -27,6 +27,7 @@ public class Spawner_Med : DefaultBuilding
         Prefabs.Add(Resources.Load<GameObject>("BossMedium"));
 
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
+        EC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
         base.Start();
     }
     public void enemySpawn1()
@@ -36,6 +37,7 @@ public class Spawner_Med : DefaultBuilding
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+        EC.RegisterEnemy(tmpEnemy);
 
         Enemies[spawnedUnits].transform.position = this.transform.position;
         spawnedUnits++;
@@ -48,6 +50,7 @@ public class Spawner_Med : DefaultBuilding
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+        EC.RegisterEnemy(tmpEnemy);
 
         Enemies[spawnedUnits].transform.position = this.transform.position;
         spawnedUnits++;
@@ -59,6 +62,7 @@ public class Spawner_Med : DefaultBuilding
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+        EC.RegisterEnemy(tmpEnemy);
 
         Enemies[spawnedUnits].transform.position = this.transform.position;
         spawnedUnits++;
@@ -70,6 +74,7 @@ public class Spawner_Med : DefaultBuilding
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+        EC.RegisterEnemy(tmpEnemy);
 
         Enemies[spawnedUnits].transform.position = this.transform.position;
         spawnedUnits++;
@@ -81,6 +86,7 @@ public class Spawner_Med : DefaultBuilding
 
         Enemies.Add(tmpEnemy);
         EnemyScripts.Add(tmpEnemyScript);
+        EC.RegisterEnemy(tmpEnemy);
 
         Enemies[spawnedUnits].transform.position = this.transform.position;
         spawnedUnits++;
