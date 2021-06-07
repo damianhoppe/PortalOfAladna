@@ -14,6 +14,11 @@ public class Position
         this.x = x;
         this.y = y;
     }
+    public Position(Vector3 vector)
+    {
+        this.x = (int) vector.x;
+        this.y = (int) vector.y;
+    }
 
     public virtual bool Equals(Position other)
     {

@@ -25,8 +25,15 @@ public class Template1 : MonoBehaviour
     {
         this.gridManager = FindObjectOfType<GridManager>();
         this.oreReqSprite = gameObject.GetComponent<SpriteRenderer>();
+        foreach (Transform child in transform)
+        {
+            GameObject gameObject = child.gameObject;
+            Structure structure = gameObject.GetComponent<Structure>();
+            Position structPos = new Position(structure.transform.position);
+            gridManager.addStructure(structure, (int)structPos.x, (int)structPos.y);
+        }
     }
-
+    /*
     void Update()
     {
         if (Load == false)
@@ -89,5 +96,5 @@ public class Template1 : MonoBehaviour
 
             Load = true;
         }
-    }
+    }*/
 }

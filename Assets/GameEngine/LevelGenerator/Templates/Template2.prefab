@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8033361624297789862}
-  - component: {fileID: 1937392655577272330}
+  - component: {fileID: 5855832609242118002}
   m_Layer: 0
   m_Name: Template2
   m_TagString: Untagged
@@ -47,7 +47,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1937392655577272330
+--- !u!114 &5855832609242118002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,44 +56,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 8033361624297789861}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fdb14c63d4ddb7459b33b70fe0bfe3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 099885d69fc62174ea516a71673aa095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultResource: []
   DefaultBuilding: []
   oreReqSprite: {fileID: 0}
-  LargeDeepWood: {fileID: 1683762629488305664, guid: 557fd570b37505f40923ba24ca858251,
-    type: 3}
-  LargeDeepGold: {fileID: 3407176812059741137, guid: 4a9b43482f04cbc4d9a0e13e45ede1b0,
-    type: 3}
-  LargeDeepMetal: {fileID: 1298780385739898044, guid: c2f71e08daa5fe24a9ec7008279071ca,
-    type: 3}
-  SmallDeepStone: {fileID: 6196606788699460754, guid: 220a3d17f46ecb14ea33417c07d26127,
-    type: 3}
-  MediumShallowMetal: {fileID: 4619139516441723585, guid: 80aa28bc914b4a846a60e4fc505b714b,
-    type: 3}
-  SmallShallowWood: {fileID: 1422564520830496695, guid: 0bc6d128d752b354dbccb58ead96d561,
-    type: 3}
-  SmallShallowGold: {fileID: 7063998219668662476, guid: add80e265e7edc04b86073268e2f9cfe,
-    type: 3}
-  SmallShallowStone: {fileID: 554801615820861330, guid: 75a59e540f36641498d41ea62596cf7c,
-    type: 3}
-  SmallShallowCrystal: {fileID: 6345328007761440321, guid: 0425bbb75943a124880d0a87ff00e6e4,
-    type: 3}
-  SmallShallowMetal: {fileID: 3954620146206216295, guid: 58b1f79f4cebf124ea8cdaee22edc98a,
-    type: 3}
-  MediumDeepWood: {fileID: 4538949494020919778, guid: cd9b6654a0c866a458531cd9995fe3ba,
-    type: 3}
-  MediumDeepGold: {fileID: 2241421747307228345, guid: f0b803ad56bee4d40b4e41be97230d06,
-    type: 3}
-  MediumDeepStone: {fileID: 929682471248170152, guid: aeba16aa64a17104c88f2cd07e56af31,
-    type: 3}
-  MediumDeepCrystal: {fileID: 6272290449645205793, guid: 2349f881dfcc5874b949b12c56f38a5f,
-    type: 3}
-  MediumDeepMetal: {fileID: 4441289717702692488, guid: 6f1461ed9b24b6049b216d63a4a348df,
-    type: 3}
-  PortalPrefab: {fileID: 7049006272243802083, guid: 0b46b7a781f6d81428ee87025457e606,
-    type: 3}
+  SmallShallowWood: {fileID: 0}
+  SmallShallowGold: {fileID: 0}
+  SmallShallowStone: {fileID: 0}
+  SmallShallowCrystal: {fileID: 0}
+  SmallShallowMetal: {fileID: 0}
+  MediumDeepWood: {fileID: 0}
+  MediumDeepGold: {fileID: 0}
+  MediumDeepStone: {fileID: 0}
+  MediumDeepCrystal: {fileID: 0}
+  MediumDeepMetal: {fileID: 0}
+  PortalPrefab: {fileID: 0}
   ore: {fileID: 0}
   portal: {fileID: 0}
 --- !u!1001 &8033361623523803293
