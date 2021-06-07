@@ -11,9 +11,17 @@ public class Spawner_TMP : Building
 
     [SerializeField]
     GameObject[] enemyArray;
+
+    public Spawner_TMP()
+    {
+        this.PlayerObjectID = 1004;
+    }
+
     protected override void Start()
     {
         base.Start();
+
+        this.PlayerObjectID = 1004;
     }
     public void Spawn()
     {

@@ -20,6 +20,12 @@ public class Spawner_Easy_Med : DefaultBuilding
 
     EnemyControllerV2 EC;
     DayNightController DNC;
+
+    public Spawner_Easy_Med()
+    { 
+        this.PlayerObjectID = 1009;
+    }
+
     protected override void Start()
     {
         Prefabs.Add(Resources.Load<GameObject>("EnemyEasy"));
@@ -29,6 +35,7 @@ public class Spawner_Easy_Med : DefaultBuilding
         DNC = GameObject.Find("PlayerDataController").GetComponent<DayNightController>();
         EC = GameObject.Find("EnemyControllerV2").GetComponent<EnemyControllerV2>();
         base.Start();
+        this.PlayerObjectID = 1009;
     }
     public void enemySpawn1()
     {

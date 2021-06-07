@@ -206,6 +206,7 @@ public class SaveController : MonoBehaviour
                 Debug.Log(name);
                 GameObject myObj = null;
                 OH.Buildings.TryGetValue(id, out myObj);
+                //Debug.Log(id);
                 BB.LoadBuilding(posX, posY, myObj);
 
                 try
@@ -402,7 +403,7 @@ public class SaveController : MonoBehaviour
 
             for (int y = -height / 2; y <= height / 2; y++)
             {
-                Debug.Log(x + " " + y);
+                //Debug.Log(x + " " + y);
                 Structure objectOnGrid = GM.getStructure(x, y);
                 if (objectOnGrid != null)
                 {

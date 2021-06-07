@@ -9,9 +9,16 @@ public class Spawner_Med_Hard_Boss : Building
 
     [SerializeField]
     GameObject[] enemyArray;
+
+    public Spawner_Med_Hard_Boss()
+    {
+        this.PlayerObjectID = 1001;
+    }
+
     protected override void Start()
     {
         base.Start();
+        this.PlayerObjectID = 1001;
     }
     public void Spawn()
     {

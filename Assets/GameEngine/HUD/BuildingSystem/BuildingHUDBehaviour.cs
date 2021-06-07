@@ -69,22 +69,26 @@ public class BuildingHUDBehaviour : MonoBehaviour
 
         foreach (KeyValuePair<int, GameObject> pair in buildings)
         {
-            Structure structure = pair.Value.GetComponent<Structure>();
-            EStructureCategory structureCategory = structure.category;
-            Category category = null;
-            categories.TryGetValue(structureCategory, out category);
-            if (category == null)
+            if (pair.Key < 1000)
             {
-                continue;
-            }
-            if(!DEBUG)
-            {
-                if(structure.PlayerBuildable && structure.getName() != "Portal")
-                    category.buildingList.addBuilding(pair.Value, pair.Key);
-            }else
-            {
-                if(structure.DebugBuildable)
-                    category.buildingList.addBuilding(pair.Value, pair.Key);
+                Structure structure = pair.Value.GetComponent<Structure>();
+                EStructureCategory structureCategory = structure.category;
+                Category category = null;
+                categories.TryGetValue(structureCategory, out category);
+                if (category == null)
+                {
+                    continue;
+                }
+                if (!DEBUG)
+                {
+                    if (structure.PlayerBuildable && structure.getName() != "Portal")
+                        category.buildingList.addBuilding(pair.Value, pair.Key);
+                }
+                else
+                {
+                    if (structure.DebugBuildable)
+                        category.buildingList.addBuilding(pair.Value, pair.Key);
+                }
             }
         }
         showCategory(visibleCategories[0]);
